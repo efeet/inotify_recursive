@@ -8,11 +8,11 @@
 #include <signal.h>
 #include <stdarg.h>
 #include <sys/types.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include <errno.h>                                                                                            
+#include <errno.h> 
+#include <stdio.h>
                                                                                                               
 #define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
                         } while (0)                                                                           
