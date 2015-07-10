@@ -1,0 +1,1 @@
+/usr/bin/cc  -g    CMakeFiles/inotify_recursive.dir/inotify.c.o  -o inotify_recursive -rdynamic 

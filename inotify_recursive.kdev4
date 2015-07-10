@@ -1,0 +1,4 @@
+[Project]
+Name=inotify_recursive
+Manager=KDevCMakeManager
+VersionControl=

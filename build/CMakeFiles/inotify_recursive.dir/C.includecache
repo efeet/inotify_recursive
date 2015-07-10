@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/usanchezc/projects/inotify_recursive/inotify.c
+sys/stat.h
+-
+limits.h
+-
+sys/select.h
+-
+sys/inotify.h
+-
+fcntl.h
+-
+ftw.h
+-
+signal.h
+-
+stdarg.h
+-
+sys/types.h
+-
+stdio.h
+-
+stdlib.h
+-
+unistd.h
+-
+string.h
+-
+errno.h
+-
+
