@@ -838,7 +838,6 @@ static void alarmHandler(int sig)
    Process the events relating to directories in the subtree we are
    monitoring, in order to keep our cached view of the subtree in sync
    with the filesystem. */
-
 static void processInotifyEvents(int *inotifyFd)
 {
     char buf[INOTIFY_READ_BUF_LEN] __attribute__ ((aligned(__alignof__(struct inotify_event))));
