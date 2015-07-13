@@ -1,3 +1,4 @@
 # inotify_recursive
-# Programa Base
-# 1.0
+# Programa Base, descarga, modifica y envia...
+# v1.0
+# 
