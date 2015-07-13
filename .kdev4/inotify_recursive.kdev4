@@ -152,5 +152,27 @@ inclusive=0
 pattern=__pycache__
 targets=2
 
+[Launch]
+Launch Configurations=Launch Configuration 0
+
+[Launch][Launch Configuration 0]
+Configured Launch Modes=debug
+Configured Launchers=gdb
+Name=inotify_recursive
+Type=Native Application
+
+[Launch][Launch Configuration 0][Data]
+Arguments=/opt/PRUEBA
+Configured from ProjectItem=inotify_recursive,inotify_recursive
+Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x00)
+Dependency Action=Nothing
+EnvironmentGroup=
+Executable=file:///home/usanchezc/projects/inotify_recursive/
+External Terminal=konsole --noclose --workdir %workdir -e %exe
+Project Target=inotify_recursive,inotify_recursive
+Use External Terminal=false
+Working Directory=file:///home/usanchezc/projects/inotify_recursive/build/
+isExecutable=false
+
 [Project]
 VersionControlSupport=kdevgit

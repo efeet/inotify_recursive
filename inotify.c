@@ -327,6 +327,7 @@ static char ** findRootDirPath(const char *path)
     int j;
 
     for (j = 0; j < numRootDirs; j++)
+	//Si rootDirPaths es diferente de NULL y path y rootDirPaths[j] es igual.
         if (rootDirPaths[j] != NULL && strcmp(path, rootDirPaths[j]) == 0)
             return &rootDirPaths[j];
 
@@ -860,7 +861,9 @@ static void processInotifyEvents(int *inotifyFd)
 
     /* Read some events from inotify file descriptor */
     cnt = (readBufferSize > 0) ? readBufferSize : INOTIFY_READ_BUF_LEN;
+    printf("Antes de numread\n");
     numRead = read(*inotifyFd, buf, cnt);
+    printf("Despues de numread\n");
     if (numRead == -1)
         errExit("read");
     if (numRead == 0) {
@@ -953,8 +956,10 @@ int main(int argc, char *argv[])
     //Variable que almacena Init Inotify
     int inotifyFd;
 
-    if (optind >= argc)
+    if (optind >= argc){
         printf("Error Inicial\n");
+	errExit("argc");
+    }
     /* Save a copy of the directories on the command line */
     copyRootDirPaths(&argv[optind]);
     /* Create an inotify instance and populate it with entries for
@@ -964,13 +969,16 @@ int main(int argc, char *argv[])
     fflush(stdout);
 
     for (;;) {
+	printf("FOR.....");
         FD_ZERO(&rfds);
         FD_SET(STDIN_FILENO, &rfds);
         FD_SET(inotifyFd, &rfds);
         //if (select(inotifyFd + 1, &rfds, NULL, NULL, NULL) == -1)
             //errExit("select");
-        if (FD_ISSET(inotifyFd, &rfds))
+        if (FD_ISSET(inotifyFd, &rfds)){
+	  printf("Entra a IF Detecta un evento\n");
             processInotifyEvents(&inotifyFd);
+	}
     }
     exit(EXIT_SUCCESS);
 }

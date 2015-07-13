@@ -25,8 +25,6 @@ stdarg.h
 -
 sys/types.h
 -
-stdio.h
--
 stdlib.h
 -
 unistd.h
@@ -34,5 +32,7 @@ unistd.h
 string.h
 -
 errno.h
+-
+stdio.h
 -
 
