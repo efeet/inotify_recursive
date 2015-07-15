@@ -580,6 +580,8 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     struct inotify_event *ev;
     size_t evLen;
     int evCacheSlot;
+    
+    struct stat buf_stat;
 
     ev = (struct inotify_event *) buf;
 
@@ -822,12 +824,20 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	if(ev->mask & IN_ISDIR){
 	//Con estas 2 Lineas podemos procesar los Dir or File para STAT o algun otro.
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
-	  printf("\n---->Directorio Ruta FULL=%s\n\n",fullPath);
+	  //printf("\n---->Directorio Ruta FULL=%s\n\n",fullPath);
+	  stat(fullPath, &buf_stat);
+	  if(buf_stat.st_mode & S_IWOTH){
+	    printf("\n---->Directorio Con Escritura Publica=%s\n\n",fullPath);
+	  }
 	}
 	else{
       //Con estas 2 Lineas podemos procesar los Dir or File para STAT o algun otro.
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
-	  printf("\n---->Archivo Ruta FULL=%s\n\n",fullPath);
+	  //printf("\n---->Archivo Ruta FULL=%s\n\n",fullPath);
+	  stat(fullPath, &buf_stat);
+	  if(buf_stat.st_mode & S_IWOTH){
+	    printf("\n---->Archivo Con Escritura Publica=%s\n\n",fullPath);
+	  }
 	}
     }
 
