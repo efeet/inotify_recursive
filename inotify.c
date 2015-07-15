@@ -602,9 +602,6 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
            return INOTIFY_READ_BUF_LEN;
         }
     }
-    //Con estas 2 Lineas podemos procesar los Dir or File para STAT o algun otro.
-    snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
-    printf("-->Ruta FULL=%s\n",fullPath);
     
     evLen = sizeof(struct inotify_event) + ev->len;
 
@@ -612,7 +609,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
         /* A new subdirectory was created, or a subdirectory was
            renamed into the tree; create watches for it, and all
            of its subdirectories. */
-        snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
+        snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);	
         logMessage(VB_BASIC, "Directory creation on wd %d: %s\n",ev->wd, fullPath);
         /* We only watch the new subtree if it has not already been cached.
            This deals with a race condition:
@@ -823,7 +820,20 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
             /* Discard all remaining events in current read() buffer */
             return INOTIFY_READ_BUF_LEN;
         }
+    } 
+    //Validacion para STAT de archivo.
+    if(ev->mask & IN_ATTRIB){
+      if(ev->mask & IN_ISDIR){
+	//Con estas 2 Lineas podemos procesar los Dir or File para STAT o algun otro.
+        snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
+	printf("\n---->Directorio Ruta FULL=%s\n",fullPath);
+      }
+    }else{
+      //Con estas 2 Lineas podemos procesar los Dir or File para STAT o algun otro.
+        snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
+	printf("\n---->Archivo Ruta FULL=%s\n",fullPath);
     }
+
     if (checkCache)
         checkCacheConsistency();
 
