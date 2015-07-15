@@ -61,13 +61,12 @@ static void logMessage(int vb_mask, const char *format, ...)
    when we are doing verbose logging.) */
 static void displayInotifyEvent(struct inotify_event *ev, char *StatPathBackup)
 {    
+    printf("\nDentro de displayInotifyEvent RUTA=%s\n",StatPathBackup);
     logMessage(VB_NOISY, "==> wd = %d; ", ev->wd);
     if (ev->cookie > 0)
         logMessage(VB_NOISY, "cookie = %4d; ", ev->cookie);
 
     logMessage(VB_NOISY, "mask = ");
-   
-    printf("Dentro de displayInotifyEvent RUTA=%s\n",StatPathBackup);
     
     if (ev->mask & IN_ISDIR)
         logMessage(VB_NOISY, "IN_ISDIR ");
