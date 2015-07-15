@@ -32,6 +32,16 @@ static int inotifyReadCnt = 0;          /* Counts number of read()s from
 
 static const int INOTIFY_READ_BUF_LEN = (100 * (sizeof(struct inotify_event) + NAME_MAX + 1));
 
+/* Data structures and functions for dealing with the directory pathnames
+   provided as command-line arguments. These directories form the roots of
+   the trees that we will monitor */
+static char **rootDirPaths; /* List of pathnames supplied on command line */
+static int numRootDirs;     /* Number of pathnames supplied on command line */
+static int ignoreRootDirs;  /* Number of command-line pathnames that
+                               we've ceased to monitor */
+static struct stat *rootDirStat;
+                            /* stat(2) structures for croot directories */
+
 /* Write a log message. The message is sent to none, either, or both of
    stderr and the log file, depending on 'vb_mask' and whether a log file
    has been specified via command-line options . */
@@ -49,14 +59,16 @@ static void logMessage(int vb_mask, const char *format, ...)
 /***********************************************************************/
 /* Display some information about an inotify event. (Used when
    when we are doing verbose logging.) */
-static void displayInotifyEvent(struct inotify_event *ev)
-{
+static void displayInotifyEvent(struct inotify_event *ev, char *StatPathBackup)
+{    
     logMessage(VB_NOISY, "==> wd = %d; ", ev->wd);
     if (ev->cookie > 0)
         logMessage(VB_NOISY, "cookie = %4d; ", ev->cookie);
 
     logMessage(VB_NOISY, "mask = ");
-
+   
+    printf("Dentro de displayInotifyEvent RUTA=%s\n",StatPathBackup);
+    
     if (ev->mask & IN_ISDIR)
         logMessage(VB_NOISY, "IN_ISDIR ");
 
@@ -236,19 +248,6 @@ static int pathnameInCache(const char *pathname)
     return pathnameToCacheSlot(pathname) >= 0;
 }
 
-
-/***********************************************************************/
-
-/* Data structures and functions for dealing with the directory pathnames
-   provided as command-line arguments. These directories form the roots of
-   the trees that we will monitor */
-static char **rootDirPaths; /* List of pathnames supplied on command line */
-static int numRootDirs;     /* Number of pathnames supplied on command line */
-static int ignoreRootDirs;  /* Number of command-line pathnames that
-                               we've ceased to monitor */
-static struct stat *rootDirStat;
-                            /* stat(2) structures for croot directories */
-
 /* Duplicate the pathnames supplied on the command line, perform
    some sanity checking along the way */
 static void copyRootDirPaths(char *argv[])
@@ -306,7 +305,6 @@ static void copyRootDirPaths(char *argv[])
 
         for (k = 0; k < j; k++) {
             if ((rootDirStat[j].st_ino == rootDirStat[k].st_ino) && (rootDirStat[j].st_dev == rootDirStat[k].st_dev)) {
-              printf("Entra al IF de duplicado\n");
                 fprintf(stderr, "Duplicate filesystem objects: %s, %s\n",argv[j], argv[k]);
                 exit(EXIT_FAILURE);
             }
@@ -580,9 +578,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     struct stat buf_stat;
 
     ev = (struct inotify_event *) buf;
-
-    displayInotifyEvent(ev);
-
+    
     if (ev->wd != -1 && !(ev->mask & IN_IGNORED)) {
                 /* IN_Q_OVERFLOW has (ev->wd == -1) */
                 /* Skip IN_IGNORED, since it will come after an event
@@ -600,6 +596,9 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     }
     
     evLen = sizeof(struct inotify_event) + ev->len;
+    
+    snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
+    displayInotifyEvent(ev,fullPath);
 
     if ((ev->mask & IN_ISDIR) && (ev->mask & (IN_CREATE | IN_MOVED_TO))) {
         /* A new subdirectory was created, or a subdirectory was
