@@ -83,10 +83,9 @@ static void displayInotifyEvent(struct inotify_event *ev)
     if (ev->mask & IN_UNMOUNT)
         logMessage(VB_NOISY, "IN_UNMOUNT ");
     
-    //if (ev->mask & IN_ATTRIB)
-        //logMessage(VB_NOISY, "IN_ATTRIB ");
-
-    //logMessage(VB_NOISY, "\n");
+    if (ev->mask & IN_ATTRIB)
+        logMessage(VB_NOISY, "IN_ATTRIB ");
+	logMessage(VB_NOISY, "\n");
 
     if (ev->len > 0)
         logMessage(VB_NOISY, "        name = %s\n", ev->name);
@@ -188,7 +187,7 @@ static void markCacheSlotEmpty(int slot)
 static int findEmptyCacheSlot(void)
 {
     int j;
-    const int ALLOC_INCR = 200;
+    const int ALLOC_INCR = 10;
 
     for (j = 0; j < cacheSize; j++)
         if (wlCache[j].wd == -1)
@@ -803,8 +802,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
         logMessage(0, "Filesystem unmounted: %s\n",wlCache[evCacheSlot].path);
         markCacheSlotEmpty(evCacheSlot);
             /* No need to remove the watch; that happens automatically */
-    } else if (ev->mask & IN_MOVE_SELF &&
-            isRootDirPath(wlCache[evCacheSlot].path)) {
+    } else if (ev->mask & IN_MOVE_SELF && isRootDirPath(wlCache[evCacheSlot].path)) {
         /* If the root path moves to a new location in the same
            filesystem, then all cached pathnames become invalid, and we
            have no direct way of knowing the new name of the root path.
@@ -820,18 +818,17 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
             /* Discard all remaining events in current read() buffer */
             return INOTIFY_READ_BUF_LEN;
         }
-    } 
-    //Validacion para STAT de archivo.
-    if(ev->mask & IN_ATTRIB){
-      if(ev->mask & IN_ISDIR){
+    } else if(ev->mask & IN_ATTRIB){
+	if(ev->mask & IN_ISDIR){
 	//Con estas 2 Lineas podemos procesar los Dir or File para STAT o algun otro.
-        snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
-	printf("\n---->Directorio Ruta FULL=%s\n",fullPath);
-      }
-    }else{
+	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
+	  printf("\n---->Directorio Ruta FULL=%s\n\n",fullPath);
+	}
+	else{
       //Con estas 2 Lineas podemos procesar los Dir or File para STAT o algun otro.
-        snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
-	printf("\n---->Archivo Ruta FULL=%s\n",fullPath);
+	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
+	  printf("\n---->Archivo Ruta FULL=%s\n\n",fullPath);
+	}
     }
 
     if (checkCache)
