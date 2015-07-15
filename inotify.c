@@ -59,9 +59,8 @@ static void logMessage(int vb_mask, const char *format, ...)
 /***********************************************************************/
 /* Display some information about an inotify event. (Used when
    when we are doing verbose logging.) */
-static void displayInotifyEvent(struct inotify_event *ev, char *StatPathBackup)
-{    
-    printf("\nDentro de displayInotifyEvent RUTA=%s\n",StatPathBackup);
+static void displayInotifyEvent(struct inotify_event *ev)
+{
     logMessage(VB_NOISY, "==> wd = %d; ", ev->wd);
     if (ev->cookie > 0)
         logMessage(VB_NOISY, "cookie = %4d; ", ev->cookie);
@@ -578,6 +577,8 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 
     ev = (struct inotify_event *) buf;
     
+    displayInotifyEvent(ev);
+    
     if (ev->wd != -1 && !(ev->mask & IN_IGNORED)) {
                 /* IN_Q_OVERFLOW has (ev->wd == -1) */
                 /* Skip IN_IGNORED, since it will come after an event
@@ -595,9 +596,6 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     }
     
     evLen = sizeof(struct inotify_event) + ev->len;
-    
-    snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
-    displayInotifyEvent(ev,fullPath);
 
     if ((ev->mask & IN_ISDIR) && (ev->mask & (IN_CREATE | IN_MOVED_TO))) {
         /* A new subdirectory was created, or a subdirectory was
