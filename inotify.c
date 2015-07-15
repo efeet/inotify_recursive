@@ -19,9 +19,7 @@
                                                                                                               
 /* logMessage() flags */                                                                                      
 #define VB_BASIC 1      /* Basic messages */                                                                  
-#define VB_NOISY 2      /* Verbose messages */                                                                
-
-int TEMPORAL = 1;                                                                                             
+#define VB_NOISY 2      /* Verbose messages */                                                                                                                                                      
 
 static int verboseMask;                                                                                       
 static int checkCache;                                                                                        
@@ -53,7 +51,6 @@ static void logMessage(int vb_mask, const char *format, ...)
    when we are doing verbose logging.) */
 static void displayInotifyEvent(struct inotify_event *ev)
 {
-  printf("Estructura de evWD=%d, evName=%s, evMask=%d, evLen=%d, evCookie=%d\n",ev->wd, ev->name, ev->mask, ev->len, ev->cookie);
     logMessage(VB_NOISY, "==> wd = %d; ", ev->wd);
     if (ev->cookie > 0)
         logMessage(VB_NOISY, "cookie = %4d; ", ev->cookie);
@@ -372,8 +369,7 @@ static void zapRootDirPath(const char *path)
 static int dirCnt;      /* Count of directories added to watch list */
 static int ifd;         /* Inotify file descriptor */
 
-static int traverseTree(const char *pathname, const struct stat *sb, int tflag,
-             struct FTW *ftwbuf)
+static int traverseTree(const char *pathname, const struct stat *sb, int tflag, struct FTW *ftwbuf)
 {
     int wd, slot, flags;
 
@@ -588,7 +584,6 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     displayInotifyEvent(ev);
 
     if (ev->wd != -1 && !(ev->mask & IN_IGNORED)) {
-      printf("589 - Entra a IF sin MASK=IN_IGNORED\n");
                 /* IN_Q_OVERFLOW has (ev->wd == -1) */
                 /* Skip IN_IGNORED, since it will come after an event
                    that has already zapped the corresponding cache entry */
@@ -638,10 +633,8 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
                   second time is harmless, but adding a second cache
                   for the grandchild would leave the cache in a confused
                   state.) */
-        if (!pathnameInCache(fullPath)){
-          printf("No esta en cache la RUTA\n");
+        if (!pathnameInCache(fullPath))
             watchSubtree(*inotifyFd, fullPath);
-        }
 
     } else if (ev->mask & IN_DELETE_SELF) {
         /* A directory was deleted. Remove the corresponding item from
@@ -822,22 +815,16 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
         }
     } else if(ev->mask & IN_ATTRIB){
 	if(ev->mask & IN_ISDIR){
-	//Con estas 2 Lineas podemos procesar los Dir or File para STAT o algun otro.
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
-	  //printf("\n---->Directorio Ruta FULL=%s\n\n",fullPath);
 	  stat(fullPath, &buf_stat);
-	  if(buf_stat.st_mode & S_IWOTH){
+	  if(buf_stat.st_mode & S_IWOTH)
 	    printf("\n---->Directorio Con Escritura Publica=%s\n\n",fullPath);
-	  }
 	}
 	else{
-      //Con estas 2 Lineas podemos procesar los Dir or File para STAT o algun otro.
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
-	  //printf("\n---->Archivo Ruta FULL=%s\n\n",fullPath);
 	  stat(fullPath, &buf_stat);
-	  if(buf_stat.st_mode & S_IWOTH){
+	  if(buf_stat.st_mode & S_IWOTH)
 	    printf("\n---->Archivo Con Escritura Publica=%s\n\n",fullPath);
-	  }
 	}
     }
 
@@ -878,9 +865,7 @@ static void processInotifyEvents(int *inotifyFd)
 
     /* Read some events from inotify file descriptor */
     cnt = (readBufferSize > 0) ? readBufferSize : INOTIFY_READ_BUF_LEN;
-    printf("Antes de numread\n");
     numRead = read(*inotifyFd, buf, cnt);
-    printf("Despues de numread\n");
     if (numRead == -1)
         errExit("read");
     if (numRead == 0) {
@@ -890,12 +875,10 @@ static void processInotifyEvents(int *inotifyFd)
 
     inotifyReadCnt++;
     //Imprime los eventos como los va leyendo y los bytes en los enventos.
-    logMessage(VB_NOISY,"\n==========> Read %d: got %zd bytes\n", inotifyReadCnt, numRead);
+    //logMessage(VB_NOISY,"\n==========> Read %d: got %zd bytes\n", inotifyReadCnt, numRead);
 
     /* Process each event in the buffer returned by read() */
     for (evp = buf; evp < buf + numRead; ) {
-      printf("PASADA PARA EVENTO - VALOR TEMPORAL=%d\n",TEMPORAL);
-      TEMPORAL++;
         evLen = processNextInotifyEvent(inotifyFd, evp, buf + numRead - evp, firstTry);
 
         if (evLen > 0) {
@@ -986,14 +969,12 @@ int main(int argc, char *argv[])
     fflush(stdout);
 
     for (;;) {
-	printf("FOR.....");
         FD_ZERO(&rfds);
         FD_SET(STDIN_FILENO, &rfds);
         FD_SET(inotifyFd, &rfds);
         //if (select(inotifyFd + 1, &rfds, NULL, NULL, NULL) == -1)
             //errExit("select");
         if (FD_ISSET(inotifyFd, &rfds)){
-	  printf("Entra a IF Detecta un evento\n");
             processInotifyEvents(&inotifyFd);
 	}
     }
