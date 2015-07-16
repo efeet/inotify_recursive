@@ -18,7 +18,6 @@
 #include <time.h> 
 #include <netdb.h> 
 
-#define _GNU_SOURCE
 #include <sys/stat.h>
 #include <limits.h>
 #include <sys/select.h>

@@ -74,9 +74,5 @@ stdio.h
 socket_client.h
 /home/usanchezc/projects/inotify_recursive/socket_client.h
 
-/home/usanchezc/projects/inotify_recursive/socket_client.c
-libraries_include.h
-/home/usanchezc/projects/inotify_recursive/libraries_include.h
-
 /home/usanchezc/projects/inotify_recursive/socket_client.h
 

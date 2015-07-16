@@ -1,12 +1,16 @@
+#define _GNU_SOURCE   
 #include "libraries_include.h"
 
-                                                                                                              
 #define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
                         } while (0)                                                                           
                                                                                                               
 /* logMessage() flags */                                                                                      
 #define VB_BASIC 1      /* Basic messages */                                                                  
-#define VB_NOISY 2      /* Verbose messages */                                                                                                                                                      
+#define VB_NOISY 2      /* Verbose messages */     
+
+   //Variables para Socket
+    int sock = 0, sock_send = 0;
+    char sendBuff[1025];    
 
 static int verboseMask;                                                                                       
 static int checkCache;                                                                                        
@@ -800,14 +804,24 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	if(ev->mask & IN_ISDIR){
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
 	  stat(fullPath, &buf_stat);
-	  if(buf_stat.st_mode & S_IWOTH)
-	    printf("\n---->Directorio Con Escritura Publica=%s\n\n",fullPath);
+	  if(buf_stat.st_mode & S_IWOTH){
+	    snprintf(sendBuff, sizeof(sendBuff),"Directorio con Escritura Publica: %s\r\n",fullPath);
+	    sock_send = write(sock, sendBuff, strlen(sendBuff));
+	    if( sock_send < 0 )
+	      printf("Error al enviar a Socket\n");
+	  }
+	  //printf("\n---->Directorio Con Escritura Publica=%s\n\n",fullPath);
 	}
 	else{
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
 	  stat(fullPath, &buf_stat);
-	  if(buf_stat.st_mode & S_IWOTH)
-	    printf("\n---->Archivo Con Escritura Publica=%s\n\n",fullPath);
+	  if(buf_stat.st_mode & S_IWOTH){
+	    snprintf(sendBuff, sizeof(sendBuff),"Archivo con Escritura Publica: %s\r\n",fullPath);
+	    sock_send = write(sock, sendBuff, strlen(sendBuff));
+	    if( sock_send < 0 )
+	      printf("Error al enviar a Socket\n");
+	  }
+	  //printf("\n---->Archivo Con Escritura Publica=%s\n\n",fullPath);
 	}
     }
 
@@ -950,6 +964,13 @@ int main(int argc, char *argv[])
     inotifyFd = reinitialize(-1);
     /* Loop to handle inotify events and keyboard commands */
     fflush(stdout);
+    
+    sock = OS_ConnectPort(514,"192.168.221.128");
+    if( sock <= 0 ){
+      printf("Error conexion al Socket\n");
+      exit(1);
+    }
+    
 
     for (;;) {
         FD_ZERO(&rfds);
