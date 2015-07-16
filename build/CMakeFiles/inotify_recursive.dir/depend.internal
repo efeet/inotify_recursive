@@ -3,3 +3,9 @@
 
 CMakeFiles/inotify_recursive.dir/inotify.c.o
  /home/usanchezc/projects/inotify_recursive/inotify.c
+ /home/usanchezc/projects/inotify_recursive/libraries_include.h
+ /home/usanchezc/projects/inotify_recursive/socket_client.h
+CMakeFiles/inotify_recursive.dir/socket_client.c.o
+ /home/usanchezc/projects/inotify_recursive/libraries_include.h
+ /home/usanchezc/projects/inotify_recursive/socket_client.c
+ /home/usanchezc/projects/inotify_recursive/socket_client.h

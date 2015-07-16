@@ -72,14 +72,39 @@ CMakeFiles/inotify_recursive.dir/inotify.c.o.provides: CMakeFiles/inotify_recurs
 
 CMakeFiles/inotify_recursive.dir/inotify.c.o.provides.build: CMakeFiles/inotify_recursive.dir/inotify.c.o
 
+CMakeFiles/inotify_recursive.dir/socket_client.c.o: CMakeFiles/inotify_recursive.dir/flags.make
+CMakeFiles/inotify_recursive.dir/socket_client.c.o: ../socket_client.c
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/usanchezc/projects/inotify_recursive/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/inotify_recursive.dir/socket_client.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/inotify_recursive.dir/socket_client.c.o   -c /home/usanchezc/projects/inotify_recursive/socket_client.c
+
+CMakeFiles/inotify_recursive.dir/socket_client.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/inotify_recursive.dir/socket_client.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/usanchezc/projects/inotify_recursive/socket_client.c > CMakeFiles/inotify_recursive.dir/socket_client.c.i
+
+CMakeFiles/inotify_recursive.dir/socket_client.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/inotify_recursive.dir/socket_client.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/usanchezc/projects/inotify_recursive/socket_client.c -o CMakeFiles/inotify_recursive.dir/socket_client.c.s
+
+CMakeFiles/inotify_recursive.dir/socket_client.c.o.requires:
+.PHONY : CMakeFiles/inotify_recursive.dir/socket_client.c.o.requires
+
+CMakeFiles/inotify_recursive.dir/socket_client.c.o.provides: CMakeFiles/inotify_recursive.dir/socket_client.c.o.requires
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/socket_client.c.o.provides.build
+.PHONY : CMakeFiles/inotify_recursive.dir/socket_client.c.o.provides
+
+CMakeFiles/inotify_recursive.dir/socket_client.c.o.provides.build: CMakeFiles/inotify_recursive.dir/socket_client.c.o
+
 # Object files for target inotify_recursive
 inotify_recursive_OBJECTS = \
-"CMakeFiles/inotify_recursive.dir/inotify.c.o"
+"CMakeFiles/inotify_recursive.dir/inotify.c.o" \
+"CMakeFiles/inotify_recursive.dir/socket_client.c.o"
 
 # External object files for target inotify_recursive
 inotify_recursive_EXTERNAL_OBJECTS =
 
 inotify_recursive: CMakeFiles/inotify_recursive.dir/inotify.c.o
+inotify_recursive: CMakeFiles/inotify_recursive.dir/socket_client.c.o
 inotify_recursive: CMakeFiles/inotify_recursive.dir/build.make
 inotify_recursive: CMakeFiles/inotify_recursive.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking C executable inotify_recursive"
@@ -90,6 +115,7 @@ CMakeFiles/inotify_recursive.dir/build: inotify_recursive
 .PHONY : CMakeFiles/inotify_recursive.dir/build
 
 CMakeFiles/inotify_recursive.dir/requires: CMakeFiles/inotify_recursive.dir/inotify.c.o.requires
+CMakeFiles/inotify_recursive.dir/requires: CMakeFiles/inotify_recursive.dir/socket_client.c.o.requires
 .PHONY : CMakeFiles/inotify_recursive.dir/requires
 
 CMakeFiles/inotify_recursive.dir/clean:

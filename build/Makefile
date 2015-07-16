@@ -180,6 +180,30 @@ inotify.c.s:
 	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/inotify.c.s
 .PHONY : inotify.c.s
 
+socket_client.o: socket_client.c.o
+.PHONY : socket_client.o
+
+# target to build an object file
+socket_client.c.o:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/socket_client.c.o
+.PHONY : socket_client.c.o
+
+socket_client.i: socket_client.c.i
+.PHONY : socket_client.i
+
+# target to preprocess a source file
+socket_client.c.i:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/socket_client.c.i
+.PHONY : socket_client.c.i
+
+socket_client.s: socket_client.c.s
+.PHONY : socket_client.s
+
+# target to generate assembly for a file
+socket_client.c.s:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/socket_client.c.s
+.PHONY : socket_client.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -196,6 +220,9 @@ help:
 	@echo "... inotify.o"
 	@echo "... inotify.i"
 	@echo "... inotify.s"
+	@echo "... socket_client.o"
+	@echo "... socket_client.i"
+	@echo "... socket_client.s"
 .PHONY : help
 
 

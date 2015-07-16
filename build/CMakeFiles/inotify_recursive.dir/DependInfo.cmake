@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/home/usanchezc/projects/inotify_recursive/inotify.c" "/home/usanchezc/projects/inotify_recursive/build/CMakeFiles/inotify_recursive.dir/inotify.c.o"
+  "/home/usanchezc/projects/inotify_recursive/socket_client.c" "/home/usanchezc/projects/inotify_recursive/build/CMakeFiles/inotify_recursive.dir/socket_client.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

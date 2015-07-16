@@ -18,4 +18,20 @@
 #include <time.h> 
 #include <netdb.h> 
 
+#define _GNU_SOURCE
+#include <sys/stat.h>
+#include <limits.h>
+#include <sys/select.h>
+#include <sys/inotify.h>
+#include <fcntl.h>
+#include <ftw.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <sys/types.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <errno.h> 
+#include <stdio.h>
+
 #include "socket_client.h"
