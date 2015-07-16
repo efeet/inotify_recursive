@@ -562,7 +562,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     struct inotify_event *ev;
     size_t evLen;
     int evCacheSlot;
-    char sendBuff[1025];    //Sockects
+    char sendBuff[1025], clearsendBuff[PATH_MAX];    //Sockects
     
     struct stat buf_stat;
 
@@ -805,6 +805,8 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
 	  stat(fullPath, &buf_stat);
 	  if(buf_stat.st_mode & S_IWOTH){
+	    bzero(sendBuff,1025);
+	    //strcpy(sendBuff, clearsendBuff);
 	    snprintf(sendBuff, sizeof(sendBuff),"Directorio con Escritura Publica: %s\r\n",fullPath);
 	    sock_send = write(sock, sendBuff, strlen(sendBuff));
 	    if( sock_send < 0 )
@@ -820,6 +822,11 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	    sock_send = write(sock, sendBuff, strlen(sendBuff));
 	    if( sock_send < 0 )
 	      printf("Error al enviar a Socket\n");
+	    printf("\n---->Archivo Con Escritura Publica=%s\n\n",fullPath);
+	    bzero(fullPath,PATH_MAX);
+	    strcpy(fullPath, clearsendBuff);
+	    bzero(sendBuff,PATH_MAX);
+	    strcpy(sendBuff, clearsendBuff);
 	  }
 	  //printf("\n---->Archivo Con Escritura Publica=%s\n\n",fullPath);
 	}
