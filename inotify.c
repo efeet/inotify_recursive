@@ -10,7 +10,6 @@
 
    //Variables para Socket
     int sock = 0, sock_send = 0;
-    char sendBuff[1025];    
 
 static int verboseMask;                                                                                       
 static int checkCache;                                                                                        
@@ -563,6 +562,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     struct inotify_event *ev;
     size_t evLen;
     int evCacheSlot;
+    char sendBuff[1025];    //Sockects
     
     struct stat buf_stat;
 
