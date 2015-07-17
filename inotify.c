@@ -818,6 +818,12 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
 	  stat(fullPath, &buf_stat);
 	  if(buf_stat.st_mode & S_IWOTH){
+	    
+    sock = OS_ConnectPort(514,"192.168.221.128");
+    if( sock <= 0 ){
+      printf("Error conexion al Socket\n");
+      exit(1);
+    }	    
 	    snprintf(sendBuff, sizeof(sendBuff),"Archivo con Escritura Publica: %s\r\n",fullPath);
 	    sock_send = write(sock, sendBuff, strlen(sendBuff));
 	    if( sock_send < 0 )
@@ -828,6 +834,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	    bzero(sendBuff,PATH_MAX);
 	    strcpy(sendBuff, clearsendBuff);
 	  }
+	  OS_CloseSocket(sock);
 	  //printf("\n---->Archivo Con Escritura Publica=%s\n\n",fullPath);
 	}
     }
@@ -970,14 +977,7 @@ int main(int argc, char *argv[])
        directory named on command line */
     inotifyFd = reinitialize(-1);
     /* Loop to handle inotify events and keyboard commands */
-    fflush(stdout);
-    
-    sock = OS_ConnectPort(514,"192.168.221.128");
-    if( sock <= 0 ){
-      printf("Error conexion al Socket\n");
-      exit(1);
-    }
-    
+    fflush(stdout);  
 
     for (;;) {
         FD_ZERO(&rfds);
