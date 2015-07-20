@@ -69,7 +69,7 @@ string.h
 -
 errno.h
 -
-stdio.h
+time.h
 -
 socket_client.h
 /home/usanchezc/projects/inotify_recursive/socket_client.h

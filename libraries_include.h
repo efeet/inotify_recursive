@@ -31,6 +31,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h> 
-#include <stdio.h>
+
+#include <time.h>
 
 #include "socket_client.h"

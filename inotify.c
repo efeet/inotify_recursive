@@ -46,6 +46,20 @@ static void logMessage(int vb_mask, const char *format, ...)
     }
 }
 
+static char ** GetDate(void)
+{
+   time_t rawtime;
+   struct tm *info;
+   char buffer[80];
+
+   time( &rawtime );
+
+   info = localtime( &rawtime );
+
+   strftime(buffer,80,"%d/%m/%Y-%I:%M:%S%p", info);
+   return &buffer;
+}
+
 /***********************************************************************/
 /* Display some information about an inotify event. (Used when
    when we are doing verbose logging.) */
@@ -562,7 +576,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     struct inotify_event *ev;
     size_t evLen;
     int evCacheSlot;
-    char sendBuff[1025], clearsendBuff[PATH_MAX];    //Sockects
+    char sendBuff[1025], clearsendBuff[PATH_MAX]; char **PutDate;    //Sockects
     int sock_inits;
     
     struct stat buf_stat;
@@ -802,6 +816,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
             return INOTIFY_READ_BUF_LEN;
         }
     } else if(ev->mask & IN_ATTRIB){
+	PutDate = GetDate();
 	if(ev->mask & IN_ISDIR){
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
 	  stat(fullPath, &buf_stat);
@@ -814,7 +829,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 		break;
 	      }	    
 	    }
-	    snprintf(sendBuff, sizeof(sendBuff),"Directorio con Escritura Publica: %s\r\n",fullPath);
+	    snprintf(sendBuff, sizeof(sendBuff),"%s|%s\r\n",PutDate, fullPath);
 	    sock_send = write(sock, sendBuff, strlen(sendBuff));
 	    if( sock_send < 0 )
 	      printf("Error al enviar a Socket\n");
@@ -839,7 +854,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 		break;
 	      }	    
 	    }
-	    snprintf(sendBuff, sizeof(sendBuff),"Archivo con Escritura Publica: %s\r\n",fullPath);
+	    snprintf(sendBuff, sizeof(sendBuff),"%s|%s\r\n",PutDate, fullPath);
 	    sock_send = write(sock, sendBuff, strlen(sendBuff));
 	    if( sock_send < 0 )
 	      printf("Error al enviar a Socket\n");
