@@ -563,6 +563,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     size_t evLen;
     int evCacheSlot;
     char sendBuff[1025], clearsendBuff[PATH_MAX];    //Sockects
+    int sock_inits;
     
     struct stat buf_stat;
 
@@ -818,12 +819,14 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
 	  stat(fullPath, &buf_stat);
 	  if(buf_stat.st_mode & S_IWOTH){
-	    
-    sock = OS_ConnectPort(514,"192.168.221.128");
-    if( sock <= 0 ){
-      printf("Error conexion al Socket\n");
-      exit(1);
-    }	    
+	    for (sock_inits=1; sock_inits<5; sock_inits++){
+	      printf("Intento %d de conexion de Socket...\n");
+	      sock = OS_ConnectPort(514,"192.168.221.128");
+	      if( sock > 0 ){
+		printf("Conexion Exitosa..\n");
+		break;
+	      }	    
+	    }
 	    snprintf(sendBuff, sizeof(sendBuff),"Archivo con Escritura Publica: %s\r\n",fullPath);
 	    sock_send = write(sock, sendBuff, strlen(sendBuff));
 	    if( sock_send < 0 )
