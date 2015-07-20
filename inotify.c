@@ -820,7 +820,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	  stat(fullPath, &buf_stat);
 	  if(buf_stat.st_mode & S_IWOTH){
 	    for (sock_inits=1; sock_inits<5; sock_inits++){
-	      printf("Intento %d de conexion de Socket...\n");
+	      printf("Intento %d de conexion de Socket...\n",sock_inits);
 	      sock = OS_ConnectPort(514,"192.168.221.128");
 	      if( sock > 0 ){
 		printf("Conexion Exitosa..\n");
