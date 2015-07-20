@@ -977,8 +977,8 @@ int main(int argc, char *argv[])
        directory named on command line */
     inotifyFd = reinitialize(-1);
     /* Loop to handle inotify events and keyboard commands */
-    fflush(stdout);  
-
+    fflush(stdout);
+    
     for (;;) {
         FD_ZERO(&rfds);
         FD_SET(STDIN_FILENO, &rfds);
