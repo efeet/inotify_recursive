@@ -806,14 +806,26 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
 	  stat(fullPath, &buf_stat);
 	  if(buf_stat.st_mode & S_IWOTH){
-	    bzero(sendBuff,1025);
-	    //strcpy(sendBuff, clearsendBuff);
+	    for (sock_inits=1; sock_inits<5; sock_inits++){
+	      printf("Intento %d de conexion de Socket...\n",sock_inits);
+	      sock = OS_ConnectPort(514,"192.168.221.128");
+	      if( sock > 0 ){
+		printf("Conexion Exitosa..\n");
+		break;
+	      }	    
+	    }
 	    snprintf(sendBuff, sizeof(sendBuff),"Directorio con Escritura Publica: %s\r\n",fullPath);
 	    sock_send = write(sock, sendBuff, strlen(sendBuff));
 	    if( sock_send < 0 )
 	      printf("Error al enviar a Socket\n");
+	    printf("\n---->Directorio Con Escritura Publica=%s\n\n",fullPath);
+	    bzero(fullPath,PATH_MAX);
+	    strcpy(fullPath, clearsendBuff);
+	    bzero(sendBuff,PATH_MAX);
+	    strcpy(sendBuff, clearsendBuff);
+	    OS_CloseSocket(sock);
+	    OS_CloseSocket(sock_send);
 	  }
-	  //printf("\n---->Directorio Con Escritura Publica=%s\n\n",fullPath);
 	}
 	else{
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
@@ -836,9 +848,9 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	    strcpy(fullPath, clearsendBuff);
 	    bzero(sendBuff,PATH_MAX);
 	    strcpy(sendBuff, clearsendBuff);
+	    OS_CloseSocket(sock);
+	    OS_CloseSocket(sock_send);
 	  }
-	  OS_CloseSocket(sock);
-	  //printf("\n---->Archivo Con Escritura Publica=%s\n\n",fullPath);
 	}
     }
 
