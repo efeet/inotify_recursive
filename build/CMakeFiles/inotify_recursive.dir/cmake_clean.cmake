@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/inotify_recursive.dir/inotify.c.o"
   "CMakeFiles/inotify_recursive.dir/socket_client.c.o"
+  "CMakeFiles/inotify_recursive.dir/curr_time.c.o"
   "inotify_recursive.pdb"
   "inotify_recursive"
 )

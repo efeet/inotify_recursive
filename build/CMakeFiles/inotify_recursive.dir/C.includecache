@@ -6,6 +6,8 @@
 
 #IncludeRegexTransform: 
 
+/home/usanchezc/projects/inotify_recursive/curr_time.h
+
 /home/usanchezc/projects/inotify_recursive/inotify.c
 libraries_include.h
 /home/usanchezc/projects/inotify_recursive/libraries_include.h
@@ -71,6 +73,8 @@ errno.h
 -
 time.h
 -
+curr_time.h
+/home/usanchezc/projects/inotify_recursive/curr_time.h
 socket_client.h
 /home/usanchezc/projects/inotify_recursive/socket_client.h
 

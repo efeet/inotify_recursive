@@ -33,5 +33,6 @@
 #include <errno.h> 
 
 #include <time.h>
+#include "curr_time.h"
 
 #include "socket_client.h"

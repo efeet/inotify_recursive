@@ -156,6 +156,30 @@ inotify_recursive/fast:
 	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/build
 .PHONY : inotify_recursive/fast
 
+curr_time.o: curr_time.c.o
+.PHONY : curr_time.o
+
+# target to build an object file
+curr_time.c.o:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/curr_time.c.o
+.PHONY : curr_time.c.o
+
+curr_time.i: curr_time.c.i
+.PHONY : curr_time.i
+
+# target to preprocess a source file
+curr_time.c.i:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/curr_time.c.i
+.PHONY : curr_time.c.i
+
+curr_time.s: curr_time.c.s
+.PHONY : curr_time.s
+
+# target to generate assembly for a file
+curr_time.c.s:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/curr_time.c.s
+.PHONY : curr_time.c.s
+
 inotify.o: inotify.c.o
 .PHONY : inotify.o
 
@@ -217,6 +241,9 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... curr_time.o"
+	@echo "... curr_time.i"
+	@echo "... curr_time.s"
 	@echo "... inotify.o"
 	@echo "... inotify.i"
 	@echo "... inotify.s"
