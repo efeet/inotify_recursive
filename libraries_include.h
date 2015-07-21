@@ -32,7 +32,9 @@
 #include <string.h>
 #include <errno.h> 
 
-#include <time.h>
 #include "curr_time.h"
+
+#include <net/if.h>
+#include "enum_ip_inter.h"
 
 #include "socket_client.h"

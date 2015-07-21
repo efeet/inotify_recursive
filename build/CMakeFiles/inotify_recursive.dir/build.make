@@ -118,11 +118,35 @@ CMakeFiles/inotify_recursive.dir/curr_time.c.o.provides: CMakeFiles/inotify_recu
 
 CMakeFiles/inotify_recursive.dir/curr_time.c.o.provides.build: CMakeFiles/inotify_recursive.dir/curr_time.c.o
 
+CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o: CMakeFiles/inotify_recursive.dir/flags.make
+CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o: ../enum_ip_inter.c
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/usanchezc/projects/inotify_recursive/build/CMakeFiles $(CMAKE_PROGRESS_4)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o   -c /home/usanchezc/projects/inotify_recursive/enum_ip_inter.c
+
+CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/usanchezc/projects/inotify_recursive/enum_ip_inter.c > CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.i
+
+CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/usanchezc/projects/inotify_recursive/enum_ip_inter.c -o CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.s
+
+CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o.requires:
+.PHONY : CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o.requires
+
+CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o.provides: CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o.requires
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o.provides.build
+.PHONY : CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o.provides
+
+CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o.provides.build: CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o
+
 # Object files for target inotify_recursive
 inotify_recursive_OBJECTS = \
 "CMakeFiles/inotify_recursive.dir/inotify.c.o" \
 "CMakeFiles/inotify_recursive.dir/socket_client.c.o" \
-"CMakeFiles/inotify_recursive.dir/curr_time.c.o"
+"CMakeFiles/inotify_recursive.dir/curr_time.c.o" \
+"CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o"
 
 # External object files for target inotify_recursive
 inotify_recursive_EXTERNAL_OBJECTS =
@@ -130,6 +154,7 @@ inotify_recursive_EXTERNAL_OBJECTS =
 inotify_recursive: CMakeFiles/inotify_recursive.dir/inotify.c.o
 inotify_recursive: CMakeFiles/inotify_recursive.dir/socket_client.c.o
 inotify_recursive: CMakeFiles/inotify_recursive.dir/curr_time.c.o
+inotify_recursive: CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o
 inotify_recursive: CMakeFiles/inotify_recursive.dir/build.make
 inotify_recursive: CMakeFiles/inotify_recursive.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking C executable inotify_recursive"
@@ -142,6 +167,7 @@ CMakeFiles/inotify_recursive.dir/build: inotify_recursive
 CMakeFiles/inotify_recursive.dir/requires: CMakeFiles/inotify_recursive.dir/inotify.c.o.requires
 CMakeFiles/inotify_recursive.dir/requires: CMakeFiles/inotify_recursive.dir/socket_client.c.o.requires
 CMakeFiles/inotify_recursive.dir/requires: CMakeFiles/inotify_recursive.dir/curr_time.c.o.requires
+CMakeFiles/inotify_recursive.dir/requires: CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o.requires
 .PHONY : CMakeFiles/inotify_recursive.dir/requires
 
 CMakeFiles/inotify_recursive.dir/clean:

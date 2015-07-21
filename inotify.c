@@ -10,6 +10,7 @@
 
    //Variables para Socket
     int sock = 0, sock_send = 0;
+    char hostname[256];
 
 static int verboseMask;                                                                                       
 static int checkCache;                                                                                        
@@ -564,6 +565,9 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     int evCacheSlot;
     char sendBuff[1025], clearsendBuff[PATH_MAX];    //Sockects
     int sock_inits;
+	      struct numera_data ips = get_interfaces();
+	      int controla1;
+	      char todas[PATH_MAX];
     
     struct stat buf_stat;
 
@@ -814,7 +818,13 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 		break;
 	      }	    
 	    }
-	    snprintf(sendBuff, sizeof(sendBuff),"%s|%s\r\n",currTime(), fullPath);
+	    for(controla1 = 0; controla1 < ips.nInterfaces; controla1++)
+	     {
+	       strcat(todas, prt_interfaces(controla1));
+	       strcat(todas,"|");
+	       printf("IP %d: %s\n",controla1,todas);
+	     }
+	    snprintf(sendBuff, sizeof(sendBuff),"%s|%s|%sWARN|Write Perm Others Users|%s\r\n",currTime(), hostname, todas, fullPath);
 	    sock_send = write(sock, sendBuff, strlen(sendBuff));
 	    if( sock_send < 0 )
 	      printf("Error al enviar a Socket\n");
@@ -823,6 +833,8 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	    strcpy(fullPath, clearsendBuff);
 	    bzero(sendBuff,PATH_MAX);
 	    strcpy(sendBuff, clearsendBuff);
+	    bzero(todas,PATH_MAX);
+	    strcpy(todas,clearsendBuff);
 	    OS_CloseSocket(sock);
 	    OS_CloseSocket(sock_send);
 	  }
@@ -839,7 +851,13 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 		break;
 	      }	    
 	    }
-	    snprintf(sendBuff, sizeof(sendBuff),"%s|%s\r\n",currTime(), fullPath);
+	    for(controla1 = 0; controla1 < ips.nInterfaces; controla1++)
+	     {
+	       strcat(todas, prt_interfaces(controla1));
+	       strcat(todas,"|");
+	       printf("IP %d: %s\n",controla1,todas);
+	     }
+	    snprintf(sendBuff, sizeof(sendBuff),"%s|%s|%sWARN|Write Perm Others Users|%s\r\n",currTime(), hostname, todas, fullPath);
 	    sock_send = write(sock, sendBuff, strlen(sendBuff));
 	    if( sock_send < 0 )
 	      printf("Error al enviar a Socket\n");
@@ -993,6 +1011,9 @@ int main(int argc, char *argv[])
     inotifyFd = reinitialize(-1);
     /* Loop to handle inotify events and keyboard commands */
     fflush(stdout);
+    
+    gethostname(hostname, sizeof(hostname));
+    hostname[sizeof(hostname) - 1] = '\0';
     
     for (;;) {
         FD_ZERO(&rfds);

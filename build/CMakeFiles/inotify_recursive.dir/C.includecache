@@ -8,6 +8,8 @@
 
 /home/usanchezc/projects/inotify_recursive/curr_time.h
 
+/home/usanchezc/projects/inotify_recursive/enum_ip_inter.h
+
 /home/usanchezc/projects/inotify_recursive/inotify.c
 libraries_include.h
 /home/usanchezc/projects/inotify_recursive/libraries_include.h
@@ -71,10 +73,12 @@ string.h
 -
 errno.h
 -
-time.h
--
 curr_time.h
 /home/usanchezc/projects/inotify_recursive/curr_time.h
+net/if.h
+-
+enum_ip_inter.h
+/home/usanchezc/projects/inotify_recursive/enum_ip_inter.h
 socket_client.h
 /home/usanchezc/projects/inotify_recursive/socket_client.h
 

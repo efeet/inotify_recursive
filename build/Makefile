@@ -180,6 +180,30 @@ curr_time.c.s:
 	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/curr_time.c.s
 .PHONY : curr_time.c.s
 
+enum_ip_inter.o: enum_ip_inter.c.o
+.PHONY : enum_ip_inter.o
+
+# target to build an object file
+enum_ip_inter.c.o:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o
+.PHONY : enum_ip_inter.c.o
+
+enum_ip_inter.i: enum_ip_inter.c.i
+.PHONY : enum_ip_inter.i
+
+# target to preprocess a source file
+enum_ip_inter.c.i:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.i
+.PHONY : enum_ip_inter.c.i
+
+enum_ip_inter.s: enum_ip_inter.c.s
+.PHONY : enum_ip_inter.s
+
+# target to generate assembly for a file
+enum_ip_inter.c.s:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.s
+.PHONY : enum_ip_inter.c.s
+
 inotify.o: inotify.c.o
 .PHONY : inotify.o
 
@@ -244,6 +268,9 @@ help:
 	@echo "... curr_time.o"
 	@echo "... curr_time.i"
 	@echo "... curr_time.s"
+	@echo "... enum_ip_inter.o"
+	@echo "... enum_ip_inter.i"
+	@echo "... enum_ip_inter.s"
 	@echo "... inotify.o"
 	@echo "... inotify.i"
 	@echo "... inotify.s"
