@@ -813,6 +813,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	    for (sock_inits=1; sock_inits<5; sock_inits++){
 	      printf("Intento %d de conexion de Socket...\n",sock_inits);
 	      sock = OS_ConnectPort(514,"192.168.221.128");
+	      //sock = OS_ConnectPort(514,"22.134.230.23");
 	      if( sock > 0 ){
 		printf("Conexion Exitosa..\n");
 		break;
@@ -846,6 +847,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	    for (sock_inits=1; sock_inits<5; sock_inits++){
 	      printf("Intento %d de conexion de Socket...\n",sock_inits);
 	      sock = OS_ConnectPort(514,"192.168.221.128");
+	      //sock = OS_ConnectPort(514,"22.134.230.23");
 	      if( sock > 0 ){
 		printf("Conexion Exitosa..\n");
 		break;
@@ -866,6 +868,8 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	    strcpy(fullPath, clearsendBuff);
 	    bzero(sendBuff,PATH_MAX);
 	    strcpy(sendBuff, clearsendBuff);
+	    bzero(todas,PATH_MAX);
+	    strcpy(todas,clearsendBuff);
 	    OS_CloseSocket(sock);
 	    OS_CloseSocket(sock_send);
 	  }
@@ -889,7 +893,8 @@ static void alarmHandler(int sig)
    with the filesystem. */
 static void processInotifyEvents(int *inotifyFd)
 {
-    char buf[INOTIFY_READ_BUF_LEN] __attribute__ ((aligned(__alignof__(struct inotify_event))));
+    //char buf[INOTIFY_READ_BUF_LEN] __attribute__ ((aligned(__alignof__(struct inotify_event))));
+    char buf[PATH_MAX + sizeof(struct inotify_event) + 1];
     ssize_t numRead, nr;
     char *evp;
     size_t cnt;
@@ -910,6 +915,7 @@ static void processInotifyEvents(int *inotifyFd)
     /* Read some events from inotify file descriptor */
     cnt = (readBufferSize > 0) ? readBufferSize : INOTIFY_READ_BUF_LEN;
     numRead = read(*inotifyFd, buf, cnt);
+    printf("------------>Valor de numRead=%d\n",numRead);
     if (numRead == -1)
         errExit("read");
     if (numRead == 0) {
@@ -922,8 +928,10 @@ static void processInotifyEvents(int *inotifyFd)
     //logMessage(VB_NOISY,"\n==========> Read %d: got %zd bytes\n", inotifyReadCnt, numRead);
 
     /* Process each event in the buffer returned by read() */
-    for (evp = buf; evp < buf + numRead; ) {
+    for (evp = buf; evp < buf + numRead - 16; ) {
+	printf("\nBusca Valor de evLen....\n");
         evLen = processNextInotifyEvent(inotifyFd, evp, buf + numRead - evp, firstTry);
+	printf("==================>Valor de evLen:%d\n",evLen);
 
         if (evLen > 0) {
             evp += evLen;
