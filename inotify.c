@@ -565,7 +565,6 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     int evCacheSlot;
     char sendBuff[1025], clearsendBuff[PATH_MAX];    //Sockects
     int sock_inits;
-	      struct numera_data ips = get_interfaces();
 	      int controla1;
 	      char todas[PATH_MAX];
     
@@ -810,6 +809,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
 	  stat(fullPath, &buf_stat);
 	  if(buf_stat.st_mode & S_IWOTH){
+	    struct numera_data ips = get_interfaces();
 	    for (sock_inits=1; sock_inits<5; sock_inits++){
 	      printf("Intento %d de conexion de Socket...\n",sock_inits);
 	      sock = OS_ConnectPort(514,"192.168.221.128");
@@ -844,6 +844,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
 	  stat(fullPath, &buf_stat);
 	  if(buf_stat.st_mode & S_IWOTH){
+	    struct numera_data ips = get_interfaces();
 	    for (sock_inits=1; sock_inits<5; sock_inits++){
 	      printf("Intento %d de conexion de Socket...\n",sock_inits);
 	      sock = OS_ConnectPort(514,"192.168.221.128");
