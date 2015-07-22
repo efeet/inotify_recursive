@@ -893,8 +893,8 @@ static void alarmHandler(int sig)
    with the filesystem. */
 static void processInotifyEvents(int *inotifyFd)
 {
-    //char buf[INOTIFY_READ_BUF_LEN] __attribute__ ((aligned(__alignof__(struct inotify_event))));
-    char buf[PATH_MAX + sizeof(struct inotify_event) + 1];
+    char buf[INOTIFY_READ_BUF_LEN] __attribute__ ((aligned(__alignof__(struct inotify_event))));
+    //char buf[PATH_MAX + sizeof(struct inotify_event) + 1];
     ssize_t numRead, nr;
     char *evp;
     size_t cnt;
