@@ -14,7 +14,8 @@
     char hostname[256];
                                                                                   
 static int checkCache = 0;                                                                                                                                                                        
-static int readBufferSize = 0;                                                                                                                                                                
+static int readBufferSize = 0;   
+static FILE *logfp = NULL; //Variable para abrir archivo de Log.
 
 static int inotifyReadCnt = 0;          /* Counts number of read()s from
                                            inotify file descriptor */
@@ -28,6 +29,7 @@ static char **rootDirPaths; /* List of pathnames supplied on command line */
 static int numRootDirs;     /* Number of pathnames supplied on command line */
 static int ignoreRootDirs;  /* Number of command-line pathnames that
                                we've ceased to monitor */
+
 static struct stat *rootDirStat;
                             /* stat(2) structures for croot directories */
 
@@ -36,12 +38,13 @@ static struct stat *rootDirStat;
    has been specified via command-line options . */
 static void logMessage(int vb_mask, const char *format, ...)
 {
+    fprintf(logfp,"%s : ",currTime());
     va_list argList;
-
-    if ((vb_mask == 0) || (vb_mask & 3)) {
+    if ((vb_mask == 0) || (vb_mask & 3)) {	
         va_start(argList, format);
-        vfprintf(stderr, format, argList);
+        vfprintf(logfp, format, argList);
         va_end(argList);
+	fprintf(logfp," \n");
     }
 }
 
@@ -51,6 +54,7 @@ static void logMessage(int vb_mask, const char *format, ...)
 static void displayInotifyEvent(struct inotify_event *ev)
 {
     logMessage(VB_NOISY, "==> wd = %d; ", ev->wd);
+    logMessage(4,"-------------------------------------_>MENSAJE:",ev->wd);
     if (ev->cookie > 0)
         logMessage(VB_NOISY, "cookie = %4d; ", ev->cookie);
 
@@ -1011,6 +1015,21 @@ int main(int argc, char *argv[])
         printf("Error Inicial\n");
 	errExit("argc");
     }
+    
+    pid_t pid = getpid();
+    FILE *fpid = fopen("./iNotify_Agent.pid", "w");
+    if (!fpid){
+      perror("Archivo PID Error\n");
+      exit(EXIT_FAILURE);
+    }
+    fprintf(fpid, "%d\n", pid);
+    fclose(fpid);
+    
+    logfp = fopen("./iNotify_Agent.log", "w+");
+    if (logfp == NULL)
+	errExit("fopen");
+    setbuf(logfp, NULL);
+    
     /* Save a copy of the directories on the command line */
     copyRootDirPaths(&argv[optind]);
     /* Create an inotify instance and populate it with entries for
