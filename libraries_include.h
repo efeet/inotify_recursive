@@ -35,6 +35,5 @@
 #include "curr_time.h"
 
 #include <net/if.h>
-#include "enum_ip_inter.h"
 
 #include "socket_client.h"

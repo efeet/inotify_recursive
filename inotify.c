@@ -1,5 +1,6 @@
 #define _GNU_SOURCE   
 #include "libraries_include.h"
+#include "enum_ip_inter.h"
 
 #define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
                         } while (0)                                                                           
@@ -11,12 +12,9 @@
    //Variables para Socket
     int sock = 0, sock_send = 0;
     char hostname[256];
-
-static int verboseMask;                                                                                       
-static int checkCache;                                                                                        
-static int dumpCache;                                                                                         
-static int readBufferSize = 0;                                                                                
-static char *stopFile;                                                                                        
+                                                                                  
+static int checkCache = 0;                                                                                                                                                                        
+static int readBufferSize = 0;                                                                                                                                                                
 
 static int inotifyReadCnt = 0;          /* Counts number of read()s from
                                            inotify file descriptor */
@@ -813,7 +811,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	    for (sock_inits=1; sock_inits<5; sock_inits++){
 	      printf("Intento %d de conexion de Socket...\n",sock_inits);
 	      sock = OS_ConnectPort(514,"192.168.221.128");
-	      //sock = OS_ConnectPort(514,"22.134.230.23");
+	      //sock = OS_ConnectPort(514,"22.134.230.24");
 	      if( sock > 0 ){
 		printf("Conexion Exitosa..\n");
 		break;
@@ -848,7 +846,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	    for (sock_inits=1; sock_inits<5; sock_inits++){
 	      printf("Intento %d de conexion de Socket...\n",sock_inits);
 	      sock = OS_ConnectPort(514,"192.168.221.128");
-	      //sock = OS_ConnectPort(514,"22.134.230.23");
+	      //sock = OS_ConnectPort(514,"22.134.230.24");
 	      if( sock > 0 ){
 		printf("Conexion Exitosa..\n");
 		break;
