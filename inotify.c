@@ -8,6 +8,7 @@
 /* logMessage() flags */                                                                                      
 #define VB_BASIC 1      /* Basic messages */                                                                  
 #define VB_NOISY 2      /* Verbose messages */     
+static int verboseMask;
 
    //Variables para Socket
     int sock = 0, sock_send = 0;
@@ -38,9 +39,9 @@ static struct stat *rootDirStat;
    has been specified via command-line options . */
 static void logMessage(int vb_mask, const char *format, ...)
 {
-    fprintf(logfp,"%s : ",currTime());
+    fprintf(logfp,"%s : ",currTimeLog());
     va_list argList;
-    if ((vb_mask == 0) || (vb_mask & 3)) {	
+    if ((vb_mask == 0) || (vb_mask & verboseMask)) {	
         va_start(argList, format);
         vfprintf(logfp, format, argList);
         va_end(argList);
@@ -53,42 +54,39 @@ static void logMessage(int vb_mask, const char *format, ...)
    when we are doing verbose logging.) */
 static void displayInotifyEvent(struct inotify_event *ev)
 {
-    logMessage(VB_NOISY, "==> wd = %d; ", ev->wd);
-    logMessage(4,"-------------------------------------_>MENSAJE:",ev->wd);
+    logMessage(VB_NOISY, "--->Event Identification -> wd = %d; ", ev->wd);
     if (ev->cookie > 0)
         logMessage(VB_NOISY, "cookie = %4d; ", ev->cookie);
-
-    logMessage(VB_NOISY, "mask = ");
     
     if (ev->mask & IN_ISDIR)
-        logMessage(VB_NOISY, "IN_ISDIR ");
+        logMessage(VB_NOISY, "mask = IN_ISDIR ");
 
     if (ev->mask & IN_CREATE)
-        logMessage(VB_NOISY, "IN_CREATE ");
+        logMessage(VB_NOISY, "mask = IN_CREATE ");
 
     if (ev->mask & IN_DELETE_SELF)
-        logMessage(VB_NOISY, "IN_DELETE_SELF ");
+        logMessage(VB_NOISY, "mask = IN_DELETE_SELF ");
 
     if (ev->mask & IN_MOVE_SELF)
-        logMessage(VB_NOISY, "IN_MOVE_SELF ");
+        logMessage(VB_NOISY, "mask = IN_MOVE_SELF ");
     if (ev->mask & IN_MOVED_FROM)
-        logMessage(VB_NOISY, "IN_MOVED_FROM ");
+        logMessage(VB_NOISY, "mask = IN_MOVED_FROM ");
     if (ev->mask & IN_MOVED_TO)
-        logMessage(VB_NOISY, "IN_MOVED_TO ");
+        logMessage(VB_NOISY, "mask = IN_MOVED_TO ");
 
     if (ev->mask & IN_IGNORED)
-        logMessage(VB_NOISY, "IN_IGNORED ");
+        logMessage(VB_NOISY, "mask = IN_IGNORED ");
     if (ev->mask & IN_Q_OVERFLOW)
-        logMessage(VB_NOISY, "IN_Q_OVERFLOW ");
+        logMessage(VB_NOISY, "mask = IN_Q_OVERFLOW ");
     if (ev->mask & IN_UNMOUNT)
-        logMessage(VB_NOISY, "IN_UNMOUNT ");
+        logMessage(VB_NOISY, "mask = IN_UNMOUNT ");
     
     if (ev->mask & IN_ATTRIB)
-        logMessage(VB_NOISY, "IN_ATTRIB ");
-	logMessage(VB_NOISY, "\n");
+        logMessage(VB_NOISY, "mask = IN_ATTRIB ");
+	//logMessage(VB_NOISY, "\n");
 
     if (ev->len > 0)
-        logMessage(VB_NOISY, "        name = %s\n", ev->name);
+        logMessage(VB_NOISY, "Event Name = %s\n", ev->name);
 }
 
 /***********************************************************************/
@@ -1008,8 +1006,8 @@ static void processInotifyEvents(int *inotifyFd)
 int main(int argc, char *argv[])
 {
     fd_set rfds;
-    //Variable que almacena Init Inotify
     int inotifyFd;
+    verboseMask = 2; //Reemplazar por opcion en archivo de configuracion...
 
     if (optind >= argc){
         printf("Error Inicial\n");
@@ -1017,7 +1015,7 @@ int main(int argc, char *argv[])
     }
     
     pid_t pid = getpid();
-    FILE *fpid = fopen("./iNotify_Agent.pid", "w");
+    FILE *fpid = fopen("./iNotify_Agent.pid", "w"); //Se puede Reemplazar por parametro de archivo de configuracion
     if (!fpid){
       perror("Archivo PID Error\n");
       exit(EXIT_FAILURE);
@@ -1025,7 +1023,7 @@ int main(int argc, char *argv[])
     fprintf(fpid, "%d\n", pid);
     fclose(fpid);
     
-    logfp = fopen("./iNotify_Agent.log", "w+");
+    logfp = fopen("./iNotify_Agent.log", "w+"); //Se puede Reemplazar por parametro de archivo de configuracion
     if (logfp == NULL)
 	errExit("fopen");
     setbuf(logfp, NULL);

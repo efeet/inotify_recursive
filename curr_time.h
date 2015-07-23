@@ -3,4 +3,6 @@
 
 char *currTime(void);
 
+char *currTimeLog(void);
+
 #endif   
