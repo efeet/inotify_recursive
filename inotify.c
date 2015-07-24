@@ -826,7 +826,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	    sock_send = write(sock, sendBuff, strlen(sendBuff));
 	    if( sock_send < 0 )
 	      printf("Error al enviar a Socket\n");
-	    printf("\n---->Directorio Con Escritura Publica=%s\n\n",fullPath);
+	    logMessage(0,"---->Directorio Con Escritura Publica=%s",fullPath);
 	    bzero(fullPath,PATH_MAX);
 	    strcpy(fullPath, clearsendBuff);
 	    bzero(sendBuff,PATH_MAX);
@@ -861,7 +861,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	    sock_send = write(sock, sendBuff, strlen(sendBuff));
 	    if( sock_send < 0 )
 	      printf("Error al enviar a Socket\n");
-	    printf("\n---->Archivo Con Escritura Publica=%s\n\n",fullPath);
+	    logMessage(0,"---->Archivo Con Escritura Publica=%s",fullPath);
 	    bzero(fullPath,PATH_MAX);
 	    strcpy(fullPath, clearsendBuff);
 	    bzero(sendBuff,PATH_MAX);
