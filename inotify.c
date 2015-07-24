@@ -356,12 +356,7 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
 
     wd = inotify_add_watch(ifd, pathname, flags | IN_ONLYDIR);
     if (wd == -1) {
-        /* By the time we come to create a watch, the directory might
-           already have been deleted or renamed, in which case we'll get
-           an ENOENT error. In that case, we log the error, but
-           carry on execution. Other errors are unexpected, and if we
-           hit them, we give up. */
-        logMessage(VB_BASIC, "inotify_add_watch: %s: %s",pathname, strerror(errno));
+        logMessage(VB_NOISY, "inotify_add_watch: %s: %s",pathname, strerror(errno));
         if (errno == ENOENT)
             return 0;
         else
@@ -371,13 +366,14 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
     if (findWatch(wd) >= 0) {
         /* This watch descriptor is already in the cache;
            nothing more to do. */
-        logMessage(VB_BASIC, "WD %d already in cache (%s)", wd, pathname);
+        logMessage(VB_NOISY, "WD %d already in cache (%s)", wd, pathname);
         return 0;
     }
 
     dirCnt++;
     /* Cache information about the watch */
     slot = addWatchToCache(wd, pathname);
+    printf("pathname = %s\n",pathname);
     /* Print the name of the current directory */
     logMessage(VB_NOISY, "    traverseTree-> : wd = %d [cache slot: %d]; %s",wd, slot, pathname);
     return 0;
@@ -391,10 +387,7 @@ static int watchDir(int inotifyFd, const char *pathname)
 {
     dirCnt = 0;
     ifd = inotifyFd;
-    /* Use FTW_PHYS to avoid following soft links to directories (which
-       could lead us in circles) */
-    /* By the time we come to process 'pathname', it may already have
-       been deleted, so we log errors from nftw(), but keep on going */
+    
     if (nftw(pathname, traverseTree, 20, FTW_PHYS) == -1)
         logMessage(VB_BASIC,
                 "nftw: %s: %s (directory probably deleted before we "
@@ -408,7 +401,7 @@ static void watchSubtree(int inotifyFd, char *path)
 {
     int cnt;
     cnt = watchDir(inotifyFd, path);
-    logMessage(VB_BASIC, "    watchSubtree: %s: %d entries added",path, cnt);
+    logMessage(VB_NOISY, "    watchSubtree: %s: %d entries added",path, cnt);
 }
 
 /***********************************************************************/
@@ -525,6 +518,47 @@ static int reinitialize(int oldInotifyFd)
     return inotifyFd;
 }
 
+static void CheckPerm(char fullPathPerm[PATH_MAX])
+{
+    char sendBuff[PATH_MAX], clearsendBuff[PATH_MAX];    //Sockects
+    int sock_inits;
+    int controla1;
+    char todas[PATH_MAX];
+    struct stat buf_stat;
+   
+    stat(fullPathPerm, &buf_stat);
+    if(buf_stat.st_mode & S_IWOTH){
+      struct numera_data ips = get_interfaces();
+      for (sock_inits=1; sock_inits<4; sock_inits++){
+	logMessage(0,"Intento %d de conexion de Socket...",sock_inits);
+	sock = OS_ConnectPort(514,"192.168.221.128");
+	//sock = OS_ConnectPort(514,"22.134.230.24");
+	if( sock > 0 ){
+	  logMessage(0,"Conexion Exitosa.");
+	  break;
+	}	    
+      }
+      for(controla1 = 0; controla1 < ips.nInterfaces; controla1++)
+	{
+	  strcat(todas, prt_interfaces(controla1));
+	  strcat(todas,"|");
+	}
+      snprintf(sendBuff, sizeof(sendBuff),"%s|%s|%sWARN|Write Perm Others Users|%s\r\n",currTime(), hostname, todas, fullPathPerm); //Construir mensaje
+      sock_send = write(sock, sendBuff, strlen(sendBuff)); //Envio a socket.
+      if( sock_send < 0 )
+	logMessage(0,"Error al enviar a Socket.");
+      logMessage(0,"---->Objeto Con Escritura Publica=%s",fullPathPerm);
+      bzero(fullPathPerm,PATH_MAX);
+      strcpy(fullPathPerm, clearsendBuff);
+      bzero(sendBuff,PATH_MAX);
+      strcpy(sendBuff, clearsendBuff);
+      bzero(todas,PATH_MAX);
+      strcpy(todas,clearsendBuff);
+      OS_CloseSocket(sock);
+      OS_CloseSocket(sock_send);
+    }
+}
+
 /* Process the next inotify event in the buffer specified by 'buf'
    and 'bufSize'. In most cases, a single event is consumed, but
    if there is an IN_MOVED_FROM+IN_MOVED_TO pair that share a cookie
@@ -536,23 +570,12 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     struct inotify_event *ev;
     size_t evLen;
     int evCacheSlot;
-    char sendBuff[1025], clearsendBuff[PATH_MAX];    //Sockects
-    int sock_inits;
-	      int controla1;
-	      char todas[PATH_MAX];
-    
-    struct stat buf_stat;
 
     ev = (struct inotify_event *) buf;
     
     displayInotifyEvent(ev);
     
     if (ev->wd != -1 && !(ev->mask & IN_IGNORED)) {
-                /* IN_Q_OVERFLOW has (ev->wd == -1) */
-                /* Skip IN_IGNORED, since it will come after an event
-                   that has already zapped the corresponding cache entry */
-        /* Cache consistency check; see the discussion
-           of "intra-tree" rename() events */
         evCacheSlot = findWatchChecked(ev->wd);
         //Elimina todo el monitor y lo vuelve a inicializar...
         if (evCacheSlot == -1) {
@@ -566,17 +589,12 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     evLen = sizeof(struct inotify_event) + ev->len;
 
     if ((ev->mask & IN_ISDIR) && (ev->mask & (IN_CREATE | IN_MOVED_TO))) {
-        /* A new subdirectory was created, or a subdirectory was
-           renamed into the tree; create watches for it, and all
-           of its subdirectories. */
         snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);	
         logMessage(VB_BASIC, "Directory creation on wd %d: %s",ev->wd, fullPath);
         if (!pathnameInCache(fullPath))
             watchSubtree(*inotifyFd, fullPath);
 
     } else if (ev->mask & IN_DELETE_SELF) {
-        /* A directory was deleted. Remove the corresponding item from
-           the cache. */
         logMessage(VB_BASIC, "Clearing watchlist item %d (%s)",ev->wd, wlCache[evCacheSlot].path);
 
         if (isRootDirPath(wlCache[evCacheSlot].path))
@@ -646,76 +664,9 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
             return INOTIFY_READ_BUF_LEN;
         }
     } else if(ev->mask & IN_ATTRIB){
-	if(ev->mask & IN_ISDIR){
-	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
-	  stat(fullPath, &buf_stat);
-	  if(buf_stat.st_mode & S_IWOTH){
-	    struct numera_data ips = get_interfaces();
-	    for (sock_inits=1; sock_inits<4; sock_inits++){
-	      logMessage(0,"Intento %d de conexion de Socket...",sock_inits);
-	      sock = OS_ConnectPort(514,"192.168.221.128");
-	      //sock = OS_ConnectPort(514,"22.134.230.24");
-	      if( sock > 0 ){
-		logMessage(0,"Conexion Exitosa.");
-		break;
-	      }	    
-	    }
-	    for(controla1 = 0; controla1 < ips.nInterfaces; controla1++)
-	     {
-	       strcat(todas, prt_interfaces(controla1));
-	       strcat(todas,"|");
-	     }
-	    snprintf(sendBuff, sizeof(sendBuff),"%s|%s|%sWARN|Write Perm Others Users|%s\r\n",currTime(), hostname, todas, fullPath);
-	    sock_send = write(sock, sendBuff, strlen(sendBuff));
-	    if( sock_send < 0 )
-	      logMessage(0,"Error al enviar a Socket.");
-	    logMessage(0,"---->Directorio Con Escritura Publica=%s",fullPath);
-	    bzero(fullPath,PATH_MAX);
-	    strcpy(fullPath, clearsendBuff);
-	    bzero(sendBuff,PATH_MAX);
-	    strcpy(sendBuff, clearsendBuff);
-	    bzero(todas,PATH_MAX);
-	    strcpy(todas,clearsendBuff);
-	    OS_CloseSocket(sock);
-	    OS_CloseSocket(sock_send);
-	  }
-	}
-	else{
-	  snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
-	  stat(fullPath, &buf_stat);
-	  if(buf_stat.st_mode & S_IWOTH){
-	    struct numera_data ips = get_interfaces();
-	    for (sock_inits=1; sock_inits<4; sock_inits++){
-	      logMessage(0,"Intento %d de conexion de Socket...",sock_inits);
-	      sock = OS_ConnectPort(514,"192.168.221.128");
-	      //sock = OS_ConnectPort(514,"22.134.230.24");
-	      if( sock > 0 ){
-		logMessage(0,"Conexion Exitosa.");
-		break;
-	      }	    
-	    }
-	    for(controla1 = 0; controla1 < ips.nInterfaces; controla1++)
-	     {
-	       strcat(todas, prt_interfaces(controla1));
-	       strcat(todas,"|");
-	     }
-	    snprintf(sendBuff, sizeof(sendBuff),"%s|%s|%sWARN|Write Perm Others Users|%s\r\n",currTime(), hostname, todas, fullPath);
-	    sock_send = write(sock, sendBuff, strlen(sendBuff));
-	    if( sock_send < 0 )
-	      logMessage(0,"Error al enviar a Socket.");
-	    logMessage(0,"---->Archivo Con Escritura Publica=%s",fullPath);
-	    bzero(fullPath,PATH_MAX);
-	    strcpy(fullPath, clearsendBuff);
-	    bzero(sendBuff,PATH_MAX);
-	    strcpy(sendBuff, clearsendBuff);
-	    bzero(todas,PATH_MAX);
-	    strcpy(todas,clearsendBuff);
-	    OS_CloseSocket(sock);
-	    OS_CloseSocket(sock_send);
-	  }
-	}
+	snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
+	  CheckPerm(fullPath);
     }
-
     if (checkCache)
         checkCacheConsistency();
 
