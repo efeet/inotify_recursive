@@ -39,9 +39,9 @@ static struct stat *rootDirStat;
    has been specified via command-line options . */
 static void logMessage(int vb_mask, const char *format, ...)
 {
-    fprintf(logfp,"%s : ",currTimeLog());
     va_list argList;
-    if ((vb_mask == 0) || (vb_mask & verboseMask)) {	
+    if ((vb_mask == 0) || (vb_mask & verboseMask)) {
+	fprintf(logfp,"%s : ",currTimeLog());
         va_start(argList, format);
         vfprintf(logfp, format, argList);
         va_end(argList);
@@ -86,7 +86,7 @@ static void displayInotifyEvent(struct inotify_event *ev)
 	//logMessage(VB_NOISY, "\n");
 
     if (ev->len > 0)
-        logMessage(VB_NOISY, "Event Name = %s\n", ev->name);
+        logMessage(VB_NOISY, "Event Name = %s", ev->name);
 }
 
 /***********************************************************************/
@@ -376,7 +376,7 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
            an ENOENT error. In that case, we log the error, but
            carry on execution. Other errors are unexpected, and if we
            hit them, we give up. */
-        logMessage(VB_BASIC, "inotify_add_watch: %s: %s\n",pathname, strerror(errno));
+        logMessage(VB_BASIC, "inotify_add_watch: %s: %s",pathname, strerror(errno));
         if (errno == ENOENT)
             return 0;
         else
@@ -386,7 +386,7 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
     if (findWatch(wd) >= 0) {
         /* This watch descriptor is already in the cache;
            nothing more to do. */
-        logMessage(VB_BASIC, "WD %d already in cache (%s)\n", wd, pathname);
+        logMessage(VB_BASIC, "WD %d already in cache (%s)", wd, pathname);
         return 0;
     }
 
@@ -394,7 +394,7 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
     /* Cache information about the watch */
     slot = addWatchToCache(wd, pathname);
     /* Print the name of the current directory */
-    logMessage(VB_NOISY, "    traverseTree-> : wd = %d [cache slot: %d]; %s\n",wd, slot, pathname);
+    logMessage(VB_NOISY, "    traverseTree-> : wd = %d [cache slot: %d]; %s",wd, slot, pathname);
     return 0;
 }
 
@@ -413,7 +413,7 @@ static int watchDir(int inotifyFd, const char *pathname)
     if (nftw(pathname, traverseTree, 20, FTW_PHYS) == -1)
         logMessage(VB_BASIC,
                 "nftw: %s: %s (directory probably deleted before we "
-                "could watch)\n", pathname, strerror(errno));
+                "could watch)", pathname, strerror(errno));
     return dirCnt;
 }
 
@@ -423,7 +423,7 @@ static void watchSubtree(int inotifyFd, char *path)
 {
     int cnt;
     cnt = watchDir(inotifyFd, path);
-    logMessage(VB_BASIC, "    watchSubtree: %s: %d entries added\n",path, cnt);
+    logMessage(VB_BASIC, "    watchSubtree: %s: %d entries added",path, cnt);
 }
 
 /***********************************************************************/
@@ -438,14 +438,11 @@ static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, c
     size_t len;
     int j;
 
-    printf("Valores rewriteCachedPaths: fullPath=%s, newPath=%s\n",fullPath,newPath);
-    printf("Names: oldName=%s, newName=%s\n",oldName, newName);
     snprintf(fullPath, sizeof(fullPath), "%s/%s", oldPathPrefix, oldName);
     snprintf(newPrefix, sizeof(newPrefix), "%s/%s", newPathPrefix, newName);
-    printf("Nuevos Valores rewriteCachedPaths: fullPath=%s, newPath=%s\n",fullPath,newPath);
     len = strlen(fullPath);
 
-    logMessage(VB_BASIC, "Rename: %s ==> %s\n", fullPath, newPrefix);
+    logMessage(VB_BASIC, "Rename: %s ==> %s", fullPath, newPrefix);
 
     for (j = 0; j < cacheSize; j++) {
         if (strncmp(fullPath, wlCache[j].path, len) == 0 &&
@@ -453,7 +450,7 @@ static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, c
                      wlCache[j].path[len] == '\0')) {
             snprintf(newPath, sizeof(newPath), "%s%s", newPrefix,&wlCache[j].path[len]);
             strncpy(wlCache[j].path, newPath, PATH_MAX);
-            logMessage(VB_NOISY, "  rewriteCachedPaths -> wd %d [cache slot %d] ==> %s\n",wlCache[j].wd, j, newPath);
+            logMessage(VB_NOISY, "  rewriteCachedPaths -> wd %d [cache slot %d] ==> %s",wlCache[j].wd, j, newPath);
         }
     }
 }
@@ -468,7 +465,7 @@ static int zapSubtree(int inotifyFd, char *path)
     int cnt;
     char *pn;
 
-    logMessage(VB_NOISY, "Zapping subtree: %s\n", path);
+    logMessage(VB_NOISY, "Zapping subtree: %s", path);
 
     len = strlen(path);
     /* The argument we receive might be a pointer to a pathname string
@@ -485,10 +482,10 @@ static int zapSubtree(int inotifyFd, char *path)
                     (wlCache[j].path[len] == '/' ||
                      wlCache[j].path[len] == '\0')) {
 
-                logMessage(VB_NOISY,"    removing watch: wd = %d (%s)\n",wlCache[j].wd, wlCache[j].path);
+                logMessage(VB_NOISY,"    removing watch: wd = %d (%s)",wlCache[j].wd, wlCache[j].path);
 
                 if (inotify_rm_watch(inotifyFd, wlCache[j].wd) == -1) {
-                    logMessage(0, "inotify_rm_watch wd = %d (%s): %s\n",wlCache[j].wd, wlCache[j].path, strerror(errno));
+                    logMessage(0, "inotify_rm_watch wd = %d (%s): %s",wlCache[j].wd, wlCache[j].path, strerror(errno));
 
                     /* When we have multiple renamers, sometimes
                        inotify_rm_watch() fails. In this case, we force a
@@ -523,9 +520,9 @@ static int reinitialize(int oldInotifyFd)
         close(oldInotifyFd);
 
         reinitCnt++;
-        logMessage(0, "Reinitializing cache and inotify FD (reinitCnt = %d)\n",reinitCnt);
+        logMessage(0, "Reinitializing cache and inotify FD (reinitCnt = %d)",reinitCnt);
     } else {
-        logMessage(0, "Initializing cache\n");
+        logMessage(0, "Initializing cache");
         reinitCnt = 0;
     }
 
@@ -533,7 +530,7 @@ static int reinitialize(int oldInotifyFd)
     if (inotifyFd == -1)
         errExit("inotify_init");
 
-    logMessage(VB_BASIC, "    new inotifyFd = %d\n", inotifyFd);
+    logMessage(VB_BASIC, "    new inotifyFd = %d", inotifyFd);
 
     freeCache();
 
@@ -547,7 +544,7 @@ static int reinitialize(int oldInotifyFd)
             cnt++;
 
     if (oldInotifyFd >= 0)
-        logMessage(0, "Rebuilt cache with %d entries\n", cnt);
+        logMessage(0, "Rebuilt cache with %d entries", cnt);
 
     return inotifyFd;
 }
@@ -597,7 +594,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
            renamed into the tree; create watches for it, and all
            of its subdirectories. */
         snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);	
-        logMessage(VB_BASIC, "Directory creation on wd %d: %s\n",ev->wd, fullPath);
+        logMessage(VB_BASIC, "Directory creation on wd %d: %s",ev->wd, fullPath);
         /* We only watch the new subtree if it has not already been cached.
            This deals with a race condition:
            * On the one hand, the following steps might occur:
@@ -630,7 +627,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     } else if (ev->mask & IN_DELETE_SELF) {
         /* A directory was deleted. Remove the corresponding item from
            the cache. */
-        logMessage(VB_BASIC, "Clearing watchlist item %d (%s)\n",ev->wd, wlCache[evCacheSlot].path);
+        logMessage(VB_BASIC, "Clearing watchlist item %d (%s)",ev->wd, wlCache[evCacheSlot].path);
 
         if (isRootDirPath(wlCache[evCacheSlot].path))
             zapRootDirPath(wlCache[evCacheSlot].path);
@@ -752,8 +749,8 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
                outside the tree we are monitoring. We need to
                remove the watches and zap the cache entries for
                the moved directory and all of its subdirectories. */
-            logMessage(VB_NOISY, "MOVED_OUT: %p %p\n",wlCache[evCacheSlot].path, ev->name);
-            logMessage(VB_NOISY, "firstTry = %d; remaining bytes = %d\n",firstTry, buf + bufSize - (char *) nextEv);
+            logMessage(VB_NOISY, "MOVED_OUT: %p %p",wlCache[evCacheSlot].path, ev->name);
+            logMessage(VB_NOISY, "firstTry = %d; remaining bytes = %d",firstTry, buf + bufSize - (char *) nextEv);
             snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
 
             if (zapSubtree(*inotifyFd, fullPath) == -1) {
@@ -764,14 +761,14 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
             }
 
         } else {
-            logMessage(VB_NOISY, "HANGING IN_MOVED_FROM\n");
+            logMessage(VB_NOISY, "HANGING IN_MOVED_FROM");
             return -1;  /* Tell our caller to do another read() */
         }
 
     } else if (ev->mask & IN_Q_OVERFLOW) {
         static int overflowCnt = 0;
         overflowCnt++;
-        logMessage(0, "Queue overflow (%d) (inotifyReadCnt = %d)\n",overflowCnt, inotifyReadCnt);
+        logMessage(0, "Queue overflow (%d) (inotifyReadCnt = %d)",overflowCnt, inotifyReadCnt);
         /* When the queue overflows, some events are lost, at which
            point we've lost any chance of keeping our cache consistent
            with the state of the filesystem. So, discard this inotify
@@ -785,7 +782,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
            is dropped, and an unmount and an ignore event are generated.
            There's nothing left for us to monitor, so we just zap the
            corresponding cache entry. */
-        logMessage(0, "Filesystem unmounted: %s\n",wlCache[evCacheSlot].path);
+        logMessage(0, "Filesystem unmounted: %s",wlCache[evCacheSlot].path);
         markCacheSlotEmpty(evCacheSlot);
             /* No need to remove the watch; that happens automatically */
     } else if (ev->mask & IN_MOVE_SELF && isRootDirPath(wlCache[evCacheSlot].path)) {
@@ -796,7 +793,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
            the root path on start-up and then trying to find a pathname
            that corresponds to that i-node. Instead, we'll keep things
            simple, and just cease monitoring it. */
-        logMessage(0, "Root path moved: %s\n",wlCache[evCacheSlot].path);
+        logMessage(0, "Root path moved: %s",wlCache[evCacheSlot].path);
         zapRootDirPath(wlCache[evCacheSlot].path);
         if (zapSubtree(*inotifyFd, wlCache[evCacheSlot].path) == -1) {
             /* Cache reached an inconsistent state */
@@ -993,10 +990,10 @@ static void processInotifyEvents(int *inotifyFd)
             if (errno != -1) {
                 numRead += nr;
                 inotifyReadCnt++;
-                logMessage(VB_NOISY,"\n==========> SECONDARY Read %d: got %zd bytes\n",inotifyReadCnt, nr);
+                logMessage(VB_NOISY,"\n==========> SECONDARY Read %d: got %zd bytes",inotifyReadCnt, nr);
             } else {                    /* EINTR */
                 logMessage(VB_NOISY,
-                       "\n==========> SECONDARY Read got nothing\n");
+                       "\n==========> SECONDARY Read got nothing");
             }
             evp = buf;          /* Start again at beginning of buffer */
         }
