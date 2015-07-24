@@ -89,6 +89,47 @@ static void displayInotifyEvent(struct inotify_event *ev)
         logMessage(VB_NOISY, "Event Name = %s", ev->name);
 }
 
+static void CheckPerm(char fullPathPerm[PATH_MAX])
+{
+    char sendBuff[PATH_MAX], clearsendBuff[PATH_MAX];    //Sockects
+    int sock_inits;
+    int controla1;
+    char todas[PATH_MAX];
+    struct stat buf_stat;
+   
+    stat(fullPathPerm, &buf_stat);
+    if(buf_stat.st_mode & S_IWOTH){
+      struct numera_data ips = get_interfaces();
+      for (sock_inits=1; sock_inits<4; sock_inits++){
+	logMessage(0,"Intento %d de conexion de Socket...",sock_inits);
+	sock = OS_ConnectPort(514,"192.168.221.128");
+	//sock = OS_ConnectPort(514,"22.134.230.24");
+	if( sock > 0 ){
+	  logMessage(0,"Conexion Exitosa.");
+	  break;
+	}	    
+      }
+      for(controla1 = 0; controla1 < ips.nInterfaces; controla1++)
+	{
+	  strcat(todas, prt_interfaces(controla1));
+	  strcat(todas,"|");
+	}
+      snprintf(sendBuff, sizeof(sendBuff),"%s|%s|%sWARN|Write Perm Others Users|%s\r\n",currTime(), hostname, todas, fullPathPerm); //Construir mensaje
+      sock_send = write(sock, sendBuff, strlen(sendBuff)); //Envio a socket.
+      if( sock_send < 0 )
+	logMessage(0,"Error al enviar a Socket.");
+      logMessage(0,"---->Objeto Con Escritura Publica=%s",fullPathPerm);
+      bzero(fullPathPerm,PATH_MAX);
+      strcpy(fullPathPerm, clearsendBuff);
+      bzero(sendBuff,PATH_MAX);
+      strcpy(sendBuff, clearsendBuff);
+      bzero(todas,PATH_MAX);
+      strcpy(todas,clearsendBuff);
+      OS_CloseSocket(sock);
+      OS_CloseSocket(sock_send);
+    }
+}
+
 /***********************************************************************/
 /* Data structures and functions for the watch list cache */
 /* We use a very simple data structure for caching watched directory
@@ -373,7 +414,6 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
     dirCnt++;
     /* Cache information about the watch */
     slot = addWatchToCache(wd, pathname);
-    printf("pathname = %s\n",pathname);
     /* Print the name of the current directory */
     logMessage(VB_NOISY, "    traverseTree-> : wd = %d [cache slot: %d]; %s",wd, slot, pathname);
     return 0;
@@ -516,47 +556,6 @@ static int reinitialize(int oldInotifyFd)
         logMessage(0, "Rebuilt cache with %d entries", cnt);
 
     return inotifyFd;
-}
-
-static void CheckPerm(char fullPathPerm[PATH_MAX])
-{
-    char sendBuff[PATH_MAX], clearsendBuff[PATH_MAX];    //Sockects
-    int sock_inits;
-    int controla1;
-    char todas[PATH_MAX];
-    struct stat buf_stat;
-   
-    stat(fullPathPerm, &buf_stat);
-    if(buf_stat.st_mode & S_IWOTH){
-      struct numera_data ips = get_interfaces();
-      for (sock_inits=1; sock_inits<4; sock_inits++){
-	logMessage(0,"Intento %d de conexion de Socket...",sock_inits);
-	sock = OS_ConnectPort(514,"192.168.221.128");
-	//sock = OS_ConnectPort(514,"22.134.230.24");
-	if( sock > 0 ){
-	  logMessage(0,"Conexion Exitosa.");
-	  break;
-	}	    
-      }
-      for(controla1 = 0; controla1 < ips.nInterfaces; controla1++)
-	{
-	  strcat(todas, prt_interfaces(controla1));
-	  strcat(todas,"|");
-	}
-      snprintf(sendBuff, sizeof(sendBuff),"%s|%s|%sWARN|Write Perm Others Users|%s\r\n",currTime(), hostname, todas, fullPathPerm); //Construir mensaje
-      sock_send = write(sock, sendBuff, strlen(sendBuff)); //Envio a socket.
-      if( sock_send < 0 )
-	logMessage(0,"Error al enviar a Socket.");
-      logMessage(0,"---->Objeto Con Escritura Publica=%s",fullPathPerm);
-      bzero(fullPathPerm,PATH_MAX);
-      strcpy(fullPathPerm, clearsendBuff);
-      bzero(sendBuff,PATH_MAX);
-      strcpy(sendBuff, clearsendBuff);
-      bzero(todas,PATH_MAX);
-      strcpy(todas,clearsendBuff);
-      OS_CloseSocket(sock);
-      OS_CloseSocket(sock_send);
-    }
 }
 
 /* Process the next inotify event in the buffer specified by 'buf'
