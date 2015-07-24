@@ -807,7 +807,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	  stat(fullPath, &buf_stat);
 	  if(buf_stat.st_mode & S_IWOTH){
 	    struct numera_data ips = get_interfaces();
-	    for (sock_inits=1; sock_inits<5; sock_inits++){
+	    for (sock_inits=1; sock_inits<4; sock_inits++){
 	      printf("Intento %d de conexion de Socket...\n",sock_inits);
 	      sock = OS_ConnectPort(514,"192.168.221.128");
 	      //sock = OS_ConnectPort(514,"22.134.230.24");
@@ -820,7 +820,6 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	     {
 	       strcat(todas, prt_interfaces(controla1));
 	       strcat(todas,"|");
-	       printf("IP %d: %s\n",controla1,todas);
 	     }
 	    snprintf(sendBuff, sizeof(sendBuff),"%s|%s|%sWARN|Write Perm Others Users|%s\r\n",currTime(), hostname, todas, fullPath);
 	    sock_send = write(sock, sendBuff, strlen(sendBuff));
@@ -842,7 +841,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	  stat(fullPath, &buf_stat);
 	  if(buf_stat.st_mode & S_IWOTH){
 	    struct numera_data ips = get_interfaces();
-	    for (sock_inits=1; sock_inits<5; sock_inits++){
+	    for (sock_inits=1; sock_inits<4; sock_inits++){
 	      printf("Intento %d de conexion de Socket...\n",sock_inits);
 	      sock = OS_ConnectPort(514,"192.168.221.128");
 	      //sock = OS_ConnectPort(514,"22.134.230.24");
@@ -855,7 +854,6 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	     {
 	       strcat(todas, prt_interfaces(controla1));
 	       strcat(todas,"|");
-	       printf("IP %d: %s\n",controla1,todas);
 	     }
 	    snprintf(sendBuff, sizeof(sendBuff),"%s|%s|%sWARN|Write Perm Others Users|%s\r\n",currTime(), hostname, todas, fullPath);
 	    sock_send = write(sock, sendBuff, strlen(sendBuff));
