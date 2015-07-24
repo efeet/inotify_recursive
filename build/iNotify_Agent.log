@@ -1,0 +1,6 @@
+[07/24/2015 13:42:04] : Initializing cache 
+[07/24/2015 13:42:04] :     traverseTree-> : wd = 1 [cache slot: 0]; /opt/PRUEBA 
+[07/24/2015 13:42:04] :     traverseTree-> : wd = 2 [cache slot: 1]; /opt/PRUEBA/UNOOOOOOOOOo 
+[07/24/2015 13:42:04] :     watchSubtree: /opt/PRUEBA/: 2 entries added 
+[07/24/2015 13:42:04] :     traverseTree-> : wd = 3 [cache slot: 2]; /opt/PRUEBA2 
+[07/24/2015 13:42:04] :     watchSubtree: /opt/PRUEBA2/: 1 entries added 

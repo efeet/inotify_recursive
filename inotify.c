@@ -456,7 +456,6 @@ static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, c
     size_t len;
     int j;
 
-    snprintf(fullPath, sizeof(fullPath), "%s/%s", oldPathPrefix, oldName);
     snprintf(newPrefix, sizeof(newPrefix), "%s/%s", newPathPrefix, newName);
     len = strlen(fullPath);
 
@@ -798,6 +797,7 @@ int main(int argc, char *argv[])
     setbuf(logfp, NULL);
     
     /* Save a copy of the directories on the command line */
+    printf("Argumentos: %s\n",argv[optind]);
     copyRootDirPaths(&argv[optind]);
     /* Create an inotify instance and populate it with entries for
        directory named on command line */

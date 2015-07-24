@@ -25,7 +25,7 @@ Path=gcc
 Type=GCC
 
 [Filters]
-size=25
+size=26
 
 [Filters][0]
 inclusive=0
@@ -115,6 +115,11 @@ targets=1
 [Filters][24]
 inclusive=0
 pattern=/main.cpp
+targets=1
+
+[Filters][25]
+inclusive=1
+pattern=.config
 targets=1
 
 [Filters][3]
