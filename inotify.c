@@ -18,25 +18,17 @@ static int checkCache = 0;
 static int readBufferSize = 0;   
 static FILE *logfp = NULL; //Variable para abrir archivo de Log.
 
-static int inotifyReadCnt = 0;          /* Counts number of read()s from
-                                           inotify file descriptor */
+static int inotifyReadCnt = 0;
 
 static const int INOTIFY_READ_BUF_LEN = (100 * (sizeof(struct inotify_event) + NAME_MAX + 1));
 
-/* Data structures and functions for dealing with the directory pathnames
-   provided as command-line arguments. These directories form the roots of
-   the trees that we will monitor */
 static char **rootDirPaths; /* List of pathnames supplied on command line */
 static int numRootDirs;     /* Number of pathnames supplied on command line */
 static int ignoreRootDirs;  /* Number of command-line pathnames that
                                we've ceased to monitor */
 
-static struct stat *rootDirStat;
-                            /* stat(2) structures for croot directories */
+static struct stat *rootDirStat; // stat(2) structures for croot directories 
 
-/* Write a log message. The message is sent to none, either, or both of
-   stderr and the log file, depending on 'vb_mask' and whether a log file
-   has been specified via command-line options . */
 static void logMessage(int vb_mask, const char *format, ...)
 {
     va_list argList;
@@ -49,9 +41,6 @@ static void logMessage(int vb_mask, const char *format, ...)
     }
 }
 
-/***********************************************************************/
-/* Display some information about an inotify event. (Used when
-   when we are doing verbose logging.) */
 static void displayInotifyEvent(struct inotify_event *ev)
 {
     logMessage(VB_NOISY, "--->Event Identification -> wd = %d; ", ev->wd);
@@ -429,7 +418,7 @@ static int watchDir(int inotifyFd, const char *pathname)
     ifd = inotifyFd;
     
     if (nftw(pathname, traverseTree, 20, FTW_PHYS) == -1)
-        logMessage(VB_BASIC,
+        logMessage(VB_NOISY,
                 "nftw: %s: %s (directory probably deleted before we "
                 "could watch)", pathname, strerror(errno));
     return dirCnt;
@@ -620,8 +609,6 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 
             rewriteCachedPaths(wlCache[evCacheSlot].path, ev->name,wlCache[nextEvCacheSlot].path, nextEv->name);
 
-            /* We have also processed the next (IN_MOVED_TO) event,
-               so skip over it */
             evLen += sizeof(struct inotify_event) + nextEv->len;
 
         } else if (((char *) nextEv < buf + bufSize) || !firstTry) {
