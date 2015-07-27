@@ -847,8 +847,8 @@ int main(int argc, char *argv[])
     fd_set rfds;
     int inotifyFd, opt, gload, cfgvalida=0;
     char* token, *token2;
-    char namecfg[11]="inotify.cfg";
-
+    char namecfg[11]="inotify.cfg", *p = malloc(strlen(argv[2] + 1));
+    
     if (optind >= argc){
         printf("Error Inicial\n");
 	exit(EXIT_FAILURE);
@@ -858,12 +858,13 @@ int main(int argc, char *argv[])
       printf("Error de uso: %s\n",argv[0]);
       exit(EXIT_FAILURE);
     }
+    strcpy(p, argv[2]);
     
     while ((opt = getopt(argc, argv, "c:k")) != -1) {
       switch (opt) {
 	case 'c':
 	  printf("Ruta de configuracion: %s\n",argv[2]);
-	  token = strtok(argv[2],"\n\r");
+	  token = strtok(p,"\n\r");
 	  token2 = strtok(token, "/");
 	  while(token2 != NULL){
 	    if(!strncmp(token2, namecfg, sizeof(namecfg))){
