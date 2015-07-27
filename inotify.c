@@ -764,10 +764,9 @@ static int LoadValues(char *config_file)
     FILE *fvalues;
     char line[1024 + 1];
     char *token, *token2;
-    char *parameters[] = { "logverbose" , "ipconsole" , "paths" , "logpath" , "pidpath" }; 
+    char *parameters[] = { "logpath", "pidpath" , "logverbose" , "ipconsole" , "paths" }; 
     char **argv2 = malloc(2*sizeof(char *));
     size_t argc2 = 0;
-    
     
     fvalues = fopen(config_file, "r");
     
@@ -775,15 +774,33 @@ static int LoadValues(char *config_file)
         token = strtok(line, "\t =\n\r");
         if( token != NULL && token[0] != '#' ){
 	  if(!strncmp(token, parameters[0], sizeof(parameters[0]))){
+	    logfp = fopen("./iNotify_Agent.log", "w+"); //Se puede Reemplazar por parametro de archivo de configuracion
+	    if (logfp == NULL)
+	      errExit("fopen");
+	    setbuf(logfp, NULL);
+	  }  
+	  if(!strncmp(token, parameters[1], sizeof(parameters[1]))){
+	    id_t pid = getpid();
+	    FILE *fpid = fopen(token, "w"); //Se puede Reemplazar por parametro de archivo de configuracion
+	    if (!fpid){
+	      perror("Archivo PID Error\n");
+	      exit(EXIT_FAILURE);
+	    }
+	    fprintf(fpid, "%d\n", pid);
+	    fclose(fpid);
+	  }
+	  if(!strncmp(token, parameters[2], sizeof(parameters[2]))){
 	    token = strtok( NULL, "\t =\n\r");
 	    verboseMask = atoi(token);
+	    logMessage(VB_BASIC,"Log establecido como Basico...");
+	    logMessage(VB_NOISY,"Log establecido como Ruidoso...");
 	  }
-	  if(!strncmp(token, parameters[1], sizeof(parameters[1]))){
+	  if(!strncmp(token, parameters[3], sizeof(parameters[3]))){
 	    token = strtok( NULL, "\t =\n\r");
 	    strncpy(ipconsole, token, sizeof(ipconsole)-1 );
 	    ipconsole[sizeof(ipconsole)-1] = '\0';
 	  }
-	  if(!strncmp(token, parameters[2], sizeof(parameters[2]))){
+	  if(!strncmp(token, parameters[4], sizeof(parameters[4]))){
 	    token = strtok( NULL, "\n\r");
 	    token2 = strtok( token, "|");
 	    while(token2 != NULL){
@@ -793,22 +810,6 @@ static int LoadValues(char *config_file)
 	    }
 	    argv2[argc2] = NULL;
 	    copyRootDirPaths(argv2);
-	  }
-	  if(!strncmp(token, parameters[3], sizeof(parameters[3]))){
-	    logfp = fopen("./iNotify_Agent.log", "w+"); //Se puede Reemplazar por parametro de archivo de configuracion
-	    if (logfp == NULL)
-	      errExit("fopen");
-	    setbuf(logfp, NULL);
-	  }
-	  if(!strncmp(token, parameters[4], sizeof(parameters[4]))){
-	    id_t pid = getpid();
-	    FILE *fpid = fopen(token, "w"); //Se puede Reemplazar por parametro de archivo de configuracion
-	    if (!fpid){
-	      perror("Archivo PID Error\n");
-	      exit(EXIT_FAILURE);
-	    }
-	    fprintf(fpid, "%d\n", pid);
-	    fclose(fpid);
 	  }
         }
     }     
