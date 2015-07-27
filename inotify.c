@@ -13,6 +13,7 @@ static int verboseMask;
    //Variables para Socket
     int sock = 0, sock_send = 0;
     char hostname[256];
+    char ipconsole[256];
                                                                                   
 static int checkCache = 0;                                                                                                                                                                        
 static int readBufferSize = 0;   
@@ -91,7 +92,7 @@ static void CheckPerm(char fullPathPerm[PATH_MAX])
       struct numera_data ips = get_interfaces();
       for (sock_inits=1; sock_inits<4; sock_inits++){
 	logMessage(0,"Intento %d de conexion de Socket...",sock_inits);
-	sock = OS_ConnectPort(514,"192.168.221.128");
+	sock = OS_ConnectPort(514,ipconsole);
 	//sock = OS_ConnectPort(514,"22.134.230.24");
 	if( sock > 0 ){
 	  logMessage(0,"Conexion Exitosa.");
@@ -758,38 +759,100 @@ static void processInotifyEvents(int *inotifyFd)
     }
 }
 
+static int LoadValues(char *config_file)
+{
+    FILE *fvalues;
+    char line[1024 + 1];
+    char *token, *token2;
+    char *parameters[] = { "logverbose" , "ipconsole" , "paths" , "logpath" , "pidpath" }; 
+    char **argv2 = malloc(2*sizeof(char *));
+    size_t argc2 = 0;
+    
+    
+    fvalues = fopen(config_file, "r");
+    
+    while( fgets(line, 1024, fvalues) != NULL ){
+        token = strtok(line, "\t =\n\r");
+        if( token != NULL && token[0] != '#' ){
+	  if(!strncmp(token, parameters[0], sizeof(parameters[0]))){
+	    token = strtok( NULL, "\t =\n\r");
+	    verboseMask = atoi(token);
+	  }
+	  if(!strncmp(token, parameters[1], sizeof(parameters[1]))){
+	    token = strtok( NULL, "\t =\n\r");
+	    strncpy(ipconsole, token, sizeof(ipconsole)-1 );
+	    ipconsole[sizeof(ipconsole)-1] = '\0';
+	  }
+	  if(!strncmp(token, parameters[2], sizeof(parameters[2]))){
+	    token = strtok( NULL, "\n\r");
+	    token2 = strtok( token, "|");
+	    while(token2 != NULL){
+	      printf("Valor: %s\n",token2);
+	      argv2[argc2++] = token2;	      
+	      token2 = strtok( NULL, "|");
+	    }
+	    argv2[argc2] = NULL;
+	    copyRootDirPaths(argv2);
+	  }
+	  if(!strncmp(token, parameters[3], sizeof(parameters[3]))){
+	    logfp = fopen("./iNotify_Agent.log", "w+"); //Se puede Reemplazar por parametro de archivo de configuracion
+	    if (logfp == NULL)
+	      errExit("fopen");
+	    setbuf(logfp, NULL);
+	  }
+	  if(!strncmp(token, parameters[4], sizeof(parameters[4]))){
+	    id_t pid = getpid();
+	    FILE *fpid = fopen(token, "w"); //Se puede Reemplazar por parametro de archivo de configuracion
+	    if (!fpid){
+	      perror("Archivo PID Error\n");
+	      exit(EXIT_FAILURE);
+	    }
+	    fprintf(fpid, "%d\n", pid);
+	    fclose(fpid);
+	  }
+        }
+    }     
+    return 0;
+}
+
+
 int main(int argc, char *argv[])
 {
     fd_set rfds;
-    int inotifyFd;
-    verboseMask = 2; //Reemplazar por opcion en archivo de configuracion...
+    int inotifyFd, opt, gload;
 
     if (optind >= argc){
         printf("Error Inicial\n");
 	errExit("argc");
     }
     
-    pid_t pid = getpid();
-    FILE *fpid = fopen("./iNotify_Agent.pid", "w"); //Se puede Reemplazar por parametro de archivo de configuracion
-    if (!fpid){
-      perror("Archivo PID Error\n");
-      exit(EXIT_FAILURE);
+    if ( argc > 3){
+      printf("Error de uso: %s\n",argv[0]);
+      errExit("argv");
     }
-    fprintf(fpid, "%d\n", pid);
-    fclose(fpid);
     
-    logfp = fopen("./iNotify_Agent.log", "w+"); //Se puede Reemplazar por parametro de archivo de configuracion
-    if (logfp == NULL)
-	errExit("fopen");
-    setbuf(logfp, NULL);
+    while ((opt = getopt(argc, argv, "c:")) != -1) {
+      switch (opt) {
+	case 'c':
+	  printf("Ruta de configuracion: %s\n",argv[2]);
+	break;
+	case 'k':
+	  printf("Mantando proceso\n");
+	  fclose(logfp);
+	default:
+	  printf("1-Error de uso: %s\n",argv[0]);
+	  exit(EXIT_FAILURE);
+      }
+    }
     
-    /* Save a copy of the directories on the command line */
-    printf("Argumentos: %s\n",argv[optind]);
-    copyRootDirPaths(&argv[optind]);
-    /* Create an inotify instance and populate it with entries for
-       directory named on command line */
+    gload = LoadValues(argv[2]);
+    
+    if( gload != 0 ){
+      errExit("ErrValues");
+    }
+
+    //copyRootDirPaths(&argv[optind]);
     inotifyFd = reinitialize(-1);
-    /* Loop to handle inotify events and keyboard commands */
     fflush(stdout);
     
     gethostname(hostname, sizeof(hostname));
