@@ -1,60 +1,8 @@
-[07/27/2015 16:06:52] : Log establecido como Ruidoso... 
-[07/27/2015 16:06:52] : Initializing cache 
-[07/27/2015 16:06:52] :     traverseTree-> : wd = 1 [cache slot: 0]; /opt/PRUEBA 
-[07/27/2015 16:06:52] :     watchSubtree: /opt/PRUEBA: 1 entries added 
-[07/27/2015 16:06:52] :     traverseTree-> : wd = 2 [cache slot: 1]; /opt/PRUEBA2 
-[07/27/2015 16:06:52] :     traverseTree-> : wd = 3 [cache slot: 2]; /opt/PRUEBA2/UNO 
-[07/27/2015 16:06:52] :     traverseTree-> : wd = 4 [cache slot: 3]; /opt/PRUEBA2/UNO/DOS 
-[07/27/2015 16:06:52] :     watchSubtree: /opt/PRUEBA2: 3 entries added 
-[07/27/2015 16:06:56] : --->Event Identification -> wd = 2;  
-[07/27/2015 16:06:56] : mask = IN_ATTRIB  
-[07/27/2015 16:06:56] : Event Name = 1 
-[07/27/2015 16:06:56] : Intento 1 de conexion de Socket... 
-[07/27/2015 16:06:56] : Conexion Exitosa. 
-[07/27/2015 16:06:56] : ---->Objeto Con Escritura Publica=/opt/PRUEBA2/1 
-[07/27/2015 16:06:56] : --->Event Identification -> wd = 2;  
-[07/27/2015 16:06:56] : mask = IN_ISDIR  
-[07/27/2015 16:06:56] : mask = IN_ATTRIB  
-[07/27/2015 16:06:56] : Event Name = UNO 
-[07/27/2015 16:06:56] : Intento 1 de conexion de Socket... 
-[07/27/2015 16:06:56] : Conexion Exitosa. 
-[07/27/2015 16:06:56] : ---->Objeto Con Escritura Publica=/opt/PRUEBA2/UNO 
-[07/27/2015 16:06:56] : --->Event Identification -> wd = 3;  
-[07/27/2015 16:06:56] : mask = IN_ISDIR  
-[07/27/2015 16:06:56] : mask = IN_ATTRIB  
-[07/27/2015 16:06:56] : Intento 1 de conexion de Socket... 
-[07/27/2015 16:06:56] : Conexion Exitosa. 
-[07/27/2015 16:06:56] : ---->Objeto Con Escritura Publica=/opt/PRUEBA2/UNO/ 
-[07/27/2015 16:06:56] : --->Event Identification -> wd = 3;  
-[07/27/2015 16:06:56] : mask = IN_ISDIR  
-[07/27/2015 16:06:56] : mask = IN_ATTRIB  
-[07/27/2015 16:06:56] : Event Name = DOS 
-[07/27/2015 16:06:56] : Intento 1 de conexion de Socket... 
-[07/27/2015 16:06:56] : Conexion Exitosa. 
-[07/27/2015 16:06:56] : ---->Objeto Con Escritura Publica=/opt/PRUEBA2/UNO/DOS 
-[07/27/2015 16:07:43] : --->Event Identification -> wd = 2;  
-[07/27/2015 16:07:43] : mask = IN_ATTRIB  
-[07/27/2015 16:07:43] : Event Name = 1 
-[07/27/2015 16:07:43] : Intento 1 de conexion de Socket... 
-[07/27/2015 16:07:43] : Conexion Exitosa. 
-[07/27/2015 16:07:43] : ---->Objeto Con Escritura Publica=/opt/PRUEBA2/1 
-[07/27/2015 16:07:43] : --->Event Identification -> wd = 2;  
-[07/27/2015 16:07:43] : mask = IN_ISDIR  
-[07/27/2015 16:07:43] : mask = IN_ATTRIB  
-[07/27/2015 16:07:43] : Event Name = UNO 
-[07/27/2015 16:07:43] : Intento 1 de conexion de Socket... 
-[07/27/2015 16:07:43] : Conexion Exitosa. 
-[07/27/2015 16:07:43] : ---->Objeto Con Escritura Publica=/opt/PRUEBA2/UNO 
-[07/27/2015 16:07:43] : --->Event Identification -> wd = 3;  
-[07/27/2015 16:07:43] : mask = IN_ISDIR  
-[07/27/2015 16:07:43] : mask = IN_ATTRIB  
-[07/27/2015 16:07:43] : Intento 1 de conexion de Socket... 
-[07/27/2015 16:07:43] : Conexion Exitosa. 
-[07/27/2015 16:07:43] : ---->Objeto Con Escritura Publica=/opt/PRUEBA2/UNO/ 
-[07/27/2015 16:07:43] : --->Event Identification -> wd = 3;  
-[07/27/2015 16:07:43] : mask = IN_ISDIR  
-[07/27/2015 16:07:43] : mask = IN_ATTRIB  
-[07/27/2015 16:07:43] : Event Name = DOS 
-[07/27/2015 16:07:43] : Intento 1 de conexion de Socket... 
-[07/27/2015 16:07:43] : Conexion Exitosa. 
-[07/27/2015 16:07:43] : ---->Objeto Con Escritura Publica=/opt/PRUEBA2/UNO/DOS 
+[07/27/2015 17:04:14] : Log establecido como Ruidoso... 
+[07/27/2015 17:04:14] : Initializing cache 
+[07/27/2015 17:04:14] :     traverseTree-> : wd = 1 [cache slot: 0]; /opt/PRUEBA 
+[07/27/2015 17:04:14] :     watchSubtree: /opt/PRUEBA: 1 entries added 
+[07/27/2015 17:04:14] :     traverseTree-> : wd = 2 [cache slot: 1]; /opt/PRUEBA2 
+[07/27/2015 17:04:14] :     traverseTree-> : wd = 3 [cache slot: 2]; /opt/PRUEBA2/UNO 
+[07/27/2015 17:04:14] :     traverseTree-> : wd = 4 [cache slot: 3]; /opt/PRUEBA2/UNO/DOS 
+[07/27/2015 17:04:14] :     watchSubtree: /opt/PRUEBA2: 3 entries added 

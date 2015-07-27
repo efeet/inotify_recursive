@@ -858,11 +858,11 @@ int main(int argc, char *argv[])
       printf("Error de uso: %s\n",argv[0]);
       exit(EXIT_FAILURE);
     }
-    strcpy(p, argv[2]);
     
     while ((opt = getopt(argc, argv, "c:k")) != -1) {
       switch (opt) {
 	case 'c':
+	  strcpy(p, argv[2]);
 	  printf("Ruta de configuracion: %s\n",argv[2]);
 	  token = strtok(p,"\n\r");
 	  token2 = strtok(token, "/");
