@@ -808,7 +808,6 @@ static int LoadValues(char *config_file)
 	      token = strtok( NULL, "\n\r");
 	      token2 = strtok( token, "|");
 	      while(token2 != NULL){
-		printf("Valor: %s\n",token2);
 		argv2[argc2++] = token2;	      
 		token2 = strtok( NULL, "|");
 	      }
@@ -846,7 +845,9 @@ static int LoadValues(char *config_file)
 int main(int argc, char *argv[])
 {
     fd_set rfds;
-    int inotifyFd, opt, gload;
+    int inotifyFd, opt, gload, cfgvalida=0;
+    char* token, *token2;
+    char namecfg[11]="inotify.cfg";
 
     if (optind >= argc){
         printf("Error Inicial\n");
@@ -862,10 +863,27 @@ int main(int argc, char *argv[])
       switch (opt) {
 	case 'c':
 	  printf("Ruta de configuracion: %s\n",argv[2]);
-	   gload = LoadValues(argv[2]);
-	   if( gload != 0 ){
-	    errExit("ErrValues");
-	   }
+	  token = strtok(argv[2],"\n\r");
+	  token2 = strtok(token, "/");
+	  while(token2 != NULL){
+	    if(!strncmp(token2, namecfg, sizeof(namecfg))){
+		cfgvalida = 1;
+		break;
+	    }
+	    else{
+	      token2 = strtok(NULL, "/");
+	      cfgvalida = 0;
+	    }
+	  }
+	  if(cfgvalida == 1){
+	    gload = LoadValues(argv[2]);
+	    if( gload != 0 ){
+	      errExit("ErrValues");
+	    }
+	  } else {
+	      printf("error: cfg file not found\n");
+	      exit(1);
+	  }
 	break;
 	case 'k':
 	  justkill = 1;
