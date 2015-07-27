@@ -14,6 +14,7 @@ static int verboseMask;
     int sock = 0, sock_send = 0;
     char hostname[256];
     char ipconsole[256];
+    int justkill = 0;
                                                                                   
 static int checkCache = 0;                                                                                                                                                                        
 static int readBufferSize = 0;   
@@ -773,45 +774,70 @@ static int LoadValues(char *config_file)
     while( fgets(line, 1024, fvalues) != NULL ){
         token = strtok(line, "\t =\n\r");
         if( token != NULL && token[0] != '#' ){
-	  if(!strncmp(token, parameters[0], sizeof(parameters[0]))){
-	    logfp = fopen("./iNotify_Agent.log", "w+"); //Se puede Reemplazar por parametro de archivo de configuracion
-	    if (logfp == NULL)
-	      errExit("fopen");
-	    setbuf(logfp, NULL);
-	  }  
-	  if(!strncmp(token, parameters[1], sizeof(parameters[1]))){
-	    id_t pid = getpid();
-	    FILE *fpid = fopen(token, "w"); //Se puede Reemplazar por parametro de archivo de configuracion
-	    if (!fpid){
-	      perror("Archivo PID Error\n");
-	      exit(EXIT_FAILURE);
+	  if(justkill == 0){
+	    if(!strncmp(token, parameters[0], sizeof(parameters[0]))){
+	      token = strtok( NULL, "\t =\n\r");
+	      logfp = fopen(token, "w+"); //Se puede Reemplazar por parametro de archivo de configuracion
+	      if (logfp == NULL)
+		errExit("fopen");
+	      setbuf(logfp, NULL);
+	    }  
+	    if(!strncmp(token, parameters[1], sizeof(parameters[1]))){
+	      id_t pid = getpid();
+	      token = strtok( NULL, "\t =\n\r");
+	      FILE *fpid = fopen(token, "w"); //Se puede Reemplazar por parametro de archivo de configuracion
+	      if (!fpid){
+		perror("Archivo PID Error\n");
+		exit(EXIT_FAILURE);
+	      }
+	      fprintf(fpid, "%d\n", pid);
+	      fclose(fpid);
 	    }
-	    fprintf(fpid, "%d\n", pid);
-	    fclose(fpid);
-	  }
-	  if(!strncmp(token, parameters[2], sizeof(parameters[2]))){
-	    token = strtok( NULL, "\t =\n\r");
-	    verboseMask = atoi(token);
-	    logMessage(VB_BASIC,"Log establecido como Basico...");
-	    logMessage(VB_NOISY,"Log establecido como Ruidoso...");
-	  }
-	  if(!strncmp(token, parameters[3], sizeof(parameters[3]))){
-	    token = strtok( NULL, "\t =\n\r");
-	    strncpy(ipconsole, token, sizeof(ipconsole)-1 );
-	    ipconsole[sizeof(ipconsole)-1] = '\0';
-	  }
-	  if(!strncmp(token, parameters[4], sizeof(parameters[4]))){
-	    token = strtok( NULL, "\n\r");
-	    token2 = strtok( token, "|");
-	    while(token2 != NULL){
-	      printf("Valor: %s\n",token2);
-	      argv2[argc2++] = token2;	      
-	      token2 = strtok( NULL, "|");
+	    if(!strncmp(token, parameters[2], sizeof(parameters[2]))){
+	      token = strtok( NULL, "\t =\n\r");
+	      verboseMask = atoi(token);
+	      logMessage(VB_BASIC,"Log establecido como Basico...");
+	      logMessage(VB_NOISY,"Log establecido como Ruidoso...");
 	    }
-	    argv2[argc2] = NULL;
-	    copyRootDirPaths(argv2);
+	    if(!strncmp(token, parameters[3], sizeof(parameters[3]))){
+	      token = strtok( NULL, "\t =\n\r");
+	      strncpy(ipconsole, token, sizeof(ipconsole)-1 );
+	      ipconsole[sizeof(ipconsole)-1] = '\0';
+	    }
+	    if(!strncmp(token, parameters[4], sizeof(parameters[4]))){
+	      token = strtok( NULL, "\n\r");
+	      token2 = strtok( token, "|");
+	      while(token2 != NULL){
+		printf("Valor: %s\n",token2);
+		argv2[argc2++] = token2;	      
+		token2 = strtok( NULL, "|");
+	      }
+	      argv2[argc2] = NULL;
+	      copyRootDirPaths(argv2);
+	    }
 	  }
-        }
+	  else{
+	    int getpid = 0;
+	    char killagent[PATH_MAX];
+	    if(!strncmp(token, parameters[1], sizeof(parameters[1]))){
+	      token = strtok( NULL, "\t =\n\r");
+	      FILE *fpid = fopen(token, "r");
+	      if (!fpid){
+		perror("Archivo PID Error\n");
+		exit(EXIT_FAILURE);
+	      }
+	      fscanf(fpid, "%d", &getpid);
+	      if(!kill(getpid, SIGKILL)){
+		fclose(fpid);
+		return 0;
+	      }
+	      else{
+		fclose(fpid);
+		return -1;
+	      }
+	    }
+	  }
+	}
     }     
     return 0;
 }
@@ -824,32 +850,36 @@ int main(int argc, char *argv[])
 
     if (optind >= argc){
         printf("Error Inicial\n");
-	errExit("argc");
+	exit(EXIT_FAILURE);
     }
     
-    if ( argc > 3){
+    if ( argc < 3){
       printf("Error de uso: %s\n",argv[0]);
-      errExit("argv");
+      exit(EXIT_FAILURE);
     }
     
-    while ((opt = getopt(argc, argv, "c:")) != -1) {
+    while ((opt = getopt(argc, argv, "c:k")) != -1) {
       switch (opt) {
 	case 'c':
 	  printf("Ruta de configuracion: %s\n",argv[2]);
+	   gload = LoadValues(argv[2]);
+	   if( gload != 0 ){
+	    errExit("ErrValues");
+	   }
 	break;
 	case 'k':
-	  printf("Mantando proceso\n");
-	  fclose(logfp);
+	  justkill = 1;
+	  printf("Terminado proceso\n");
+	   gload = LoadValues(argv[2]);
+	   if( gload == 0 )
+	     errExit("Terminando proceso iNotify Agent ");
+	   else
+	     errExit("Problemas para terminar proceso iNotify Agent");
+	break;
 	default:
 	  printf("1-Error de uso: %s\n",argv[0]);
 	  exit(EXIT_FAILURE);
       }
-    }
-    
-    gload = LoadValues(argv[2]);
-    
-    if( gload != 0 ){
-      errExit("ErrValues");
     }
 
     //copyRootDirPaths(&argv[optind]);
