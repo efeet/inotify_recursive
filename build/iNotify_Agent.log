@@ -1,40 +1,4 @@
-[07/27/2015 17:54:22] : Log establecido como Ruidoso... 
-[07/27/2015 17:54:22] : Initializing cache 
-[07/27/2015 17:54:22] :     traverseTree-> : wd = 1 [cache slot: 0]; /opt/PRUEBA 
-[07/27/2015 17:54:22] :     watchSubtree: /opt/PRUEBA: 1 entries added 
-[07/27/2015 17:54:22] :     traverseTree-> : wd = 2 [cache slot: 1]; /opt/PRUEBA2 
-[07/27/2015 17:54:22] :     traverseTree-> : wd = 3 [cache slot: 2]; /opt/PRUEBA2/UNO 
-[07/27/2015 17:54:22] :     traverseTree-> : wd = 4 [cache slot: 3]; /opt/PRUEBA2/UNO/DOS 
-[07/27/2015 17:54:22] :     watchSubtree: /opt/PRUEBA2: 3 entries added 
-[07/27/2015 17:54:22] : --->Event Identification -> wd = 2;  
-[07/27/2015 17:54:22] : mask = IN_ISDIR  
-[07/27/2015 17:54:22] : mask = IN_OPEN  
-[07/27/2015 17:54:22] : Event Name = UNO 
-[07/27/2015 17:54:22] : --->Event Identification -> wd = 3;  
-[07/27/2015 17:54:22] : mask = IN_ISDIR  
-[07/27/2015 17:54:22] : mask = IN_OPEN  
-[07/27/2015 17:54:22] : Event Name = DOS 
-[07/27/2015 17:54:30] : --->Event Identification -> wd = 1;  
-[07/27/2015 17:54:30] : mask = IN_CREATE  
-[07/27/2015 17:54:30] : Event Name = AAAAAAAAAAAAAAA 
-[07/27/2015 17:54:30] : --->Event Identification -> wd = 1;  
-[07/27/2015 17:54:30] : mask = IN_OPEN  
-[07/27/2015 17:54:30] : Event Name = AAAAAAAAAAAAAAA 
-[07/27/2015 17:54:30] : --->Event Identification -> wd = 1;  
-[07/27/2015 17:54:30] : mask = IN_ATTRIB  
-[07/27/2015 17:54:30] : Event Name = AAAAAAAAAAAAAAA 
-[07/27/2015 17:54:30] : --->Event Identification -> wd = 1;  
-[07/27/2015 17:54:30] : mask = IN_CLOSE_WRITE  
-[07/27/2015 17:54:30] : Event Name = AAAAAAAAAAAAAAA 
-[07/27/2015 17:54:36] : --->Event Identification -> wd = 1;  
-[07/27/2015 17:54:36] : mask = IN_MODIFY  
-[07/27/2015 17:54:36] : Event Name = AAAAAAAAAAAAAAA 
-[07/27/2015 17:54:36] : --->Event Identification -> wd = 1;  
-[07/27/2015 17:54:36] : mask = IN_OPEN  
-[07/27/2015 17:54:36] : Event Name = AAAAAAAAAAAAAAA 
-[07/27/2015 17:54:36] : --->Event Identification -> wd = 1;  
-[07/27/2015 17:54:36] : mask = IN_MODIFY  
-[07/27/2015 17:54:36] : Event Name = AAAAAAAAAAAAAAA 
-[07/27/2015 17:54:36] : --->Event Identification -> wd = 1;  
-[07/27/2015 17:54:36] : mask = IN_CLOSE_WRITE  
-[07/27/2015 17:54:36] : Event Name = AAAAAAAAAAAAAAA 
+[07/28/2015 16:46:30] : Log establecido como Ruidoso... 
+[07/28/2015 16:46:30] : Initializing cache 
+[07/28/2015 16:46:30] :     traverseTree-> : wd = 1 [cache slot: 0]; /opt/PRUEBA 
+[07/28/2015 16:46:30] :     watchSubtree: /opt/PRUEBA: 1 entries added 

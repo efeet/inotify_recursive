@@ -701,7 +701,6 @@ static void processInotifyEvents(int *inotifyFd)
     /* Read some events from inotify file descriptor */
     cnt = (readBufferSize > 0) ? readBufferSize : INOTIFY_READ_BUF_LEN;
     numRead = read(*inotifyFd, buf, cnt);
-    printf("------------>Valor de numRead=%d\n",numRead);
     if (numRead == -1)
         errExit("read");
     if (numRead == 0) {
@@ -715,9 +714,7 @@ static void processInotifyEvents(int *inotifyFd)
 
     /* Process each event in the buffer returned by read() */
     for (evp = buf; evp < buf + numRead - 16; ) {
-	printf("\nBusca Valor de evLen....\n");
         evLen = processNextInotifyEvent(inotifyFd, evp, buf + numRead - evp, firstTry);
-	printf("==================>Valor de evLen:%d\n",evLen);
 
         if (evLen > 0) {
             evp += evLen;
@@ -772,10 +769,33 @@ static int LoadValues(char *config_file)
 {
     FILE *fvalues;
     char line[1024 + 1];
-    char *token, *token2;
+    char *token, *token2, buf[12];
     char *parameters[] = { "logpath", "pidpath" , "logverbose" , "ipconsole" , "paths" }; 
     char **argv2 = malloc(2*sizeof(char *));
     size_t argc2 = 0;
+    int fd, n, max_watches;
+    
+    fd = open("/proc/sys/fs/inotify/max_user_watches", O_RDONLY);
+    if (fd < 0) {
+        perror("No se puede abrir /proc/sys/fs/inotify/max_user_watches");
+        exit(1);
+    }
+
+    if ( (n = read(fd, buf, sizeof(buf) - 1)) < 0) {
+        perror("No se puede leer() /proc/sys/fs/inotify/max_user_watches");
+        exit(1);
+    }
+    
+    buf[n] = 0;
+    max_watches = atoi(buf) - 256;
+    printf("Numero de Archivos a monitorear = /proc/sys/fs/inotify/max_user_watches: %d\n",max_watches);
+    printf("Por cada 65000 archivos, se restan 256\n");
+    if (max_watches <= 0) {
+        printf("Numero de Rutas Incorrecto: ");
+        printf(buf);
+        printf("\n");
+        return 1;
+    }
     
     fvalues = fopen(config_file, "r");
     
