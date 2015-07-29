@@ -218,7 +218,7 @@ static void markCacheSlotEmpty(int slot)
 static int findEmptyCacheSlot(void)
 {
     int j;
-    const int ALLOC_INCR = 1;
+    const int ALLOC_INCR = 200;
 
     for (j = 0; j < cacheSize; j++)
         if (wlCache[j].wd == -1)
@@ -930,8 +930,7 @@ int main(int argc, char *argv[])
 	  exit(EXIT_FAILURE);
       }
     }
-
-    //copyRootDirPaths(&argv[optind]);
+    
     inotifyFd = reinitialize(-1);
     fflush(stdout);
     
@@ -942,8 +941,6 @@ int main(int argc, char *argv[])
         FD_ZERO(&rfds);
         FD_SET(STDIN_FILENO, &rfds);
         FD_SET(inotifyFd, &rfds);
-        //if (select(inotifyFd + 1, &rfds, NULL, NULL, NULL) == -1)
-            //errExit("select");
         if (FD_ISSET(inotifyFd, &rfds)){
             processInotifyEvents(&inotifyFd);
 	}
