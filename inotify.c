@@ -14,6 +14,7 @@ static int verboseMask;
     int sock = 0, sock_send = 0;
     char hostname[256];
     char ipconsole[256];
+    char allIps[PATH_MAX];
     int justkill = 0;
                                                                                   
 static int checkCache = 0;                                                                                                                                                                        
@@ -45,7 +46,6 @@ static void logMessage(int vb_mask, const char *format, ...)
 
 static void displayInotifyEvent(struct inotify_event *ev)
 {
-    logMessage(VB_NOISY, "--->Event Identification -> wd = %d; ", ev->wd);
     if (ev->cookie > 0)
         logMessage(VB_NOISY, "cookie = %4d; ", ev->cookie);
     
@@ -92,28 +92,19 @@ static void CheckPerm(char fullPathPerm[PATH_MAX])
 {
     char sendBuff[PATH_MAX], clearsendBuff[PATH_MAX];    //Sockects
     int sock_inits;
-    int controla1;
-    char todas[PATH_MAX];
     struct stat buf_stat;
    
     stat(fullPathPerm, &buf_stat);
     if(buf_stat.st_mode & S_IWOTH){
-      struct numera_data ips = get_interfaces();
       for (sock_inits=1; sock_inits<4; sock_inits++){
 	logMessage(0,"Intento %d de conexion de Socket...",sock_inits);
 	sock = OS_ConnectPort(514,ipconsole);
-	//sock = OS_ConnectPort(514,"22.134.230.24");
 	if( sock > 0 ){
 	  logMessage(0,"Conexion Exitosa.");
 	  break;
 	}	    
       }
-      for(controla1 = 0; controla1 < ips.nInterfaces; controla1++)
-	{
-	  strcat(todas, prt_interfaces(controla1));
-	  strcat(todas,"|");
-	}
-      snprintf(sendBuff, sizeof(sendBuff),"%s|%s|%sWARN|Write Perm Others Users|%s\r\n",currTime(), hostname, todas, fullPathPerm); //Construir mensaje
+      snprintf(sendBuff, sizeof(sendBuff),"%s|%s|%sWARN|Write Perm Others Users|%s\r\n",currTime(), hostname, allIps, fullPathPerm); //Construir mensaje
       sock_send = write(sock, sendBuff, strlen(sendBuff)); //Envio a socket.
       if( sock_send < 0 )
 	logMessage(0,"Error al enviar a Socket.");
@@ -122,8 +113,6 @@ static void CheckPerm(char fullPathPerm[PATH_MAX])
       strcpy(fullPathPerm, clearsendBuff);
       bzero(sendBuff,PATH_MAX);
       strcpy(sendBuff, clearsendBuff);
-      bzero(todas,PATH_MAX);
-      strcpy(todas,clearsendBuff);
       OS_CloseSocket(sock);
       OS_CloseSocket(sock_send);
     }
@@ -874,7 +863,7 @@ static int LoadValues(char *config_file)
 int main(int argc, char *argv[])
 {
     fd_set rfds;
-    int inotifyFd, opt, gload, cfgvalida=0;
+    int inotifyFd, opt, gload, cfgvalida=0, controla1;
     char* token, *token2;
     char namecfg[11]="inotify.cfg";
     
@@ -934,6 +923,13 @@ int main(int argc, char *argv[])
     
     inotifyFd = reinitialize(-1);
     fflush(stdout);
+    
+    struct numera_data ips = get_interfaces();
+    for(controla1 = 0; controla1 < ips.nInterfaces; controla1++)
+	{
+	  strcat(allIps, prt_interfaces(controla1));
+	  strcat(allIps,"|");
+	}
     
     gethostname(hostname, sizeof(hostname));
     hostname[sizeof(hostname) - 1] = '\0';
