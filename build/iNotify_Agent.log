@@ -1,0 +1,9 @@
+[07/29/2015 18:35:30] : Log establecido como Ruidoso... 
+[07/29/2015 18:35:30] : Initializing cache 
+[07/29/2015 18:35:30] :     traverseTree-> : wd = 1 [cache slot: 0]; /opt/PRUEBA 
+[07/29/2015 18:35:30] :     watchSubtree: /opt/PRUEBA: 1 entries added 
+[07/29/2015 18:35:36] : mask = IN_ATTRIB  
+[07/29/2015 18:35:36] : Event Name = file_1 
+[07/29/2015 18:35:36] : Intento 1 de conexion de Socket... 
+[07/29/2015 18:35:36] : Conexion Exitosa. 
+[07/29/2015 18:35:36] : ---->Objeto Con Escritura Publica=/opt/PRUEBA/file_1 

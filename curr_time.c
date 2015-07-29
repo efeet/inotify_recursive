@@ -15,7 +15,7 @@ char * currTime(void)
     if (tm == NULL)
         return NULL;
 
-    s = strftime(buf,BUF_SIZE,"%Y-%m-%d %I:%M:%S%p", tm);
+    s = strftime(buf,BUF_SIZE,"%Y-%m-%d %T", tm);
 
     return (s == 0) ? NULL : buf;
 }
@@ -32,7 +32,7 @@ char * currTimeLog(void)
     if (tm == NULL)
         return NULL;
 
-    s = strftime(buf,BUF_SIZE,"[%m/%d/%Y %H:%M:%S]", tm);
+    s = strftime(buf,BUF_SIZE,"[%m/%d/%Y %T]", tm);
 
     return (s == 0) ? NULL : buf;
 }
