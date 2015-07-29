@@ -218,7 +218,7 @@ static void markCacheSlotEmpty(int slot)
 static int findEmptyCacheSlot(void)
 {
     int j;
-    const int ALLOC_INCR = 10;
+    const int ALLOC_INCR = 1;
 
     for (j = 0; j < cacheSize; j++)
         if (wlCache[j].wd == -1)
@@ -875,7 +875,7 @@ int main(int argc, char *argv[])
     fd_set rfds;
     int inotifyFd, opt, gload, cfgvalida=0;
     char* token, *token2;
-    char namecfg[11]="inotify.cfg", *p = malloc(strlen(argv[2] + 1));
+    char namecfg[11]="inotify.cfg";
     
     if (optind >= argc){
         printf("Error Inicial\n");
@@ -886,6 +886,8 @@ int main(int argc, char *argv[])
       printf("Error de uso: %s\n",argv[0]);
       exit(EXIT_FAILURE);
     }
+    
+    char *p = malloc(strlen(argv[2] + 1));
     
     while ((opt = getopt(argc, argv, "c:k")) != -1) {
       switch (opt) {

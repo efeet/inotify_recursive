@@ -1,4 +1,4 @@
-[07/28/2015 16:46:30] : Log establecido como Ruidoso... 
-[07/28/2015 16:46:30] : Initializing cache 
-[07/28/2015 16:46:30] :     traverseTree-> : wd = 1 [cache slot: 0]; /opt/PRUEBA 
-[07/28/2015 16:46:30] :     watchSubtree: /opt/PRUEBA: 1 entries added 
+[07/28/2015 18:56:23] : Log establecido como Ruidoso... 
+[07/28/2015 18:56:23] : Initializing cache 
+[07/28/2015 18:56:23] :     traverseTree-> : wd = 1 [cache slot: 0]; /opt/PRUEBA 
+[07/28/2015 18:56:23] :     watchSubtree: /opt/PRUEBA: 1 entries added 
