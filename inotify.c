@@ -75,14 +75,14 @@ static void displayInotifyEvent(struct inotify_event *ev)
     if (ev->mask & IN_ATTRIB)
         logMessage(VB_NOISY, "mask = IN_ATTRIB ");
     
-    if (ev->mask & IN_OPEN)
+    /*if (ev->mask & IN_OPEN)
         logMessage(VB_NOISY, "mask = IN_OPEN ");
     
     if (ev->mask & IN_MODIFY)
 	logMessage(VB_NOISY, "mask = IN_MODIFY ");
     
     if (ev->mask & IN_CLOSE_WRITE)
-	logMessage(VB_NOISY, "mask = IN_CLOSE_WRITE ");
+	logMessage(VB_NOISY, "mask = IN_CLOSE_WRITE ");*/
 
     if (ev->len > 0)
         logMessage(VB_NOISY, "Event Name = %s", ev->name);
@@ -389,7 +389,8 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
         return 0;               /* Ignore nondirectory files */
 
     /* Create a watch for this directory */
-    flags = IN_CREATE | IN_MOVED_FROM | IN_MOVED_TO | IN_DELETE_SELF | IN_ATTRIB | IN_OPEN | IN_MODIFY | IN_CLOSE_WRITE;
+    flags = IN_CREATE | IN_MOVED_FROM | IN_MOVED_TO | IN_DELETE_SELF | IN_ATTRIB;
+    //| IN_OPEN | IN_MODIFY | IN_CLOSE_WRITE;
 
     if (isRootDirPath(pathname))
         flags |= IN_MOVE_SELF;
