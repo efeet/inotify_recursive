@@ -222,7 +222,7 @@ static int findEmptyCacheSlot(void)
 
     for (j = 0; j < cacheSize; j++)
         if (wlCache[j].wd == -1)
-            return j;
+            return j; 
 
     /* No free slot found; resize cache */
     cacheSize += ALLOC_INCR;
