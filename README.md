@@ -11,4 +11,4 @@
 #
 # ..
 # IDE: Kdevelop 4.7
->>>>>>> a2ce3efb15ccf16177e6eb77b0762b4f45b7a5b2
+#
