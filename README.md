@@ -11,6 +11,6 @@
 #
 # ..
 # IDE: Kdevelop 4.7
-# SuSe
+# Edicion en VM OpenSuSe
 #
-# ............
+#
