@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/usanchezc/projects/inotify_recursive
+CMAKE_SOURCE_DIR = /home/efeet/projects/inotify_recursive
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/usanchezc/projects/inotify_recursive/build
+CMAKE_BINARY_DIR = /home/efeet/projects/inotify_recursive/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -114,9 +114,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/usanchezc/projects/inotify_recursive/build/CMakeFiles /home/usanchezc/projects/inotify_recursive/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/efeet/projects/inotify_recursive/build/CMakeFiles /home/efeet/projects/inotify_recursive/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/usanchezc/projects/inotify_recursive/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/efeet/projects/inotify_recursive/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -156,6 +156,54 @@ inotify_recursive/fast:
 	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/build
 .PHONY : inotify_recursive/fast
 
+curr_time.o: curr_time.c.o
+.PHONY : curr_time.o
+
+# target to build an object file
+curr_time.c.o:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/curr_time.c.o
+.PHONY : curr_time.c.o
+
+curr_time.i: curr_time.c.i
+.PHONY : curr_time.i
+
+# target to preprocess a source file
+curr_time.c.i:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/curr_time.c.i
+.PHONY : curr_time.c.i
+
+curr_time.s: curr_time.c.s
+.PHONY : curr_time.s
+
+# target to generate assembly for a file
+curr_time.c.s:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/curr_time.c.s
+.PHONY : curr_time.c.s
+
+enum_ip_inter.o: enum_ip_inter.c.o
+.PHONY : enum_ip_inter.o
+
+# target to build an object file
+enum_ip_inter.c.o:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o
+.PHONY : enum_ip_inter.c.o
+
+enum_ip_inter.i: enum_ip_inter.c.i
+.PHONY : enum_ip_inter.i
+
+# target to preprocess a source file
+enum_ip_inter.c.i:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.i
+.PHONY : enum_ip_inter.c.i
+
+enum_ip_inter.s: enum_ip_inter.c.s
+.PHONY : enum_ip_inter.s
+
+# target to generate assembly for a file
+enum_ip_inter.c.s:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.s
+.PHONY : enum_ip_inter.c.s
+
 inotify.o: inotify.c.o
 .PHONY : inotify.o
 
@@ -180,6 +228,30 @@ inotify.c.s:
 	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/inotify.c.s
 .PHONY : inotify.c.s
 
+socket_client.o: socket_client.c.o
+.PHONY : socket_client.o
+
+# target to build an object file
+socket_client.c.o:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/socket_client.c.o
+.PHONY : socket_client.c.o
+
+socket_client.i: socket_client.c.i
+.PHONY : socket_client.i
+
+# target to preprocess a source file
+socket_client.c.i:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/socket_client.c.i
+.PHONY : socket_client.c.i
+
+socket_client.s: socket_client.c.s
+.PHONY : socket_client.s
+
+# target to generate assembly for a file
+socket_client.c.s:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/socket_client.c.s
+.PHONY : socket_client.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -193,9 +265,18 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... curr_time.o"
+	@echo "... curr_time.i"
+	@echo "... curr_time.s"
+	@echo "... enum_ip_inter.o"
+	@echo "... enum_ip_inter.i"
+	@echo "... enum_ip_inter.s"
 	@echo "... inotify.o"
 	@echo "... inotify.i"
 	@echo "... inotify.s"
+	@echo "... socket_client.o"
+	@echo "... socket_client.i"
+	@echo "... socket_client.s"
 .PHONY : help
 
 

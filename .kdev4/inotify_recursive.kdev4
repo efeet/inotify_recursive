@@ -2,8 +2,8 @@
 BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x01\x00\x00\x00"\x00i\x00n\x00o\x00t\x00i\x00f\x00y\x00_\x00r\x00e\x00c\x00u\x00r\x00s\x00i\x00v\x00e)
 
 [CMake]
-Build Directory Count=1
-Current Build Directory Index=0
+Build Directory Count=2
+Current Build Directory Index=1
 ProjectRootRelative=./
 
 [CMake][CMake Build Directory 0]
@@ -13,6 +13,19 @@ CMake Binary=file:///usr/bin/cmake
 Environment Profile=
 Extra Arguments=
 Install Directory=file:///usr/local
+
+[CMake][CMake Build Directory 1]
+Build Directory Path=file:///home/efeet/projects/inotify_recursive/build
+Build Type=Debug
+CMake Binary=file:///usr/bin/cmake
+Environment Profile=
+Extra Arguments=
+Install Directory=file:///usr/local
+
+[CustomDefinesAndIncludes][ProjectPath0]
+Defines=\x00\x00\x00\x00
+Includes=\x00\x00\x00\x01\x00\x00\x00\x1a\x00/\x00u\x00s\x00r\x00/\x00i\x00n\x00c\x00l\x00u\x00d\x00e\x00/
+Path=.
 
 [Defines And Includes][Compiler]
 Name=GCC
@@ -146,6 +159,28 @@ targets=2
 inclusive=0
 pattern=__pycache__
 targets=2
+
+[Launch]
+Launch Configurations=Launch Configuration 0
+
+[Launch][Launch Configuration 0]
+Configured Launch Modes=debug
+Configured Launchers=gdb
+Name=inotify_recursive
+Type=Native Application
+
+[Launch][Launch Configuration 0][Data]
+Arguments=-c /home/usanchezc/projects/inotify_recursive/inotify.cfg
+Configured from ProjectItem=inotify_recursive,inotify_recursive
+Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x00)
+Dependency Action=Nothing
+EnvironmentGroup=
+Executable=file:///home/usanchezc/projects/inotify_recursive/
+External Terminal=konsole --noclose --workdir %workdir -e %exe
+Project Target=inotify_recursive,inotify_recursive
+Use External Terminal=false
+Working Directory=file:///home/usanchezc/projects/inotify_recursive/build/
+isExecutable=false
 
 [Project]
 VersionControlSupport=kdevgit
