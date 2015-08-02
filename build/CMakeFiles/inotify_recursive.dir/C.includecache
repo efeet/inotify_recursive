@@ -6,13 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/usanchezc/projects/inotify_recursive/curr_time.c
-libraries_include.h
-/home/usanchezc/projects/inotify_recursive/libraries_include.h
-curr_time.h
 /home/usanchezc/projects/inotify_recursive/curr_time.h
 
-/home/usanchezc/projects/inotify_recursive/curr_time.h
+/home/usanchezc/projects/inotify_recursive/enum_ip_inter.h
+
+/home/usanchezc/projects/inotify_recursive/inotify.c
+libraries_include.h
+/home/usanchezc/projects/inotify_recursive/libraries_include.h
+enum_ip_inter.h
+/home/usanchezc/projects/inotify_recursive/enum_ip_inter.h
 
 /home/usanchezc/projects/inotify_recursive/libraries_include.h
 stdio.h

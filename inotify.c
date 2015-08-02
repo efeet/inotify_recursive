@@ -1,7 +1,7 @@
 #define _GNU_SOURCE   
 #include "libraries_include.h"
 #include "enum_ip_inter.h"
-
+ 
 #define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
                         } while (0)                                                                           
                                                                                                               
@@ -527,7 +527,7 @@ static int reinitialize(int oldInotifyFd)
     if (inotifyFd == -1)
         errExit("inotify_init");
 
-    logMessage(VB_BASIC, "    new inotifyFd = %d", inotifyFd);
+    logMessage(0, "    new inotifyFd = %d", inotifyFd);
 
     freeCache();
 
@@ -793,17 +793,17 @@ static int LoadValues(char *config_file)
         token = strtok(line, "\t =\n\r");
         if( token != NULL && token[0] != '#' ){
 	  if(justkill == 0){
-	    if(!strncmp(token, parameters[0], sizeof(parameters[0]))){
+	    if(!strncmp(token, parameters[0], sizeof(parameters[0]))){ //Cargamos parametro de archivo de LOG.
 	      token = strtok( NULL, "\t =\n\r");
-	      logfp = fopen(token, "w+"); //Se puede Reemplazar por parametro de archivo de configuracion
+	      logfp = fopen(token, "w+"); 
 	      if (logfp == NULL)
 		errExit("fopen");
 	      setbuf(logfp, NULL);
 	    }  
-	    if(!strncmp(token, parameters[1], sizeof(parameters[1]))){
+	    if(!strncmp(token, parameters[1], sizeof(parameters[1]))){ //Cargamos parametro de archivo PID.
 	      id_t pid = getpid();
 	      token = strtok( NULL, "\t =\n\r");
-	      FILE *fpid = fopen(token, "w"); //Se puede Reemplazar por parametro de archivo de configuracion
+	      FILE *fpid = fopen(token, "w"); 
 	      if (!fpid){
 		perror("Archivo PID Error\n");
 		exit(EXIT_FAILURE);
@@ -811,18 +811,18 @@ static int LoadValues(char *config_file)
 	      fprintf(fpid, "%d\n", pid);
 	      fclose(fpid);
 	    }
-	    if(!strncmp(token, parameters[2], sizeof(parameters[2]))){
+	    if(!strncmp(token, parameters[2], sizeof(parameters[2]))){ //Cargamos parametro de Verbose de Log.
 	      token = strtok( NULL, "\t =\n\r");
 	      verboseMask = atoi(token);
 	      logMessage(VB_BASIC,"Log establecido como Basico...");
 	      logMessage(VB_NOISY,"Log establecido como Ruidoso...");
 	    }
-	    if(!strncmp(token, parameters[3], sizeof(parameters[3]))){
+	    if(!strncmp(token, parameters[3], sizeof(parameters[3]))){ //Cargamos parametro de la IP de Consola que recibe mensajes.
 	      token = strtok( NULL, "\t =\n\r");
 	      strncpy(ipconsole, token, sizeof(ipconsole)-1 );
 	      ipconsole[sizeof(ipconsole)-1] = '\0';
 	    }
-	    if(!strncmp(token, parameters[4], sizeof(parameters[4]))){
+	    if(!strncmp(token, parameters[4], sizeof(parameters[4]))){ //Cargamos parametros de las rutas a monitorear.
 	      token = strtok( NULL, "\n\r");
 	      token2 = strtok( token, "|");
 	      while(token2 != NULL){
@@ -836,7 +836,7 @@ static int LoadValues(char *config_file)
 	  else{
 	    int getpid = 0;
 	    char killagent[PATH_MAX];
-	    if(!strncmp(token, parameters[1], sizeof(parameters[1]))){
+	    if(!strncmp(token, parameters[1], sizeof(parameters[1]))){ //Cargamos el parametro de PID para matar el proceso.
 	      token = strtok( NULL, "\t =\n\r");
 	      FILE *fpid = fopen(token, "r");
 	      if (!fpid){
