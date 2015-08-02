@@ -5,3 +5,4 @@
 #
 # ..
 # IDE: Kdevelop 4.7
+# Edicion en SuSe VM
