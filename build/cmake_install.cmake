@@ -1,4 +1,4 @@
-# Install script for directory: /home/usanchezc/projects/inotify_recursive
+# Install script for directory: /home/efeet/projects/inotify_recursive
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/inotify_recursive"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/usanchezc/projects/inotify_recursive/build/inotify_recursive")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/efeet/projects/inotify_recursive/build/inotify_recursive")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/inotify_recursive" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/inotify_recursive")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -54,7 +54,7 @@ else()
   set(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 endif()
 
-file(WRITE "/home/usanchezc/projects/inotify_recursive/build/${CMAKE_INSTALL_MANIFEST}" "")
+file(WRITE "/home/efeet/projects/inotify_recursive/build/${CMAKE_INSTALL_MANIFEST}" "")
 foreach(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  file(APPEND "/home/usanchezc/projects/inotify_recursive/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  file(APPEND "/home/efeet/projects/inotify_recursive/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 endforeach()
