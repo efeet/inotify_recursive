@@ -385,7 +385,7 @@ static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, c
     snprintf(newPrefix, sizeof(newPrefix), "%s/%s", newPathPrefix, newName);
     len = strlen(fullPath);
 
-    logMessage(VB_BASIC, "Rename: %s ==> %s", fullPath, newPrefix);
+    logMessage(0, "Rename: %s ==> %s", fullPath, newPrefix);
 
     for (j = 0; j < cacheSize; j++) {
         if (strncmp(fullPath, wlCache[j].path, len) == 0 &&
@@ -455,7 +455,7 @@ static int reinitialize(int oldInotifyFd)
     if (inotifyFd == -1)
         errExit("inotify_init");
 
-    logMessage(VB_BASIC, "    new inotifyFd = %d", inotifyFd);
+    logMessage(0, "    new inotifyFd = %d", inotifyFd);
 
     freeCache();
 
