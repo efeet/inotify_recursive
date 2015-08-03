@@ -6,19 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/efeet/projects/inotify_recursive/curr_time.c
-libraries_include.h
-/home/efeet/projects/inotify_recursive/libraries_include.h
-curr_time.h
 /home/efeet/projects/inotify_recursive/curr_time.h
-
-/home/efeet/projects/inotify_recursive/curr_time.h
-
-/home/efeet/projects/inotify_recursive/enum_ip_inter.c
-libraries_include.h
-/home/efeet/projects/inotify_recursive/libraries_include.h
-enum_ip_inter.h
-/home/efeet/projects/inotify_recursive/enum_ip_inter.h
 
 /home/efeet/projects/inotify_recursive/enum_ip_inter.h
 
@@ -93,10 +81,6 @@ net/if.h
 -
 socket_client.h
 /home/efeet/projects/inotify_recursive/socket_client.h
-
-/home/efeet/projects/inotify_recursive/socket_client.c
-libraries_include.h
-/home/efeet/projects/inotify_recursive/libraries_include.h
 
 /home/efeet/projects/inotify_recursive/socket_client.h
 

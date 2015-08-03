@@ -4,18 +4,17 @@
 
 #define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
                         } while (0)                                                                           
-                                                                                                              
-/* logMessage() flags */                                                                                      
+                                                                                                                                                                                              
 #define VB_BASIC 1      /* Basic messages */                                                                  
 #define VB_NOISY 2      /* Verbose messages */     
 static int verboseMask;
 
-   //Variables para Socket
-    int sock = 0, sock_send = 0;
-    char hostname[256];
-    char ipconsole[256];
-    char allIps[PATH_MAX];
-    int justkill = 0;
+//Variables para Socket
+int sock = 0, sock_send = 0;
+char hostname[256];
+char ipconsole[256];
+char allIps[PATH_MAX];
+int justkill = 0;
                                                                                   
 static int checkCache = 0;                                                                                                                                                                        
 static int readBufferSize = 0;   
@@ -75,14 +74,14 @@ static void displayInotifyEvent(struct inotify_event *ev)
     if (ev->mask & IN_ATTRIB)
         logMessage(VB_NOISY, "mask = IN_ATTRIB ");
     
-    /*if (ev->mask & IN_OPEN)
+    if (ev->mask & IN_OPEN)
         logMessage(VB_NOISY, "mask = IN_OPEN ");
     
     if (ev->mask & IN_MODIFY)
 	logMessage(VB_NOISY, "mask = IN_MODIFY ");
     
     if (ev->mask & IN_CLOSE_WRITE)
-	logMessage(VB_NOISY, "mask = IN_CLOSE_WRITE ");*/
+	logMessage(VB_NOISY, "mask = IN_CLOSE_WRITE ");
 
     if (ev->len > 0)
         logMessage(VB_NOISY, "Event Name = %s", ev->name);
@@ -118,11 +117,6 @@ static void CheckPerm(char fullPathPerm[PATH_MAX])
     }
 }
 
-/***********************************************************************/
-/* Data structures and functions for the watch list cache */
-/* We use a very simple data structure for caching watched directory
-   paths: a dynamically sized array that is searched linearly. Not
-   efficient, but our main goal is to demonstrate the use of inotify. */
 struct watch {
     int wd;                     /* Watch descriptor (-1 if slot unused) */
     char path[PATH_MAX];        /* Cached pathname */
@@ -131,16 +125,13 @@ struct watch {
 struct watch *wlCache = NULL;   /* Array of cached items */
 static int cacheSize = 0;       /* Current size of the array */
 
-/* Deallocate the watch cache */
 static void freeCache(void)
 {
-    free(wlCache);
+    free(wlCache);  //Free cache
     cacheSize = 0;
     wlCache = NULL;
 }
 
-/* Check that all pathnames in the cache are valid, and refer
-   to directories */
 static void checkCacheConsistency(void)
 {
     int failures, j;
@@ -166,8 +157,6 @@ static void checkCacheConsistency(void)
         logMessage(VB_NOISY, "checkCacheConsistency: %d failures\n",failures);
 }
 
-/* Check whether the cache contains the watch descriptor 'wd'.
-   If found, return the slot number, otherwise return -1. */
 static int findWatch(int wd)
 {
     int j;
@@ -179,9 +168,6 @@ static int findWatch(int wd)
     return -1;
 }
 
-/* Find and return the cache slot for the watch descriptor 'wd'.
-   The caller expects this watch descriptor to exist.  If it does not,
-   there is a problem, which is signaled by the -1 return. */
 static int findWatchChecked(int wd)
 {
     int slot;
@@ -194,16 +180,12 @@ static int findWatchChecked(int wd)
     logMessage(0, "Could not find watch %d\n", wd);
 }
 
-/* Mark a cache entry as unused */
 static void markCacheSlotEmpty(int slot)
 {
-    //logMessage(VB_NOISY,"        markCacheSlotEmpty: slot = %d;  wd = %d; path = %s\n",slot, wlCache[slot].wd, wlCache[slot].path);
-
-    wlCache[slot].wd = -1;
+    wlCache[slot].wd = -1;  //Marcado de slot libre.
     wlCache[slot].path[0] = '\0';
 }
 
-/* Find a free slot in the cache */
 static int findEmptyCacheSlot(void)
 {
     int j;
@@ -213,7 +195,6 @@ static int findEmptyCacheSlot(void)
         if (wlCache[j].wd == -1)
             return j; 
 
-    /* No free slot found; resize cache */
     cacheSize += ALLOC_INCR;
 
     wlCache = realloc(wlCache, cacheSize * sizeof(struct watch));
@@ -223,11 +204,9 @@ static int findEmptyCacheSlot(void)
     for (j = cacheSize - ALLOC_INCR; j < cacheSize; j++)
         markCacheSlotEmpty(j);
 
-    return cacheSize - ALLOC_INCR;      /* Return first slot in
-                                           newly allocated space */
+    return cacheSize - ALLOC_INCR;
 }
 
-/* Add an item to the cache */
 static int addWatchToCache(int wd, const char *pathname)
 {
     int slot;
@@ -240,8 +219,6 @@ static int addWatchToCache(int wd, const char *pathname)
     return slot;
 }
 
-/* Return the cache slot that corresponds to a particular pathname,
-   or -1 if the pathname is not in the cache */
 static int pathnameToCacheSlot(const char *pathname)
 {
     int j;
@@ -253,14 +230,11 @@ static int pathnameToCacheSlot(const char *pathname)
     return -1;
 }
 
-/* Is 'pathname' in the watch cache? */
 static int pathnameInCache(const char *pathname)
 {
     return pathnameToCacheSlot(pathname) >= 0;
 }
 
-/* Duplicate the pathnames supplied on the command line, perform
-   some sanity checking along the way */
 static void copyRootDirPaths(char *argv[])
 {
     char **p;
@@ -270,11 +244,7 @@ static void copyRootDirPaths(char *argv[])
     p = argv;
     numRootDirs = 0;
 
-    printf("->Backup\n");
-    /* Count the number of root paths, and check that the paths are valid */
     for (p = argv; *p != NULL; p++) {
-        /* Check that command-line arguments are directories */
-        printf("->Valor de p=%s\n",*p);
         if (lstat(*p, &sb) == -1) {
             fprintf(stderr, "lstat() failed on '%s'\n", *p);
             printf("Error lstat()\n");
@@ -288,7 +258,6 @@ static void copyRootDirPaths(char *argv[])
         numRootDirs++;
     }
 
-    /* Create a copy of the root directory pathnames */
     rootDirPaths = calloc(numRootDirs, sizeof(char *));
     if (rootDirPaths == NULL)
         errExit("calloc");
@@ -298,9 +267,7 @@ static void copyRootDirPaths(char *argv[])
         errExit("calloc");
 
     for (j = 0; j < numRootDirs; j++) {
-      printf("->Inicia argv[j]=%s\n",argv[j]);
         rootDirPaths[j] = strdup(argv[j]);
-        printf("rootDirPaths[j]=%s\n",rootDirPaths[j]);
         if (rootDirPaths[j] == NULL)
             errExit("strdup");
         if (lstat(argv[j], &rootDirStat[j]) == -1)
@@ -313,12 +280,9 @@ static void copyRootDirPaths(char *argv[])
             }
         }
     }
-    printf("ignoreRootDirs=%d\n",ignoreRootDirs);
     ignoreRootDirs = 0;
 }
 
-/* Return the address of the element in 'rootDirPaths' that points
-   to a string matching 'path', or NULL if there is no match */
 static char ** findRootDirPath(const char *path)
 {
     int j;
@@ -331,14 +295,11 @@ static char ** findRootDirPath(const char *path)
     return NULL;
 }
 
-/* Is 'path' one of the pathnames that was listed on the command line? */
 static int isRootDirPath(const char *path)
 {
     return findRootDirPath(path) != NULL;
 }
 
-/* We've ceased to monitor a root directory pathname (probably because it
-   was renamed), so zap this pathname from the root path list */
 static void zapRootDirPath(const char *path)
 {
     char **p;
@@ -359,14 +320,6 @@ static void zapRootDirPath(const char *path)
     }
 }
 
-/***********************************************************************/
-/* Below is a function called by nftw() to traverse a directory tree.
-   The function adds a watch for each directory in the tree. Each
-   successful call to this function should return 0 to indicate to
-   nftw() that the tree traversal should continue. */
-/* The usual hack for nftw()...  We can't pass arguments to the
-   function invoked by nftw(), so we use these global variables to
-   exchange information with the function. */
 static int dirCnt;      /* Count of directories added to watch list */
 static int ifd;         /* Inotify file descriptor */
 
@@ -378,8 +331,7 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
         return 0;               /* Ignore nondirectory files */
 
     /* Create a watch for this directory */
-    flags = IN_CREATE | IN_MOVED_FROM | IN_MOVED_TO | IN_DELETE_SELF | IN_ATTRIB;
-    //| IN_OPEN | IN_MODIFY | IN_CLOSE_WRITE;
+    flags = IN_CREATE | IN_MOVED_FROM | IN_MOVED_TO | IN_DELETE_SELF | IN_ATTRIB| IN_OPEN | IN_MODIFY | IN_CLOSE_WRITE;
 
     if (isRootDirPath(pathname))
         flags |= IN_MOVE_SELF;
@@ -394,24 +346,16 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
     }
 
     if (findWatch(wd) >= 0) {
-        /* This watch descriptor is already in the cache;
-           nothing more to do. */
         logMessage(VB_NOISY, "WD %d already in cache (%s)", wd, pathname);
         return 0;
     }
 
     dirCnt++;
-    /* Cache information about the watch */
     slot = addWatchToCache(wd, pathname);
-    /* Print the name of the current directory */
     logMessage(VB_NOISY, "    traverseTree-> : wd = %d [cache slot: %d]; %s",wd, slot, pathname);
     return 0;
 }
 
-/* Add the directory in 'pathname' to the watch list of the inotify
-   file descriptor 'inotifyFd'. The process is recursive: watch items
-   are also created for all of the subdirectories of 'pathname'.
-   Returns number of watches/cache entries added for this subtree. */
 static int watchDir(int inotifyFd, const char *pathname)
 {
     dirCnt = 0;
@@ -424,8 +368,6 @@ static int watchDir(int inotifyFd, const char *pathname)
     return dirCnt;
 }
 
-/* Add watches and cache entries for a subtree, logging a message
-   noting the number entries added. */
 static void watchSubtree(int inotifyFd, char *path)
 {
     int cnt;
@@ -433,11 +375,6 @@ static void watchSubtree(int inotifyFd, char *path)
     logMessage(VB_NOISY, "    watchSubtree: %s: %d entries added",path, cnt);
 }
 
-/***********************************************************************/
-/* The directory oldPathPrefix/oldName was renamed to
-   newPathPrefix/newName. Fix up cache entries for
-   oldPathPrefix/oldName and all of its subdirectories
-   to reflect the change. */
 static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, const char *newPathPrefix, const char *newName)
 {
     char fullPath[PATH_MAX], newPrefix[PATH_MAX];
@@ -461,9 +398,6 @@ static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, c
     }
 }
 
-/* Zap watches and cache entries for directory 'path' and all of its
-   subdirectories. Returns number of entries that we (tried to) zap,
-   or -1 if an inotify_rm_watch() call failed. */
 static int zapSubtree(int inotifyFd, char *path)
 {
     size_t len;
@@ -501,12 +435,6 @@ static int zapSubtree(int inotifyFd, char *path)
     return cnt;
 }
 
-/* When the cache is in an unrecoverable state, we discard the current
-   inotify file descriptor ('oldInotifyFd') and create a new one (returned
-   as the function result), and zap and rebuild the cache.
-   If 'oldInotifyFd' is -1, this is the initial build of the cache, or an
-   explicitly requested cache rebuild, so we are a little less verbose,
-   and we reset 'reinitCnt'.  */
 static int reinitialize(int oldInotifyFd)
 {
     int inotifyFd;
@@ -546,11 +474,6 @@ static int reinitialize(int oldInotifyFd)
     return inotifyFd;
 }
 
-/* Process the next inotify event in the buffer specified by 'buf'
-   and 'bufSize'. In most cases, a single event is consumed, but
-   if there is an IN_MOVED_FROM+IN_MOVED_TO pair that share a cookie
-   value, both events are consumed.
-   Returns the number of bytes in the event(s) consumed from 'buf'.  */
 static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, int firstTry)
 {
     char fullPath[PATH_MAX];
@@ -663,10 +586,6 @@ static void alarmHandler(int sig)
     return;             /* Just interrupt read() */
 }
 
-/* Read a block of events from the inotify file descriptor, 'inotifyFd'.
-   Process the events relating to directories in the subtree we are
-   monitoring, in order to keep our cached view of the subtree in sync
-   with the filesystem. */
 static void processInotifyEvents(int *inotifyFd)
 {
     char buf[INOTIFY_READ_BUF_LEN] __attribute__ ((aligned(__alignof__(struct inotify_event))));
@@ -699,8 +618,6 @@ static void processInotifyEvents(int *inotifyFd)
     }
 
     inotifyReadCnt++;
-    //Imprime los eventos como los va leyendo y los bytes en los enventos.
-    //logMessage(VB_NOISY,"\n==========> Read %d: got %zd bytes\n", inotifyReadCnt, numRead);
 
     /* Process each event in the buffer returned by read() */
     for (evp = buf; evp < buf + numRead - 16; ) {
