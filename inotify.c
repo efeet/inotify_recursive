@@ -15,6 +15,7 @@ char hostname[256];
 char ipconsole[256];
 char allIps[PATH_MAX];
 int justkill = 0;
+int modifiedband=0, showchanges = 0;
                                                                                   
 static int checkCache = 0;                                                                                                                                                                        
 static int readBufferSize = 0;   
@@ -48,43 +49,83 @@ static void displayInotifyEvent(struct inotify_event *ev)
     if (ev->cookie > 0)
         logMessage(VB_NOISY, "cookie = %4d; ", ev->cookie);
     
-    if (ev->mask & IN_ISDIR)
+    if (ev->mask & IN_ISDIR){
         logMessage(VB_NOISY, "mask = IN_ISDIR ");
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
 
-    if (ev->mask & IN_CREATE)
+    if (ev->mask & IN_CREATE){
+        modifiedband = 0;
         logMessage(VB_NOISY, "mask = IN_CREATE ");
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
 
-    if (ev->mask & IN_DELETE_SELF)
+    if (ev->mask & IN_DELETE_SELF){
+	printf("Borrado1\n");
         logMessage(VB_NOISY, "mask = IN_DELETE_SELF ");
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
+    
+    if (ev->mask & IN_DELETE){
+	printf("Borrado1.5\n");
+        logMessage(VB_NOISY, "mask = IN_DELETE ");
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
 
-    if (ev->mask & IN_MOVE_SELF)
+    if (ev->mask & IN_MOVE_SELF){
         logMessage(VB_NOISY, "mask = IN_MOVE_SELF ");
-    if (ev->mask & IN_MOVED_FROM)
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
+    
+    if (ev->mask & IN_MOVED_FROM){
         logMessage(VB_NOISY, "mask = IN_MOVED_FROM ");
-    if (ev->mask & IN_MOVED_TO)
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
+    
+    if (ev->mask & IN_MOVED_TO){
         logMessage(VB_NOISY, "mask = IN_MOVED_TO ");
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
 
-    if (ev->mask & IN_IGNORED)
+    if (ev->mask & IN_IGNORED){
         logMessage(VB_NOISY, "mask = IN_IGNORED ");
-    if (ev->mask & IN_Q_OVERFLOW)
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
+    
+    if (ev->mask & IN_Q_OVERFLOW){
         logMessage(VB_NOISY, "mask = IN_Q_OVERFLOW ");
-    if (ev->mask & IN_UNMOUNT)
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
+    
+    if (ev->mask & IN_UNMOUNT){
         logMessage(VB_NOISY, "mask = IN_UNMOUNT ");
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
     
-    if (ev->mask & IN_ATTRIB)
+    if (ev->mask & IN_ATTRIB){
         logMessage(VB_NOISY, "mask = IN_ATTRIB ");
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
     
-    if (ev->mask & IN_OPEN)
-        logMessage(VB_NOISY, "mask = IN_OPEN ");
+    //if (ev->mask & IN_OPEN)
+        //logMessage(VB_NOISY, "mask = IN_OPEN ");
     
-    if (ev->mask & IN_MODIFY)
-	logMessage(VB_NOISY, "mask = IN_MODIFY ");
+    //if (ev->mask & IN_MODIFY)
+	//logMessage(VB_NOISY, "mask = IN_MODIFY ");
     
-    if (ev->mask & IN_CLOSE_WRITE)
-	logMessage(VB_NOISY, "mask = IN_CLOSE_WRITE ");
-
-    if (ev->len > 0)
-        logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    //if (ev->mask & IN_CLOSE_WRITE)
+	//logMessage(VB_NOISY, "mask = IN_CLOSE_WRITE ");
 }
 
 static void CheckPerm(char fullPathPerm[PATH_MAX])
@@ -331,7 +372,7 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
         return 0;               /* Ignore nondirectory files */
 
     /* Create a watch for this directory */
-    flags = IN_CREATE | IN_MOVED_FROM | IN_MOVED_TO | IN_DELETE_SELF | IN_ATTRIB| IN_OPEN | IN_MODIFY | IN_CLOSE_WRITE;
+    flags = IN_CREATE | IN_MOVED_FROM | IN_MOVED_TO | IN_DELETE_SELF | IN_DELETE | IN_ATTRIB| IN_OPEN | IN_MODIFY | IN_CLOSE_WRITE;
 
     if (isRootDirPath(pathname))
         flags |= IN_MOVE_SELF;
@@ -505,6 +546,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
             watchSubtree(*inotifyFd, fullPath);
 
     } else if (ev->mask & IN_DELETE_SELF) {
+	printf("Borrado2\n");
         logMessage(0, "Clearing watchlist item %d (%s)",ev->wd, wlCache[evCacheSlot].path);
 
         if (isRootDirPath(wlCache[evCacheSlot].path))
@@ -515,25 +557,17 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     } else if ((ev->mask & (IN_MOVED_FROM | IN_ISDIR)) == (IN_MOVED_FROM | IN_ISDIR)) {
         struct inotify_event *nextEv;
         nextEv = (struct inotify_event *) (buf + evLen);
-        if (((char *) nextEv < buf + bufSize) &&
-                (nextEv->mask & IN_MOVED_TO) &&
-                (nextEv->cookie == ev->cookie)) {
-
+        if (((char *) nextEv < buf + bufSize) && (nextEv->mask & IN_MOVED_TO) && (nextEv->cookie == ev->cookie)){
             int nextEvCacheSlot;
-
             nextEvCacheSlot = findWatchChecked(nextEv->wd);
-
             if (nextEvCacheSlot == -1) {
                 /* Cache reached an inconsistent state */
                 *inotifyFd = reinitialize(*inotifyFd);
                 /* Discard all remaining events in current read() buffer */
                 return INOTIFY_READ_BUF_LEN;
             }
-
             rewriteCachedPaths(wlCache[evCacheSlot].path, ev->name,wlCache[nextEvCacheSlot].path, nextEv->name);
-
             evLen += sizeof(struct inotify_event) + nextEv->len;
-
         } else if (((char *) nextEv < buf + bufSize) || !firstTry) {
             logMessage(VB_NOISY, "MOVED_OUT: %p %p",wlCache[evCacheSlot].path, ev->name);
             logMessage(VB_NOISY, "firstTry = %d; remaining bytes = %d",firstTry, buf + bufSize - (char *) nextEv);
@@ -545,7 +579,6 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
                 /* Discard all remaining events in current read() buffer */
                 return INOTIFY_READ_BUF_LEN;
             }
-
         } else {
             logMessage(VB_NOISY, "HANGING IN_MOVED_FROM");
             return -1;  /* Tell our caller to do another read() */
@@ -573,7 +606,15 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
         }
     } else if(ev->mask & IN_ATTRIB){
 	snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
-	  CheckPerm(fullPath);
+	CheckPerm(fullPath);
+    } else if(ev->mask & IN_OPEN && modifiedband == 0){
+	modifiedband = 1;
+    } else if(ev->mask & IN_MODIFY && modifiedband == 1){
+	modifiedband = 2;
+    } else if(ev->mask & IN_CLOSE_WRITE && modifiedband == 2 && showchanges == 1){
+	snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
+	logMessage(0, "Modificacion de contenido en: %s",fullPath);
+	modifiedband = 0;
     }
     if (checkCache)
         checkCacheConsistency();
@@ -677,7 +718,7 @@ static int LoadValues(char *config_file)
     FILE *fvalues;
     char line[1024 + 1];
     char *token, *token2, buf[12];
-    char *parameters[] = { "logpath", "pidpath" , "logverbose" , "ipconsole" , "paths" }; 
+    char *parameters[] = { "logpath", "pidpath" , "logverbose" , "ipconsole" , "paths", "showchanges" }; 
     char **argv2 = malloc(2*sizeof(char *));
     size_t argc2 = 0;
     int fd, n, max_watches;
@@ -748,6 +789,10 @@ static int LoadValues(char *config_file)
 	      }
 	      argv2[argc2] = NULL;
 	      copyRootDirPaths(argv2);
+	    }
+	    if(!strncmp(token, parameters[5], sizeof(parameters[5]))){
+	      token = strtok( NULL, "\t =\n\r");
+	      showchanges = atoi(token);
 	    }
 	  }
 	  else{
