@@ -56,7 +56,6 @@ static void displayInotifyEvent(struct inotify_event *ev)
     }
 
     if (ev->mask & IN_CREATE){
-        modifiedband = 0;
         logMessage(VB_NOISY, "mask = IN_CREATE ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
