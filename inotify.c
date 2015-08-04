@@ -1,21 +1,21 @@
 #define _GNU_SOURCE   
 #include "libraries_include.h"
 #include "enum_ip_inter.h"
-
+ 
 #define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
                         } while (0)                                                                           
-                                                                                                                                                                                              
+                                                                                                              
+/* logMessage() flags */                                                                                      
 #define VB_BASIC 1      /* Basic messages */                                                                  
 #define VB_NOISY 2      /* Verbose messages */     
 static int verboseMask;
 
-//Variables para Socket
-int sock = 0, sock_send = 0;
-char hostname[256];
-char ipconsole[256];
-char allIps[PATH_MAX];
-int justkill = 0;
-int modifiedband=0, showchanges = 0;
+   //Variables para Socket
+    int sock = 0, sock_send = 0;
+    char hostname[256];
+    char ipconsole[256];
+    char allIps[PATH_MAX];
+    int justkill = 0;
                                                                                   
 static int checkCache = 0;                                                                                                                                                                        
 static int readBufferSize = 0;   
@@ -49,83 +49,43 @@ static void displayInotifyEvent(struct inotify_event *ev)
     if (ev->cookie > 0)
         logMessage(VB_NOISY, "cookie = %4d; ", ev->cookie);
     
-    if (ev->mask & IN_ISDIR){
+    if (ev->mask & IN_ISDIR)
         logMessage(VB_NOISY, "mask = IN_ISDIR ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
 
-    if (ev->mask & IN_CREATE){
-        modifiedband = 0;
+    if (ev->mask & IN_CREATE)
         logMessage(VB_NOISY, "mask = IN_CREATE ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
 
-    if (ev->mask & IN_DELETE_SELF){
-	printf("Borrado1\n");
+    if (ev->mask & IN_DELETE_SELF)
         logMessage(VB_NOISY, "mask = IN_DELETE_SELF ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    
-    if (ev->mask & IN_DELETE){
-	printf("Borrado1.5\n");
-        logMessage(VB_NOISY, "mask = IN_DELETE ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
 
-    if (ev->mask & IN_MOVE_SELF){
+    if (ev->mask & IN_MOVE_SELF)
         logMessage(VB_NOISY, "mask = IN_MOVE_SELF ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    
-    if (ev->mask & IN_MOVED_FROM){
+    if (ev->mask & IN_MOVED_FROM)
         logMessage(VB_NOISY, "mask = IN_MOVED_FROM ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    
-    if (ev->mask & IN_MOVED_TO){
+    if (ev->mask & IN_MOVED_TO)
         logMessage(VB_NOISY, "mask = IN_MOVED_TO ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
 
-    if (ev->mask & IN_IGNORED){
+    if (ev->mask & IN_IGNORED)
         logMessage(VB_NOISY, "mask = IN_IGNORED ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    
-    if (ev->mask & IN_Q_OVERFLOW){
+    if (ev->mask & IN_Q_OVERFLOW)
         logMessage(VB_NOISY, "mask = IN_Q_OVERFLOW ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    
-    if (ev->mask & IN_UNMOUNT){
+    if (ev->mask & IN_UNMOUNT)
         logMessage(VB_NOISY, "mask = IN_UNMOUNT ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
     
-    if (ev->mask & IN_ATTRIB){
+    if (ev->mask & IN_ATTRIB)
         logMessage(VB_NOISY, "mask = IN_ATTRIB ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
     
-    //if (ev->mask & IN_OPEN)
-        //logMessage(VB_NOISY, "mask = IN_OPEN ");
+    /*if (ev->mask & IN_OPEN)
+        logMessage(VB_NOISY, "mask = IN_OPEN ");
     
-    //if (ev->mask & IN_MODIFY)
-	//logMessage(VB_NOISY, "mask = IN_MODIFY ");
+    if (ev->mask & IN_MODIFY)
+	logMessage(VB_NOISY, "mask = IN_MODIFY ");
     
-    //if (ev->mask & IN_CLOSE_WRITE)
-	//logMessage(VB_NOISY, "mask = IN_CLOSE_WRITE ");
+    if (ev->mask & IN_CLOSE_WRITE)
+	logMessage(VB_NOISY, "mask = IN_CLOSE_WRITE ");*/
+
+    if (ev->len > 0)
+        logMessage(VB_NOISY, "Event Name = %s", ev->name);
 }
 
 static void CheckPerm(char fullPathPerm[PATH_MAX])
@@ -158,6 +118,11 @@ static void CheckPerm(char fullPathPerm[PATH_MAX])
     }
 }
 
+/***********************************************************************/
+/* Data structures and functions for the watch list cache */
+/* We use a very simple data structure for caching watched directory
+   paths: a dynamically sized array that is searched linearly. Not
+   efficient, but our main goal is to demonstrate the use of inotify. */
 struct watch {
     int wd;                     /* Watch descriptor (-1 if slot unused) */
     char path[PATH_MAX];        /* Cached pathname */
@@ -166,13 +131,16 @@ struct watch {
 struct watch *wlCache = NULL;   /* Array of cached items */
 static int cacheSize = 0;       /* Current size of the array */
 
+/* Deallocate the watch cache */
 static void freeCache(void)
 {
-    free(wlCache);  //Free cache
+    free(wlCache);
     cacheSize = 0;
     wlCache = NULL;
 }
 
+/* Check that all pathnames in the cache are valid, and refer
+   to directories */
 static void checkCacheConsistency(void)
 {
     int failures, j;
@@ -198,6 +166,8 @@ static void checkCacheConsistency(void)
         logMessage(VB_NOISY, "checkCacheConsistency: %d failures\n",failures);
 }
 
+/* Check whether the cache contains the watch descriptor 'wd'.
+   If found, return the slot number, otherwise return -1. */
 static int findWatch(int wd)
 {
     int j;
@@ -209,6 +179,9 @@ static int findWatch(int wd)
     return -1;
 }
 
+/* Find and return the cache slot for the watch descriptor 'wd'.
+   The caller expects this watch descriptor to exist.  If it does not,
+   there is a problem, which is signaled by the -1 return. */
 static int findWatchChecked(int wd)
 {
     int slot;
@@ -221,21 +194,26 @@ static int findWatchChecked(int wd)
     logMessage(0, "Could not find watch %d\n", wd);
 }
 
+/* Mark a cache entry as unused */
 static void markCacheSlotEmpty(int slot)
 {
-    wlCache[slot].wd = -1;  //Marcado de slot libre.
+    //logMessage(VB_NOISY,"        markCacheSlotEmpty: slot = %d;  wd = %d; path = %s\n",slot, wlCache[slot].wd, wlCache[slot].path);
+
+    wlCache[slot].wd = -1;
     wlCache[slot].path[0] = '\0';
 }
 
+/* Find a free slot in the cache */
 static int findEmptyCacheSlot(void)
 {
     int j;
-    const int ALLOC_INCR = 200;
+    const int ALLOC_INCR = 10;
 
     for (j = 0; j < cacheSize; j++)
         if (wlCache[j].wd == -1)
             return j; 
 
+    /* No free slot found; resize cache */
     cacheSize += ALLOC_INCR;
 
     wlCache = realloc(wlCache, cacheSize * sizeof(struct watch));
@@ -245,9 +223,11 @@ static int findEmptyCacheSlot(void)
     for (j = cacheSize - ALLOC_INCR; j < cacheSize; j++)
         markCacheSlotEmpty(j);
 
-    return cacheSize - ALLOC_INCR;
+    return cacheSize - ALLOC_INCR;      /* Return first slot in
+                                           newly allocated space */
 }
 
+/* Add an item to the cache */
 static int addWatchToCache(int wd, const char *pathname)
 {
     int slot;
@@ -260,6 +240,8 @@ static int addWatchToCache(int wd, const char *pathname)
     return slot;
 }
 
+/* Return the cache slot that corresponds to a particular pathname,
+   or -1 if the pathname is not in the cache */
 static int pathnameToCacheSlot(const char *pathname)
 {
     int j;
@@ -271,11 +253,14 @@ static int pathnameToCacheSlot(const char *pathname)
     return -1;
 }
 
+/* Is 'pathname' in the watch cache? */
 static int pathnameInCache(const char *pathname)
 {
     return pathnameToCacheSlot(pathname) >= 0;
 }
 
+/* Duplicate the pathnames supplied on the command line, perform
+   some sanity checking along the way */
 static void copyRootDirPaths(char *argv[])
 {
     char **p;
@@ -285,7 +270,11 @@ static void copyRootDirPaths(char *argv[])
     p = argv;
     numRootDirs = 0;
 
+    printf("->Backup\n");
+    /* Count the number of root paths, and check that the paths are valid */
     for (p = argv; *p != NULL; p++) {
+        /* Check that command-line arguments are directories */
+        printf("->Valor de p=%s\n",*p);
         if (lstat(*p, &sb) == -1) {
             fprintf(stderr, "lstat() failed on '%s'\n", *p);
             printf("Error lstat()\n");
@@ -299,6 +288,7 @@ static void copyRootDirPaths(char *argv[])
         numRootDirs++;
     }
 
+    /* Create a copy of the root directory pathnames */
     rootDirPaths = calloc(numRootDirs, sizeof(char *));
     if (rootDirPaths == NULL)
         errExit("calloc");
@@ -308,7 +298,9 @@ static void copyRootDirPaths(char *argv[])
         errExit("calloc");
 
     for (j = 0; j < numRootDirs; j++) {
+      printf("->Inicia argv[j]=%s\n",argv[j]);
         rootDirPaths[j] = strdup(argv[j]);
+        printf("rootDirPaths[j]=%s\n",rootDirPaths[j]);
         if (rootDirPaths[j] == NULL)
             errExit("strdup");
         if (lstat(argv[j], &rootDirStat[j]) == -1)
@@ -321,9 +313,12 @@ static void copyRootDirPaths(char *argv[])
             }
         }
     }
+    printf("ignoreRootDirs=%d\n",ignoreRootDirs);
     ignoreRootDirs = 0;
 }
 
+/* Return the address of the element in 'rootDirPaths' that points
+   to a string matching 'path', or NULL if there is no match */
 static char ** findRootDirPath(const char *path)
 {
     int j;
@@ -336,11 +331,14 @@ static char ** findRootDirPath(const char *path)
     return NULL;
 }
 
+/* Is 'path' one of the pathnames that was listed on the command line? */
 static int isRootDirPath(const char *path)
 {
     return findRootDirPath(path) != NULL;
 }
 
+/* We've ceased to monitor a root directory pathname (probably because it
+   was renamed), so zap this pathname from the root path list */
 static void zapRootDirPath(const char *path)
 {
     char **p;
@@ -361,6 +359,14 @@ static void zapRootDirPath(const char *path)
     }
 }
 
+/***********************************************************************/
+/* Below is a function called by nftw() to traverse a directory tree.
+   The function adds a watch for each directory in the tree. Each
+   successful call to this function should return 0 to indicate to
+   nftw() that the tree traversal should continue. */
+/* The usual hack for nftw()...  We can't pass arguments to the
+   function invoked by nftw(), so we use these global variables to
+   exchange information with the function. */
 static int dirCnt;      /* Count of directories added to watch list */
 static int ifd;         /* Inotify file descriptor */
 
@@ -372,7 +378,8 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
         return 0;               /* Ignore nondirectory files */
 
     /* Create a watch for this directory */
-    flags = IN_CREATE | IN_MOVED_FROM | IN_MOVED_TO | IN_DELETE_SELF | IN_DELETE | IN_ATTRIB| IN_OPEN | IN_MODIFY | IN_CLOSE_WRITE;
+    flags = IN_CREATE | IN_MOVED_FROM | IN_MOVED_TO | IN_DELETE_SELF | IN_ATTRIB;
+    //| IN_OPEN | IN_MODIFY | IN_CLOSE_WRITE;
 
     if (isRootDirPath(pathname))
         flags |= IN_MOVE_SELF;
@@ -387,16 +394,24 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
     }
 
     if (findWatch(wd) >= 0) {
+        /* This watch descriptor is already in the cache;
+           nothing more to do. */
         logMessage(VB_NOISY, "WD %d already in cache (%s)", wd, pathname);
         return 0;
     }
 
     dirCnt++;
+    /* Cache information about the watch */
     slot = addWatchToCache(wd, pathname);
+    /* Print the name of the current directory */
     logMessage(VB_NOISY, "    traverseTree-> : wd = %d [cache slot: %d]; %s",wd, slot, pathname);
     return 0;
 }
 
+/* Add the directory in 'pathname' to the watch list of the inotify
+   file descriptor 'inotifyFd'. The process is recursive: watch items
+   are also created for all of the subdirectories of 'pathname'.
+   Returns number of watches/cache entries added for this subtree. */
 static int watchDir(int inotifyFd, const char *pathname)
 {
     dirCnt = 0;
@@ -409,6 +424,8 @@ static int watchDir(int inotifyFd, const char *pathname)
     return dirCnt;
 }
 
+/* Add watches and cache entries for a subtree, logging a message
+   noting the number entries added. */
 static void watchSubtree(int inotifyFd, char *path)
 {
     int cnt;
@@ -416,6 +433,11 @@ static void watchSubtree(int inotifyFd, char *path)
     logMessage(VB_NOISY, "    watchSubtree: %s: %d entries added",path, cnt);
 }
 
+/***********************************************************************/
+/* The directory oldPathPrefix/oldName was renamed to
+   newPathPrefix/newName. Fix up cache entries for
+   oldPathPrefix/oldName and all of its subdirectories
+   to reflect the change. */
 static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, const char *newPathPrefix, const char *newName)
 {
     char fullPath[PATH_MAX], newPrefix[PATH_MAX];
@@ -423,6 +445,7 @@ static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, c
     size_t len;
     int j;
 
+    snprintf(fullPath, sizeof(fullPath), "%s/%s", oldPathPrefix, oldName);
     snprintf(newPrefix, sizeof(newPrefix), "%s/%s", newPathPrefix, newName);
     len = strlen(fullPath);
 
@@ -434,11 +457,14 @@ static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, c
                      wlCache[j].path[len] == '\0')) {
             snprintf(newPath, sizeof(newPath), "%s%s", newPrefix,&wlCache[j].path[len]);
             strncpy(wlCache[j].path, newPath, PATH_MAX);
-            logMessage(VB_NOISY, "  rewriteCachedPaths -> wd %d [cache slot %d] ==> %s",wlCache[j].wd, j, newPath);
+            logMessage(0, "  rewriteCachedPaths -> wd %d [cache slot %d] ==> %s",wlCache[j].wd, j, newPath);
         }
     }
 }
 
+/* Zap watches and cache entries for directory 'path' and all of its
+   subdirectories. Returns number of entries that we (tried to) zap,
+   or -1 if an inotify_rm_watch() call failed. */
 static int zapSubtree(int inotifyFd, char *path)
 {
     size_t len;
@@ -446,7 +472,7 @@ static int zapSubtree(int inotifyFd, char *path)
     int cnt;
     char *pn;
 
-    logMessage(VB_NOISY, "Zapping subtree: %s", path);
+    logMessage(0, "Zapping subtree: %s", path);
 
     len = strlen(path);
     pn = strdup(path);
@@ -459,7 +485,7 @@ static int zapSubtree(int inotifyFd, char *path)
                     (wlCache[j].path[len] == '/' ||
                      wlCache[j].path[len] == '\0')) {
 
-                logMessage(VB_NOISY,"    removing watch: wd = %d (%s)",wlCache[j].wd, wlCache[j].path);
+                logMessage(0,"    removing watch: wd = %d (%s)",wlCache[j].wd, wlCache[j].path);
 
                 if (inotify_rm_watch(inotifyFd, wlCache[j].wd) == -1) {
                     logMessage(0, "inotify_rm_watch wd = %d (%s): %s",wlCache[j].wd, wlCache[j].path, strerror(errno));
@@ -476,6 +502,12 @@ static int zapSubtree(int inotifyFd, char *path)
     return cnt;
 }
 
+/* When the cache is in an unrecoverable state, we discard the current
+   inotify file descriptor ('oldInotifyFd') and create a new one (returned
+   as the function result), and zap and rebuild the cache.
+   If 'oldInotifyFd' is -1, this is the initial build of the cache, or an
+   explicitly requested cache rebuild, so we are a little less verbose,
+   and we reset 'reinitCnt'.  */
 static int reinitialize(int oldInotifyFd)
 {
     int inotifyFd;
@@ -515,6 +547,11 @@ static int reinitialize(int oldInotifyFd)
     return inotifyFd;
 }
 
+/* Process the next inotify event in the buffer specified by 'buf'
+   and 'bufSize'. In most cases, a single event is consumed, but
+   if there is an IN_MOVED_FROM+IN_MOVED_TO pair that share a cookie
+   value, both events are consumed.
+   Returns the number of bytes in the event(s) consumed from 'buf'.  */
 static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, int firstTry)
 {
     char fullPath[PATH_MAX];
@@ -546,7 +583,6 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
             watchSubtree(*inotifyFd, fullPath);
 
     } else if (ev->mask & IN_DELETE_SELF) {
-	printf("Borrado2\n");
         logMessage(0, "Clearing watchlist item %d (%s)",ev->wd, wlCache[evCacheSlot].path);
 
         if (isRootDirPath(wlCache[evCacheSlot].path))
@@ -557,17 +593,25 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
     } else if ((ev->mask & (IN_MOVED_FROM | IN_ISDIR)) == (IN_MOVED_FROM | IN_ISDIR)) {
         struct inotify_event *nextEv;
         nextEv = (struct inotify_event *) (buf + evLen);
-        if (((char *) nextEv < buf + bufSize) && (nextEv->mask & IN_MOVED_TO) && (nextEv->cookie == ev->cookie)){
+        if (((char *) nextEv < buf + bufSize) &&
+                (nextEv->mask & IN_MOVED_TO) &&
+                (nextEv->cookie == ev->cookie)) {
+
             int nextEvCacheSlot;
+
             nextEvCacheSlot = findWatchChecked(nextEv->wd);
+
             if (nextEvCacheSlot == -1) {
                 /* Cache reached an inconsistent state */
                 *inotifyFd = reinitialize(*inotifyFd);
                 /* Discard all remaining events in current read() buffer */
                 return INOTIFY_READ_BUF_LEN;
             }
+
             rewriteCachedPaths(wlCache[evCacheSlot].path, ev->name,wlCache[nextEvCacheSlot].path, nextEv->name);
+
             evLen += sizeof(struct inotify_event) + nextEv->len;
+
         } else if (((char *) nextEv < buf + bufSize) || !firstTry) {
             logMessage(VB_NOISY, "MOVED_OUT: %p %p",wlCache[evCacheSlot].path, ev->name);
             logMessage(VB_NOISY, "firstTry = %d; remaining bytes = %d",firstTry, buf + bufSize - (char *) nextEv);
@@ -579,9 +623,10 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
                 /* Discard all remaining events in current read() buffer */
                 return INOTIFY_READ_BUF_LEN;
             }
+
         } else {
             logMessage(VB_NOISY, "HANGING IN_MOVED_FROM");
-            return -1;  /* Tell our caller to do another read() */
+            return -2;  /* Tell our caller to do another read() */
         }
 
     } else if (ev->mask & IN_Q_OVERFLOW) {
@@ -606,19 +651,12 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
         }
     } else if(ev->mask & IN_ATTRIB){
 	snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
-	CheckPerm(fullPath);
-    } else if(ev->mask & IN_OPEN && modifiedband == 0){
-	modifiedband = 1;
-    } else if(ev->mask & IN_MODIFY && modifiedband == 1){
-	modifiedband = 2;
-    } else if(ev->mask & IN_CLOSE_WRITE && modifiedband == 2 && showchanges == 1){
-	snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
-	logMessage(0, "Modificacion de contenido en: %s",fullPath);
-	modifiedband = 0;
+	  CheckPerm(fullPath);
     }
     if (checkCache)
         checkCacheConsistency();
 
+    printf("Regresando evLen = %d\n", evLen);
     return evLen;
 }
 
@@ -627,6 +665,10 @@ static void alarmHandler(int sig)
     return;             /* Just interrupt read() */
 }
 
+/* Read a block of events from the inotify file descriptor, 'inotifyFd'.
+   Process the events relating to directories in the subtree we are
+   monitoring, in order to keep our cached view of the subtree in sync
+   with the filesystem. */
 static void processInotifyEvents(int *inotifyFd)
 {
     char buf[INOTIFY_READ_BUF_LEN] __attribute__ ((aligned(__alignof__(struct inotify_event))));
@@ -659,6 +701,8 @@ static void processInotifyEvents(int *inotifyFd)
     }
 
     inotifyReadCnt++;
+    //Imprime los eventos como los va leyendo y los bytes en los enventos.
+    //logMessage(VB_NOISY,"\n==========> Read %d: got %zd bytes\n", inotifyReadCnt, numRead);
 
     /* Process each event in the buffer returned by read() */
     for (evp = buf; evp < buf + numRead - 16; ) {
@@ -677,7 +721,6 @@ static void processInotifyEvents(int *inotifyFd)
 
             /* Shuffle remaining bytes to start of buffer */
             for (j = 0; j < numRead; j++)
-                printf("905 -  FOR: Valores J=%d, buf=%s[j], evp=%s[j]\n",j,buf[j],evp[j]);
                 buf[j] = evp[j];
 
             /* Do a read with timeout, to allow next events (if any) to arrive */
@@ -718,7 +761,7 @@ static int LoadValues(char *config_file)
     FILE *fvalues;
     char line[1024 + 1];
     char *token, *token2, buf[12];
-    char *parameters[] = { "logpath", "pidpath" , "logverbose" , "ipconsole" , "paths", "showchanges" }; 
+    char *parameters[] = { "logpath", "pidpath" , "logverbose" , "ipconsole" , "paths" }; 
     char **argv2 = malloc(2*sizeof(char *));
     size_t argc2 = 0;
     int fd, n, max_watches;
@@ -751,17 +794,17 @@ static int LoadValues(char *config_file)
         token = strtok(line, "\t =\n\r");
         if( token != NULL && token[0] != '#' ){
 	  if(justkill == 0){
-	    if(!strncmp(token, parameters[0], sizeof(parameters[0]))){
+	    if(!strncmp(token, parameters[0], sizeof(parameters[0]))){ //Cargamos parametro de archivo de LOG.
 	      token = strtok( NULL, "\t =\n\r");
-	      logfp = fopen(token, "w+"); //Se puede Reemplazar por parametro de archivo de configuracion
+	      logfp = fopen(token, "w+"); 
 	      if (logfp == NULL)
 		errExit("fopen");
 	      setbuf(logfp, NULL);
 	    }  
-	    if(!strncmp(token, parameters[1], sizeof(parameters[1]))){
+	    if(!strncmp(token, parameters[1], sizeof(parameters[1]))){ //Cargamos parametro de archivo PID.
 	      id_t pid = getpid();
 	      token = strtok( NULL, "\t =\n\r");
-	      FILE *fpid = fopen(token, "w"); //Se puede Reemplazar por parametro de archivo de configuracion
+	      FILE *fpid = fopen(token, "w"); 
 	      if (!fpid){
 		perror("Archivo PID Error\n");
 		exit(EXIT_FAILURE);
@@ -769,18 +812,18 @@ static int LoadValues(char *config_file)
 	      fprintf(fpid, "%d\n", pid);
 	      fclose(fpid);
 	    }
-	    if(!strncmp(token, parameters[2], sizeof(parameters[2]))){
+	    if(!strncmp(token, parameters[2], sizeof(parameters[2]))){ //Cargamos parametro de Verbose de Log.
 	      token = strtok( NULL, "\t =\n\r");
 	      verboseMask = atoi(token);
 	      logMessage(VB_BASIC,"Log establecido como Basico...");
 	      logMessage(VB_NOISY,"Log establecido como Ruidoso...");
 	    }
-	    if(!strncmp(token, parameters[3], sizeof(parameters[3]))){
+	    if(!strncmp(token, parameters[3], sizeof(parameters[3]))){ //Cargamos parametro de la IP de Consola que recibe mensajes.
 	      token = strtok( NULL, "\t =\n\r");
 	      strncpy(ipconsole, token, sizeof(ipconsole)-1 );
 	      ipconsole[sizeof(ipconsole)-1] = '\0';
 	    }
-	    if(!strncmp(token, parameters[4], sizeof(parameters[4]))){
+	    if(!strncmp(token, parameters[4], sizeof(parameters[4]))){ //Cargamos parametros de las rutas a monitorear.
 	      token = strtok( NULL, "\n\r");
 	      token2 = strtok( token, "|");
 	      while(token2 != NULL){
@@ -790,15 +833,11 @@ static int LoadValues(char *config_file)
 	      argv2[argc2] = NULL;
 	      copyRootDirPaths(argv2);
 	    }
-	    if(!strncmp(token, parameters[5], sizeof(parameters[5]))){
-	      token = strtok( NULL, "\t =\n\r");
-	      showchanges = atoi(token);
-	    }
 	  }
 	  else{
 	    int getpid = 0;
 	    char killagent[PATH_MAX];
-	    if(!strncmp(token, parameters[1], sizeof(parameters[1]))){
+	    if(!strncmp(token, parameters[1], sizeof(parameters[1]))){ //Cargamos el parametro de PID para matar el proceso.
 	      token = strtok( NULL, "\t =\n\r");
 	      FILE *fpid = fopen(token, "r");
 	      if (!fpid){
