@@ -207,7 +207,7 @@ static void markCacheSlotEmpty(int slot)
 static int findEmptyCacheSlot(void)
 {
     int j;
-    const int ALLOC_INCR = 200;
+    const int ALLOC_INCR = 10;
 
     for (j = 0; j < cacheSize; j++)
         if (wlCache[j].wd == -1)
@@ -445,10 +445,11 @@ static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, c
     size_t len;
     int j;
 
+    snprintf(fullPath, sizeof(fullPath), "%s/%s", oldPathPrefix, oldName);
     snprintf(newPrefix, sizeof(newPrefix), "%s/%s", newPathPrefix, newName);
     len = strlen(fullPath);
 
-    logMessage(VB_BASIC, "Rename: %s ==> %s", fullPath, newPrefix);
+    logMessage(0, "Rename: %s ==> %s", fullPath, newPrefix);
 
     for (j = 0; j < cacheSize; j++) {
         if (strncmp(fullPath, wlCache[j].path, len) == 0 &&
@@ -456,7 +457,7 @@ static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, c
                      wlCache[j].path[len] == '\0')) {
             snprintf(newPath, sizeof(newPath), "%s%s", newPrefix,&wlCache[j].path[len]);
             strncpy(wlCache[j].path, newPath, PATH_MAX);
-            logMessage(VB_NOISY, "  rewriteCachedPaths -> wd %d [cache slot %d] ==> %s",wlCache[j].wd, j, newPath);
+            logMessage(0, "  rewriteCachedPaths -> wd %d [cache slot %d] ==> %s",wlCache[j].wd, j, newPath);
         }
     }
 }
@@ -471,7 +472,7 @@ static int zapSubtree(int inotifyFd, char *path)
     int cnt;
     char *pn;
 
-    logMessage(VB_NOISY, "Zapping subtree: %s", path);
+    logMessage(0, "Zapping subtree: %s", path);
 
     len = strlen(path);
     pn = strdup(path);
@@ -484,7 +485,7 @@ static int zapSubtree(int inotifyFd, char *path)
                     (wlCache[j].path[len] == '/' ||
                      wlCache[j].path[len] == '\0')) {
 
-                logMessage(VB_NOISY,"    removing watch: wd = %d (%s)",wlCache[j].wd, wlCache[j].path);
+                logMessage(0,"    removing watch: wd = %d (%s)",wlCache[j].wd, wlCache[j].path);
 
                 if (inotify_rm_watch(inotifyFd, wlCache[j].wd) == -1) {
                     logMessage(0, "inotify_rm_watch wd = %d (%s): %s",wlCache[j].wd, wlCache[j].path, strerror(errno));

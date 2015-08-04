@@ -1,0 +1,18 @@
+[08/04/2015 10:36:18] : Log establecido como Ruidoso... 
+[08/04/2015 10:36:18] : Initializing cache 
+[08/04/2015 10:36:18] :     new inotifyFd = 6 
+[08/04/2015 10:36:18] :     traverseTree-> : wd = 1 [cache slot: 0]; /opt/PRUEBA 
+[08/04/2015 10:36:18] :     traverseTree-> : wd = 2 [cache slot: 1]; /opt/PRUEBA/SIETE 
+[08/04/2015 10:36:18] :     watchSubtree: /opt/PRUEBA: 2 entries added 
+[08/04/2015 10:36:40] : mask = IN_ISDIR  
+[08/04/2015 10:36:40] : mask = IN_CREATE  
+[08/04/2015 10:36:40] : Event Name = UNO 
+[08/04/2015 10:36:40] : Directory creation on wd 1: /opt/PRUEBA/UNO 
+[08/04/2015 10:36:40] :     traverseTree-> : wd = 3 [cache slot: 2]; /opt/PRUEBA/UNO 
+[08/04/2015 10:36:40] :     watchSubtree: /opt/PRUEBA/UNO: 1 entries added 
+[08/04/2015 10:36:43] : cookie =  855;  
+[08/04/2015 10:36:43] : mask = IN_ISDIR  
+[08/04/2015 10:36:43] : mask = IN_MOVED_FROM  
+[08/04/2015 10:36:43] : Event Name = UNO 
+[08/04/2015 10:36:43] : Rename: /opt/PRUEBA/UNO ==> /opt/PRUEBA/DOS 
+[08/04/2015 10:36:43] :   rewriteCachedPaths -> wd 3 [cache slot 2] ==> /opt/PRUEBA/DOS 
