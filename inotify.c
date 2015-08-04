@@ -49,18 +49,18 @@ static void displayInotifyEvent(struct inotify_event *ev)
     if (ev->cookie > 0)
         logMessage(VB_NOISY, "cookie = %4d; ", ev->cookie);
     
-    /*if (ev->mask & IN_ISDIR){
+    if (ev->mask & IN_ISDIR){
         logMessage(VB_NOISY, "mask = IN_ISDIR ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }*/
+    }
 
-    /*if (ev->mask & IN_CREATE){
+    if (ev->mask & IN_CREATE){
         modifiedband = 0;
         logMessage(VB_NOISY, "mask = IN_CREATE ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }*/
+    }
 
     if (ev->mask & IN_DELETE_SELF){
         logMessage(VB_NOISY, "mask = IN_DELETE_SELF ");
@@ -110,20 +110,29 @@ static void displayInotifyEvent(struct inotify_event *ev)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
     
-    /*if (ev->mask & IN_ATTRIB){
+    if (ev->mask & IN_ATTRIB){
         logMessage(VB_NOISY, "mask = IN_ATTRIB ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }*/
+    }
     
-    //if (ev->mask & IN_OPEN)
-        //logMessage(VB_NOISY, "mask = IN_OPEN ");
+    if (ev->mask & IN_OPEN){
+        logMessage(VB_NOISY, "mask = IN_OPEN ");
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
     
-    //if (ev->mask & IN_MODIFY)
-	//logMessage(VB_NOISY, "mask = IN_MODIFY ");
+    if (ev->mask & IN_MODIFY){
+	logMessage(VB_NOISY, "mask = IN_MODIFY ");
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
     
-    //if (ev->mask & IN_CLOSE_WRITE)
-	//logMessage(VB_NOISY, "mask = IN_CLOSE_WRITE ");
+    if (ev->mask & IN_CLOSE_WRITE){
+	logMessage(VB_NOISY, "mask = IN_CLOSE_WRITE ");
+	if (ev->len > 0)
+	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
+    }
 }
 
 static void CheckPerm(char fullPathPerm[PATH_MAX])
@@ -612,7 +621,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 	modifiedband = 1;
     } else if(ev->mask & IN_MODIFY && modifiedband == 1){
 	modifiedband = 2;
-    } else if(ev->mask & IN_DELETE){
+    } else if(ev->mask & IN_DELETE || ev->mask & IN_CREATE ){
 	modifiedband = 0;
     } else if(ev->mask & IN_CLOSE_WRITE && modifiedband == 2 && showchanges == 1){
 	snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
