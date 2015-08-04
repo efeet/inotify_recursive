@@ -556,7 +556,6 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
         markCacheSlotEmpty(evCacheSlot);
             /* No need to remove the watch; that happens automatically */
     } else if ((ev->mask & (IN_MOVED_FROM | IN_ISDIR)) == (IN_MOVED_FROM | IN_ISDIR)) {
-	printf("Entra a IF1\n");
         struct inotify_event *nextEv;
         nextEv = (struct inotify_event *) (buf + evLen);
         if (((char *) nextEv < buf + bufSize) && 
