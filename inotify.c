@@ -1,3 +1,8 @@
+/**
+ * by eFeet
+ * @_eFeet_ (twitter)
+ * https://github.com/efeet
+ */
 #define _GNU_SOURCE   
 #include "libraries_include.h"
 #include "enum_ip_inter.h"
