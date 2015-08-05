@@ -748,8 +748,7 @@ static int LoadValues(char *config_file)
     }
     
     buf[n] = 0;
-    //max_watches = atoi(buf) - 256;
-    max_watches = 0;
+    max_watches = atoi(buf) - 256;
     printf("Numero de Archivos a monitorear = /proc/sys/fs/inotify/max_user_watches: %d\n",max_watches);
     printf("Por cada 65000 archivos, se restan 256\n");
     if (max_watches <= 0) {
@@ -875,7 +874,7 @@ int main(int argc, char *argv[])
 	    gload = LoadValues(argv[2]);
 	    printf("valor de gload = %d\n", gload);
 	    if( gload != 0 ){
-	      printf("Error Load Values\n");
+	      printf("Error Load Values from cfg file\n");
 	      exit(EXIT_FAILURE);
 	    }
 	  } else {
