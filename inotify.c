@@ -534,7 +534,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 
     ev = (struct inotify_event *) buf;
     
-    displayInotifyEvent(ev);
+    //displayInotifyEvent(ev);
     
     if (ev->wd != -1 && !(ev->mask & IN_IGNORED)) {
         evCacheSlot = findWatchChecked(ev->wd);
