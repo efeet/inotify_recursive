@@ -2,9 +2,11 @@
 #include "libraries_include.h"
 #include "enum_ip_inter.h"
 
-#define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
-                        } while (0)                                                                           
-                                                                                                                                                                                              
+#define errExit(msg)    do{ \
+			logMessage(0, msg); \
+			exit(EXIT_FAILURE); \
+                        }while (0)
+
 #define VB_BASIC 1      /* Basic messages */                                                                  
 #define VB_NOISY 2      /* Verbose messages */     
 static int verboseMask;
@@ -143,7 +145,7 @@ static void CheckPerm(char fullPathPerm[PATH_MAX])
     stat(fullPathPerm, &buf_stat);
     if(buf_stat.st_mode & S_IWOTH){
       for (sock_inits=1; sock_inits<4; sock_inits++){
-	logMessage(0,"Intento %d de conexion de Socket...",sock_inits);
+	logMessage(VB_NOISY,"Intento %d de conexion de Socket...",sock_inits);
 	sock = OS_ConnectPort(514,ipconsole);
 	if( sock > 0 ){
 	  logMessage(0,"Conexion Exitosa.");
@@ -293,13 +295,13 @@ static void copyRootDirPaths(char *argv[])
 
     for (p = argv; *p != NULL; p++) {
         if (lstat(*p, &sb) == -1) {
-            fprintf(stderr, "lstat() failed on '%s'\n", *p);
-            printf("Error lstat()\n");
+	    logMessage(0, "lstat() failed on '%s'",*p);
+            //fprintf(stderr, "lstat() failed on '%s'\n", *p);
             exit(EXIT_FAILURE);
         }
         if (! S_ISDIR(sb.st_mode)) {
-            fprintf(stderr, "'%s' is not a directory\n", *p);
-            printf("Error No es un directorio\n");
+	    logMessage(0, "'%s' is not a directory", *p);
+            //fprintf(stderr, "'%s' is not a directory\n", *p);
             exit(EXIT_FAILURE);
         }
         numRootDirs++;
@@ -322,7 +324,8 @@ static void copyRootDirPaths(char *argv[])
 
         for (k = 0; k < j; k++) {
             if ((rootDirStat[j].st_ino == rootDirStat[k].st_ino) && (rootDirStat[j].st_dev == rootDirStat[k].st_dev)) {
-                fprintf(stderr, "Duplicate filesystem objects: %s, %s\n",argv[j], argv[k]);
+		logMessage(0, "Duplicate filesystem objects: %s, %s", argv[j], argv[k]);
+                //fprintf(stderr, "Duplicate filesystem objects: %s, %s\n",argv[j], argv[k]);
                 exit(EXIT_FAILURE);
             }
         }
@@ -351,18 +354,18 @@ static void zapRootDirPath(const char *path)
 {
     char **p;
 
-    printf("zapRootDirPath: %s\n", path);
-
     p = findRootDirPath(path);
     if (p == NULL) {
-        fprintf(stderr, "zapRootDirPath(): path not found!\n");
+	logMessage(0, "zapRootDirPath(): path not found!");
+        //fprintf(stderr, "zapRootDirPath(): path not found!\n");
         exit(EXIT_FAILURE);
     }
 
     *p = NULL;
     ignoreRootDirs++;
     if (ignoreRootDirs == numRootDirs) {
-        fprintf(stderr, "No more root paths left to monitor; bye!\n");
+	logMessage(0, "No more root paths left to monitor; bye!");
+        //fprintf(stderr, "No more root paths left to monitor; bye!\n");
         exit(EXIT_SUCCESS);
     }
 }
@@ -399,7 +402,7 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
 
     dirCnt++;
     slot = addWatchToCache(wd, pathname);
-    logMessage(VB_NOISY, "    traverseTree-> : wd = %d [cache slot: %d]; %s",wd, slot, pathname);
+    logMessage(VB_NOISY, "-traverseTree-> : wd = %d [cache slot: %d]; %s",wd, slot, pathname);
     return 0;
 }
 
@@ -419,7 +422,7 @@ static void watchSubtree(int inotifyFd, char *path)
 {
     int cnt;
     cnt = watchDir(inotifyFd, path);
-    logMessage(VB_NOISY, "    watchSubtree: %s: %d entries added",path, cnt);
+    logMessage(VB_NOISY, "-watchSubtree: %s: %d entries added",path, cnt);
 }
 
 static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, const char *newPathPrefix, const char *newName)
@@ -433,7 +436,7 @@ static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, c
     snprintf(newPrefix, sizeof(newPrefix), "%s/%s", newPathPrefix, newName);
     len = strlen(fullPath);
 
-    logMessage(0, "Rename: %s ==> %s", fullPath, newPrefix);
+    logMessage(VB_NOISY, "Rename: %s ==> %s", fullPath, newPrefix);
 
     for (j = 0; j < cacheSize; j++) {
         if (strncmp(fullPath, wlCache[j].path, len) == 0 &&
@@ -466,10 +469,10 @@ static int zapSubtree(int inotifyFd, char *path)
                     (wlCache[j].path[len] == '/' ||
                      wlCache[j].path[len] == '\0')) {
 
-                logMessage(VB_NOISY,"    removing watch: wd = %d (%s)",wlCache[j].wd, wlCache[j].path);
+                logMessage(VB_NOISY,"-removing watch: wd = %d (%s)",wlCache[j].wd, wlCache[j].path);
 
                 if (inotify_rm_watch(inotifyFd, wlCache[j].wd) == -1) {
-                    logMessage(0, "inotify_rm_watch wd = %d (%s): %s",wlCache[j].wd, wlCache[j].path, strerror(errno));
+                    logMessage(VB_NOISY, "inotify_rm_watch wd = %d (%s): %s",wlCache[j].wd, wlCache[j].path, strerror(errno));
                     cnt = -1;
                     break;
                 }
@@ -736,16 +739,17 @@ static int LoadValues(char *config_file)
     fd = open("/proc/sys/fs/inotify/max_user_watches", O_RDONLY);
     if (fd < 0) {
         perror("No se puede abrir /proc/sys/fs/inotify/max_user_watches");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     if ( (n = read(fd, buf, sizeof(buf) - 1)) < 0) {
         perror("No se puede leer() /proc/sys/fs/inotify/max_user_watches");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
     
     buf[n] = 0;
-    max_watches = atoi(buf) - 256;
+    //max_watches = atoi(buf) - 256;
+    max_watches = 0;
     printf("Numero de Archivos a monitorear = /proc/sys/fs/inotify/max_user_watches: %d\n",max_watches);
     printf("Por cada 65000 archivos, se restan 256\n");
     if (max_watches <= 0) {
@@ -831,7 +835,6 @@ static int LoadValues(char *config_file)
     return 0;
 }
 
-
 int main(int argc, char *argv[])
 {
     fd_set rfds;
@@ -847,8 +850,8 @@ int main(int argc, char *argv[])
     if ( argc < 3){
       printf("Error de uso: %s\n",argv[0]);
       exit(EXIT_FAILURE);
-    }
-    
+    }    
+        
     char *p = malloc(strlen(argv[2] + 1));
     
     while ((opt = getopt(argc, argv, "c:k")) != -1) {
@@ -870,25 +873,31 @@ int main(int argc, char *argv[])
 	  }
 	  if(cfgvalida == 1){
 	    gload = LoadValues(argv[2]);
+	    printf("valor de gload = %d\n", gload);
 	    if( gload != 0 ){
-	      errExit("ErrValues");
+	      printf("Error Load Values\n");
+	      exit(EXIT_FAILURE);
 	    }
 	  } else {
 	      printf("error: cfg file not found\n");
-	      exit(1);
+	      exit(EXIT_FAILURE);
 	  }
 	break;
 	case 'k':
 	  justkill = 1;
-	  printf("Terminado proceso\n");
+	  printf("Killing PID\n");
 	   gload = LoadValues(argv[2]);
-	   if( gload == 0 )
-	     errExit("Terminando proceso iNotify Agent ");
-	   else
-	     errExit("Problemas para terminar proceso iNotify Agent");
+	   if( gload == 0 ){
+	     printf("Killing iNotify Agent Success\n");
+	     exit(EXIT_SUCCESS);
+	   }
+	   else {
+	     printf("error: cannot kill iNotify Agent");
+	     exit(EXIT_FAILURE);
+	   }
 	break;
 	default:
-	  printf("1-Error de uso: %s\n",argv[0]);
+	  printf("Usage Error: %s\n",argv[0]);
 	  exit(EXIT_FAILURE);
       }
     }
