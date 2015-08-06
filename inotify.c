@@ -771,7 +771,7 @@ static int LoadValues(char *config_file)
 	  if(justkill == 0){
 	    if(!strncmp(token, parameters[0], sizeof(parameters[0]))){
 	      token = strtok( NULL, "\t =\n\r");
-	      logfp = fopen(token, "w+"); //Se puede Reemplazar por parametro de archivo de configuracion
+	      logfp = fopen(token, "a+");
 	      if (logfp == NULL)
 		errExit("fopen");
 	      setbuf(logfp, NULL);
@@ -779,7 +779,7 @@ static int LoadValues(char *config_file)
 	    if(!strncmp(token, parameters[1], sizeof(parameters[1]))){
 	      id_t pid = getpid();
 	      token = strtok( NULL, "\t =\n\r");
-	      FILE *fpid = fopen(token, "w"); //Se puede Reemplazar por parametro de archivo de configuracion
+	      FILE *fpid = fopen(token, "w");
 	      if (!fpid){
 		perror("Archivo PID Error\n");
 		exit(EXIT_FAILURE);
