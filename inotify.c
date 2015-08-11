@@ -857,7 +857,6 @@ int main(int argc, char *argv[])
 	  }
 	  if(cfgvalida == 1){
 	    gload = LoadValues(argv[2]);
-	    printf("valor de gload = %d\n", gload);
 	    if( gload != 0 ){
 	      printf("Error Load Values from cfg file\n");
 	      exit(EXIT_FAILURE);
