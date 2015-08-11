@@ -9,6 +9,6 @@
 #
 # ..
 # IDE: Kdevelop 4.7
-# Edicion en VM OpenSuSe
+# Edicion en AGS Machine OpenSuSe
 #
 #
