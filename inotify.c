@@ -739,29 +739,9 @@ static int LoadValues(char *config_file)
     char *parameters[] = { "logpath", "pidpath" , "logverbose" , "ipconsole" , "paths", "showchanges" }; 
     char **argv2 = malloc(2*sizeof(char *));
     size_t argc2 = 0;
-    int fd, n, max_watches;
+    int max_watches;
     
-    fd = open("/proc/sys/fs/inotify/max_user_watches", O_RDONLY);
-    if (fd < 0) {
-        perror("No se puede abrir /proc/sys/fs/inotify/max_user_watches");
-        exit(EXIT_FAILURE);
-    }
-
-    if ( (n = read(fd, buf, sizeof(buf) - 1)) < 0) {
-        perror("No se puede leer() /proc/sys/fs/inotify/max_user_watches");
-        exit(EXIT_FAILURE);
-    }
-    
-    buf[n] = 0;
-    max_watches = atoi(buf) - 256;
-    printf("Numero de Archivos a monitorear = /proc/sys/fs/inotify/max_user_watches: %d\n",max_watches);
-    printf("Por cada 65000 archivos, se restan 256\n");
-    if (max_watches <= 0) {
-        printf("Numero de Rutas Incorrecto: ");
-        printf(buf);
-        printf("\n");
-        return 1;
-    }
+    max_watches = chk_kernel();
     
     fvalues = fopen(config_file, "r");
     
@@ -877,7 +857,6 @@ int main(int argc, char *argv[])
 	  }
 	  if(cfgvalida == 1){
 	    gload = LoadValues(argv[2]);
-	    printf("valor de gload = %d\n", gload);
 	    if( gload != 0 ){
 	      printf("Error Load Values from cfg file\n");
 	      exit(EXIT_FAILURE);
