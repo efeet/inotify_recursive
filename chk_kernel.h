@@ -1,0 +1,1 @@
+int chk_kernel(void);

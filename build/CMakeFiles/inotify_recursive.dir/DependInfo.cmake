@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/home/usanchezc/projects/inotify_recursive/chk_kernel.c" "/home/usanchezc/projects/inotify_recursive/build/CMakeFiles/inotify_recursive.dir/chk_kernel.c.o"
   "/home/usanchezc/projects/inotify_recursive/curr_time.c" "/home/usanchezc/projects/inotify_recursive/build/CMakeFiles/inotify_recursive.dir/curr_time.c.o"
   "/home/usanchezc/projects/inotify_recursive/enum_ip_inter.c" "/home/usanchezc/projects/inotify_recursive/build/CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o"
   "/home/usanchezc/projects/inotify_recursive/inotify.c" "/home/usanchezc/projects/inotify_recursive/build/CMakeFiles/inotify_recursive.dir/inotify.c.o"

@@ -156,6 +156,30 @@ inotify_recursive/fast:
 	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/build
 .PHONY : inotify_recursive/fast
 
+chk_kernel.o: chk_kernel.c.o
+.PHONY : chk_kernel.o
+
+# target to build an object file
+chk_kernel.c.o:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/chk_kernel.c.o
+.PHONY : chk_kernel.c.o
+
+chk_kernel.i: chk_kernel.c.i
+.PHONY : chk_kernel.i
+
+# target to preprocess a source file
+chk_kernel.c.i:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/chk_kernel.c.i
+.PHONY : chk_kernel.c.i
+
+chk_kernel.s: chk_kernel.c.s
+.PHONY : chk_kernel.s
+
+# target to generate assembly for a file
+chk_kernel.c.s:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/chk_kernel.c.s
+.PHONY : chk_kernel.c.s
+
 curr_time.o: curr_time.c.o
 .PHONY : curr_time.o
 
@@ -265,6 +289,9 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... chk_kernel.o"
+	@echo "... chk_kernel.i"
+	@echo "... chk_kernel.s"
 	@echo "... curr_time.o"
 	@echo "... curr_time.i"
 	@echo "... curr_time.s"

@@ -37,3 +37,4 @@
 #include <net/if.h>
 
 #include "socket_client.h"
+#include "chk_kernel.h"

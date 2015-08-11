@@ -616,3 +616,290 @@
 [08/11/2015 12:43:22] : -watchSubtree: /etc/: 253 entries added 
 [08/11/2015 12:43:29] : Modificacion de contenido en: /etc/sudoers.tmp 
 [08/11/2015 12:43:32] : Modificacion de contenido en: /etc/.sudoers.tmp.swp 
+[08/11/2015 12:50:03] : Log establecido como Ruidoso... 
+[08/11/2015 12:50:03] : Initializing cache 
+[08/11/2015 12:50:03] :     new inotifyFd = 6 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 1 [cache slot: 0]; /opt/PRUEBA 
+[08/11/2015 12:50:03] : -watchSubtree: /opt/PRUEBA: 1 entries added 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 2 [cache slot: 1]; /etc 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 3 [cache slot: 2]; /etc/bash_completion.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 4 [cache slot: 3]; /etc/iproute2 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 5 [cache slot: 4]; /etc/dracut.conf.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 6 [cache slot: 5]; /etc/rpm 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 7 [cache slot: 6]; /etc/gtk-2.0 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 8 [cache slot: 7]; /etc/cron.hourly 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 9 [cache slot: 8]; /etc/plymouth 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 10 [cache slot: 9]; /etc/modprobe.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 11 [cache slot: 10]; /etc/ConsoleKit 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 12 [cache slot: 11]; /etc/ConsoleKit/run-session.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 13 [cache slot: 12]; /etc/xinetd.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 14 [cache slot: 13]; /etc/UPower 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 15 [cache slot: 14]; /etc/dbus-1 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 16 [cache slot: 15]; /etc/dbus-1/system.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 17 [cache slot: 16]; /etc/dbus-1/session.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 18 [cache slot: 17]; /etc/apparmor 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 19 [cache slot: 18]; /etc/cupshelpers 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 20 [cache slot: 19]; /etc/sasl2 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 21 [cache slot: 20]; /etc/udev 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 22 [cache slot: 21]; /etc/udev/rules.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 23 [cache slot: 22]; /etc/ssh 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 24 [cache slot: 23]; /etc/icewm 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 25 [cache slot: 24]; /etc/icewm/yast2 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 26 [cache slot: 25]; /etc/systemd 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 27 [cache slot: 26]; /etc/systemd/user 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 28 [cache slot: 27]; /etc/systemd/system 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 29 [cache slot: 28]; /etc/systemd/system/default.target.wants 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 30 [cache slot: 29]; /etc/systemd/system/sockets.target.wants 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 31 [cache slot: 30]; /etc/systemd/system/bluetooth.target.wants 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 32 [cache slot: 31]; /etc/systemd/system/remote-fs.target.wants 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 33 [cache slot: 32]; /etc/systemd/system/multi-user.target.wants 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 34 [cache slot: 33]; /etc/systemd/system/timers.target.wants 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 35 [cache slot: 34]; /etc/systemd/system/getty.target.wants 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 36 [cache slot: 35]; /etc/systemd/system/sysinit.target.wants 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 37 [cache slot: 36]; /etc/systemd/system/system-update.target.wants 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 38 [cache slot: 37]; /etc/lvm 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 39 [cache slot: 38]; /etc/lvm/archive 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 40 [cache slot: 39]; /etc/lvm/backup 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 41 [cache slot: 40]; /etc/lvm/metadata 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 42 [cache slot: 41]; /etc/profile.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 43 [cache slot: 42]; /etc/slp.reg.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 44 [cache slot: 43]; /etc/gnupg 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 45 [cache slot: 44]; /etc/audisp 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 46 [cache slot: 45]; /etc/audisp/plugins.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 47 [cache slot: 46]; /etc/postfix 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 48 [cache slot: 47]; /etc/postfix/system 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 49 [cache slot: 48]; /etc/security 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 50 [cache slot: 49]; /etc/fonts 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 51 [cache slot: 50]; /etc/fonts/conf.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 52 [cache slot: 51]; /etc/fonts/conf.avail 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 53 [cache slot: 52]; /etc/depmod.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 54 [cache slot: 53]; /etc/cron.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 55 [cache slot: 54]; /etc/sysconfig 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 56 [cache slot: 55]; /etc/sysconfig/SuSEfirewall2.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 57 [cache slot: 56]; /etc/sysconfig/SuSEfirewall2.d/services 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 58 [cache slot: 57]; /etc/sysconfig/scripts 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 59 [cache slot: 58]; /etc/sysconfig/network 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 60 [cache slot: 59]; /etc/sysconfig/network/scripts 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 61 [cache slot: 60]; /etc/sysconfig/network/if-up.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 62 [cache slot: 61]; /etc/sysconfig/network/if-down.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 63 [cache slot: 62]; /etc/sysconfig/network/providers 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 64 [cache slot: 63]; /etc/pam.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 65 [cache slot: 64]; /etc/bootsplash 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 66 [cache slot: 65]; /etc/bootsplash/themes 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 67 [cache slot: 66]; /etc/bootsplash/themes/openSUSE 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 68 [cache slot: 67]; /etc/bootsplash/themes/openSUSE/cdrom 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 69 [cache slot: 68]; /etc/bootsplash/themes/openSUSE/bootloader 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 70 [cache slot: 69]; /etc/snapper 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 71 [cache slot: 70]; /etc/snapper/filters 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 72 [cache slot: 71]; /etc/snapper/config-templates 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 73 [cache slot: 72]; /etc/snapper/configs 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 74 [cache slot: 73]; /etc/polkit-1 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 75 [cache slot: 74]; /etc/polkit-1/rules.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 76 [cache slot: 75]; /etc/iscsi 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 77 [cache slot: 76]; /etc/iscsi/ifaces 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 78 [cache slot: 77]; /etc/default 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 79 [cache slot: 78]; /etc/permissions.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 80 [cache slot: 79]; /etc/tuned 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 81 [cache slot: 80]; /etc/cups 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 82 [cache slot: 81]; /etc/cups/interfaces 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 83 [cache slot: 82]; /etc/cups/ppd 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 84 [cache slot: 83]; /etc/cups/ssl 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 85 [cache slot: 84]; /etc/gpm 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 86 [cache slot: 85]; /etc/gpm/syn.conf 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 87 [cache slot: 86]; /etc/gpm/twiddler.conf 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 88 [cache slot: 87]; /etc/gpm/root.conf 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 89 [cache slot: 88]; /etc/uefi 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 90 [cache slot: 89]; /etc/uefi/certs 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 91 [cache slot: 90]; /etc/ppp 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 92 [cache slot: 91]; /etc/ppp/peers 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 93 [cache slot: 92]; /etc/ppp/ip-down.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 94 [cache slot: 93]; /etc/ppp/ip-up.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 95 [cache slot: 94]; /etc/ssl 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 96 [cache slot: 95]; /etc/ssl/private 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 97 [cache slot: 96]; /etc/omc 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 98 [cache slot: 97]; /etc/omc/srvinfo.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 99 [cache slot: 98]; /etc/named.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 100 [cache slot: 99]; /etc/apparmor.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 101 [cache slot: 100]; /etc/apparmor.d/apache2.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 102 [cache slot: 101]; /etc/apparmor.d/tunables 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 103 [cache slot: 102]; /etc/apparmor.d/tunables/xdg-user-dirs.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 104 [cache slot: 103]; /etc/apparmor.d/tunables/home.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 105 [cache slot: 104]; /etc/apparmor.d/tunables/multiarch.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 106 [cache slot: 105]; /etc/apparmor.d/local 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 107 [cache slot: 106]; /etc/apparmor.d/abstractions 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 108 [cache slot: 107]; /etc/apparmor.d/abstractions/ubuntu-browsers.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 109 [cache slot: 108]; /etc/apparmor.d/abstractions/apparmor_api 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 110 [cache slot: 109]; /etc/apparmor.d/disable 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 111 [cache slot: 110]; /etc/netconfig.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 112 [cache slot: 111]; /etc/skel 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 113 [cache slot: 112]; /etc/skel/public_html 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 114 [cache slot: 113]; /etc/skel/bin 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 115 [cache slot: 114]; /etc/skel/.fonts 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 116 [cache slot: 115]; /etc/skel/.config 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 117 [cache slot: 116]; /etc/skel/.local 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 118 [cache slot: 117]; /etc/wicked 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 119 [cache slot: 118]; /etc/wicked/extensions 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 120 [cache slot: 119]; /etc/wicked/ifconfig 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 121 [cache slot: 120]; /etc/NetworkManager 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 122 [cache slot: 121]; /etc/NetworkManager/dispatcher.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 123 [cache slot: 122]; /etc/NetworkManager/VPN 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 124 [cache slot: 123]; /etc/NetworkManager/system-connections 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 125 [cache slot: 124]; /etc/logrotate.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 126 [cache slot: 125]; /etc/cron.daily 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 127 [cache slot: 126]; /etc/YaST2 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 128 [cache slot: 127]; /etc/YaST2/licenses 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 129 [cache slot: 128]; /etc/YaST2/licenses/base 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 130 [cache slot: 129]; /etc/openldap 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 131 [cache slot: 130]; /etc/openldap/schema 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 132 [cache slot: 131]; /etc/selinux 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 133 [cache slot: 132]; /etc/init.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 134 [cache slot: 133]; /etc/init.d/rcS.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 135 [cache slot: 134]; /etc/init.d/rc3.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 136 [cache slot: 135]; /etc/init.d/rc6.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 137 [cache slot: 136]; /etc/init.d/rc1.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 138 [cache slot: 137]; /etc/init.d/boot.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 139 [cache slot: 138]; /etc/init.d/rc2.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 140 [cache slot: 139]; /etc/init.d/rc5.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 141 [cache slot: 140]; /etc/init.d/rc0.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 142 [cache slot: 141]; /etc/init.d/rc4.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 143 [cache slot: 142]; /etc/libnl 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 144 [cache slot: 143]; /etc/grub.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 145 [cache slot: 144]; /etc/zypp 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 146 [cache slot: 145]; /etc/zypp/services.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 147 [cache slot: 146]; /etc/zypp/repos.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 148 [cache slot: 147]; /etc/zypp/multiversion.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 149 [cache slot: 148]; /etc/zypp/vendors.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 150 [cache slot: 149]; /etc/request-key.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 151 [cache slot: 150]; /etc/audit 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 152 [cache slot: 151]; /etc/audit/rules.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 153 [cache slot: 152]; /etc/ifplugd 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 154 [cache slot: 153]; /etc/java 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 155 [cache slot: 154]; /etc/java/security 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 156 [cache slot: 155]; /etc/java/security/security.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 157 [cache slot: 156]; /etc/pm 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 158 [cache slot: 157]; /etc/pm/config.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 159 [cache slot: 158]; /etc/pm/power.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 160 [cache slot: 159]; /etc/pm/sleep.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 161 [cache slot: 160]; /etc/at-spi2 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 162 [cache slot: 161]; /etc/pulse 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 163 [cache slot: 162]; /etc/gtk-3.0 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 164 [cache slot: 163]; /etc/PackageKit 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 165 [cache slot: 164]; /etc/X11 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 166 [cache slot: 165]; /etc/X11/xorg.conf.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 167 [cache slot: 166]; /etc/X11/xim.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 168 [cache slot: 167]; /etc/X11/xinit 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 169 [cache slot: 168]; /etc/X11/xinit/xinitrc.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 170 [cache slot: 169]; /etc/X11/xdm 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 171 [cache slot: 170]; /etc/xdg 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 172 [cache slot: 171]; /etc/xdg/menus 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 173 [cache slot: 172]; /etc/xdg/menus/applications-merged 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 174 [cache slot: 173]; /etc/xdg/autostart 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 175 [cache slot: 174]; /etc/xdg/systemd 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 176 [cache slot: 175]; /etc/kde4 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 177 [cache slot: 176]; /etc/kde4/kdm 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 178 [cache slot: 177]; /etc/kde4/share 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 179 [cache slot: 178]; /etc/kde4/share/config 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 180 [cache slot: 179]; /etc/kde4/share/apps 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 181 [cache slot: 180]; /etc/kde4/share/apps/konqueror 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 182 [cache slot: 181]; /etc/kde4/share/apps/konqueror/profiles 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 183 [cache slot: 182]; /etc/kde4/share/apps/plasma-desktop 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 184 [cache slot: 183]; /etc/kde4/share/apps/plasma-desktop/init 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 185 [cache slot: 184]; /etc/vpnc 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 186 [cache slot: 185]; /etc/wpa_supplicant 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 187 [cache slot: 186]; /etc/avahi 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 188 [cache slot: 187]; /etc/avahi/services 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 189 [cache slot: 188]; /etc/gdbinit.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 190 [cache slot: 189]; /etc/ca-certificates 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 191 [cache slot: 190]; /etc/ca-certificates/update.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 192 [cache slot: 191]; /etc/openvpn 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 193 [cache slot: 192]; /etc/sensors.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 194 [cache slot: 193]; /etc/cron.monthly 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 195 [cache slot: 194]; /etc/pango 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 196 [cache slot: 195]; /etc/sudoers.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 197 [cache slot: 196]; /etc/reader.conf.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 198 [cache slot: 197]; /etc/sysctl.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 199 [cache slot: 198]; /etc/pki 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 200 [cache slot: 199]; /etc/pki/trust 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 201 [cache slot: 200]; /etc/pki/trust/anchors 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 202 [cache slot: 201]; /etc/pki/trust/blacklist 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 203 [cache slot: 202]; /etc/lirc 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 204 [cache slot: 203]; /etc/news 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 205 [cache slot: 204]; /etc/uucp 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 206 [cache slot: 205]; /etc/aliases.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 207 [cache slot: 206]; /etc/dconf 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 208 [cache slot: 207]; /etc/dconf/db 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 209 [cache slot: 208]; /etc/dconf/profile 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 210 [cache slot: 209]; /etc/alternatives 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 211 [cache slot: 210]; /etc/opt 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 212 [cache slot: 211]; /etc/cron.weekly 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 213 [cache slot: 212]; /etc/pkcs11 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 214 [cache slot: 213]; /etc/pkcs11/modules 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 215 [cache slot: 214]; /etc/susehelp.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 216 [cache slot: 215]; /etc/susehelp.d/htdig 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 217 [cache slot: 216]; /etc/openal 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 218 [cache slot: 217]; /etc/ld.so.conf.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 219 [cache slot: 218]; /etc/tmpdirs.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 220 [cache slot: 219]; /etc/samba 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 221 [cache slot: 220]; /etc/auto.master.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 222 [cache slot: 221]; /etc/binfmt.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 223 [cache slot: 222]; /etc/cifs-utils 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 224 [cache slot: 223]; /etc/pptp.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 225 [cache slot: 224]; /etc/htdig 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 226 [cache slot: 225]; /etc/tmpfiles.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 227 [cache slot: 226]; /etc/modules-load.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 228 [cache slot: 227]; /etc/gconf 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 229 [cache slot: 228]; /etc/gconf/2 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 230 [cache slot: 229]; /etc/gconf/gconf.xml.defaults 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 231 [cache slot: 230]; /etc/gconf/gconf.xml.mandatory 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 232 [cache slot: 231]; /etc/gconf/gconf.xml.system 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 233 [cache slot: 232]; /etc/gconf/gconf.xml.vendor 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 234 [cache slot: 233]; /etc/gconf/gconf.xml.schemas 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 235 [cache slot: 234]; /etc/joe 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 236 [cache slot: 235]; /etc/mc 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 237 [cache slot: 236]; /etc/zsh_completion.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 238 [cache slot: 237]; /etc/mcelog 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 239 [cache slot: 238]; /etc/xscreensaver 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 240 [cache slot: 239]; /etc/obex-data-server 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 241 [cache slot: 240]; /etc/ImageMagick-6_Q16-2 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 242 [cache slot: 241]; /etc/products.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 243 [cache slot: 242]; /etc/pcmcia 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 244 [cache slot: 243]; /etc/jvm 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 245 [cache slot: 244]; /etc/jvm-commmon 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 246 [cache slot: 245]; /etc/maven 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 247 [cache slot: 246]; /etc/my.cnf.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 248 [cache slot: 247]; /etc/apache2 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 249 [cache slot: 248]; /etc/apache2/conf.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 250 [cache slot: 249]; /etc/sane.d 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 251 [cache slot: 250]; /etc/hp 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 252 [cache slot: 251]; /etc/gimp 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 253 [cache slot: 252]; /etc/gimp/2.0 
+[08/11/2015 12:50:03] : -traverseTree-> : wd = 254 [cache slot: 253]; /etc/akonadi 
+[08/11/2015 12:50:03] : -watchSubtree: /etc/: 253 entries added 
+[08/11/2015 12:52:31] : Modificacion de contenido en: /etc/resolv.conf.WWBoVa 
+[08/11/2015 12:52:31] : Modificacion de contenido en: /etc/resolv.conf.WWBoVa 
+[08/11/2015 12:52:31] : Modificacion de contenido en: /etc/resolv.conf 
+[08/11/2015 12:52:31] : Modificacion de contenido en: /etc/yp.conf.ANQESj 
+[08/11/2015 12:53:32] : Modificacion de contenido en: /etc/resolv.conf.60MOxC 
+[08/11/2015 12:53:32] : Modificacion de contenido en: /etc/resolv.conf.60MOxC 
+[08/11/2015 12:53:32] : Modificacion de contenido en: /etc/resolv.conf.60MOxC 
+[08/11/2015 12:53:32] : Modificacion de contenido en: /etc/resolv.conf 
+[08/11/2015 12:53:32] : Modificacion de contenido en: /etc/yp.conf.ts3i2u 
+[08/11/2015 12:53:44] : Modificacion de contenido en: /etc/resolv.conf.9U9sHc 
+[08/11/2015 12:53:44] : Modificacion de contenido en: /etc/resolv.conf.9U9sHc 
+[08/11/2015 12:53:44] : Modificacion de contenido en: /etc/resolv.conf 
+[08/11/2015 12:53:44] : Modificacion de contenido en: /etc/yp.conf.AFGznf 
+[08/11/2015 12:56:09] : Modificacion de contenido en: /etc/resolv.conf.Pc8whU 
+[08/11/2015 12:56:09] : Modificacion de contenido en: /etc/resolv.conf.Pc8whU 
+[08/11/2015 12:56:09] : Modificacion de contenido en: /etc/resolv.conf.Pc8whU 
+[08/11/2015 12:56:09] : Modificacion de contenido en: /etc/resolv.conf 
+[08/11/2015 12:56:09] : Modificacion de contenido en: /etc/yp.conf.7452as 
+[08/11/2015 12:56:10] : Modificacion de contenido en: /etc/NetworkManager/system-connections/GSNETWLANMEX.VO0D3X 
+[08/11/2015 13:32:02] : Modificacion de contenido en: /etc/resolv.conf.vsKh9m 
+[08/11/2015 13:32:02] : Modificacion de contenido en: /etc/resolv.conf.vsKh9m 
+[08/11/2015 13:32:02] : Modificacion de contenido en: /etc/resolv.conf 
+[08/11/2015 13:32:02] : Modificacion de contenido en: /etc/yp.conf.ZlyWcy 
+[08/11/2015 13:32:17] : Modificacion de contenido en: /etc/resolv.conf.NqxCgH 
+[08/11/2015 13:32:17] : Modificacion de contenido en: /etc/resolv.conf.NqxCgH 
+[08/11/2015 13:32:17] : Modificacion de contenido en: /etc/resolv.conf.NqxCgH 
+[08/11/2015 13:32:17] : Modificacion de contenido en: /etc/resolv.conf 
+[08/11/2015 13:32:17] : Modificacion de contenido en: /etc/yp.conf.mwhYMa 

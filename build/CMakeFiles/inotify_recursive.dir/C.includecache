@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+/home/usanchezc/projects/inotify_recursive/chk_kernel.c
+libraries_include.h
+/home/usanchezc/projects/inotify_recursive/libraries_include.h
+
+/home/usanchezc/projects/inotify_recursive/chk_kernel.h
+
 /home/usanchezc/projects/inotify_recursive/curr_time.c
 libraries_include.h
 /home/usanchezc/projects/inotify_recursive/libraries_include.h
@@ -93,6 +99,8 @@ net/if.h
 -
 socket_client.h
 /home/usanchezc/projects/inotify_recursive/socket_client.h
+chk_kernel.h
+/home/usanchezc/projects/inotify_recursive/chk_kernel.h
 
 /home/usanchezc/projects/inotify_recursive/socket_client.c
 libraries_include.h
