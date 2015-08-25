@@ -6,12 +6,14 @@ CMakeFiles/inotify_recursive.dir/chk_kernel.c.o
  /home/usanchezc/projects/inotify_recursive/chk_kernel.h
  /home/usanchezc/projects/inotify_recursive/curr_time.h
  /home/usanchezc/projects/inotify_recursive/libraries_include.h
+ /home/usanchezc/projects/inotify_recursive/rotate_log.h
  /home/usanchezc/projects/inotify_recursive/socket_client.h
 CMakeFiles/inotify_recursive.dir/curr_time.c.o
  /home/usanchezc/projects/inotify_recursive/chk_kernel.h
  /home/usanchezc/projects/inotify_recursive/curr_time.c
  /home/usanchezc/projects/inotify_recursive/curr_time.h
  /home/usanchezc/projects/inotify_recursive/libraries_include.h
+ /home/usanchezc/projects/inotify_recursive/rotate_log.h
  /home/usanchezc/projects/inotify_recursive/socket_client.h
 CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o
  /home/usanchezc/projects/inotify_recursive/chk_kernel.h
@@ -19,6 +21,7 @@ CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o
  /home/usanchezc/projects/inotify_recursive/enum_ip_inter.c
  /home/usanchezc/projects/inotify_recursive/enum_ip_inter.h
  /home/usanchezc/projects/inotify_recursive/libraries_include.h
+ /home/usanchezc/projects/inotify_recursive/rotate_log.h
  /home/usanchezc/projects/inotify_recursive/socket_client.h
 CMakeFiles/inotify_recursive.dir/inotify.c.o
  /home/usanchezc/projects/inotify_recursive/chk_kernel.h
@@ -26,10 +29,19 @@ CMakeFiles/inotify_recursive.dir/inotify.c.o
  /home/usanchezc/projects/inotify_recursive/enum_ip_inter.h
  /home/usanchezc/projects/inotify_recursive/inotify.c
  /home/usanchezc/projects/inotify_recursive/libraries_include.h
+ /home/usanchezc/projects/inotify_recursive/rotate_log.h
+ /home/usanchezc/projects/inotify_recursive/socket_client.h
+CMakeFiles/inotify_recursive.dir/rotate_log.c.o
+ /home/usanchezc/projects/inotify_recursive/chk_kernel.h
+ /home/usanchezc/projects/inotify_recursive/curr_time.h
+ /home/usanchezc/projects/inotify_recursive/libraries_include.h
+ /home/usanchezc/projects/inotify_recursive/rotate_log.c
+ /home/usanchezc/projects/inotify_recursive/rotate_log.h
  /home/usanchezc/projects/inotify_recursive/socket_client.h
 CMakeFiles/inotify_recursive.dir/socket_client.c.o
  /home/usanchezc/projects/inotify_recursive/chk_kernel.h
  /home/usanchezc/projects/inotify_recursive/curr_time.h
  /home/usanchezc/projects/inotify_recursive/libraries_include.h
+ /home/usanchezc/projects/inotify_recursive/rotate_log.h
  /home/usanchezc/projects/inotify_recursive/socket_client.c
  /home/usanchezc/projects/inotify_recursive/socket_client.h

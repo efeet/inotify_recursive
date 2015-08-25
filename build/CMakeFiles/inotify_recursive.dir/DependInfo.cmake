@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/home/usanchezc/projects/inotify_recursive/curr_time.c" "/home/usanchezc/projects/inotify_recursive/build/CMakeFiles/inotify_recursive.dir/curr_time.c.o"
   "/home/usanchezc/projects/inotify_recursive/enum_ip_inter.c" "/home/usanchezc/projects/inotify_recursive/build/CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o"
   "/home/usanchezc/projects/inotify_recursive/inotify.c" "/home/usanchezc/projects/inotify_recursive/build/CMakeFiles/inotify_recursive.dir/inotify.c.o"
+  "/home/usanchezc/projects/inotify_recursive/rotate_log.c" "/home/usanchezc/projects/inotify_recursive/build/CMakeFiles/inotify_recursive.dir/rotate_log.c.o"
   "/home/usanchezc/projects/inotify_recursive/socket_client.c" "/home/usanchezc/projects/inotify_recursive/build/CMakeFiles/inotify_recursive.dir/socket_client.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")

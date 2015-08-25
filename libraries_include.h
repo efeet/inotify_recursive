@@ -38,3 +38,4 @@
 
 #include "socket_client.h"
 #include "chk_kernel.h"
+#include "rotate_log.h"

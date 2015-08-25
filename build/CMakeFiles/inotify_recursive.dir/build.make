@@ -49,9 +49,32 @@ include CMakeFiles/inotify_recursive.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/inotify_recursive.dir/flags.make
 
+CMakeFiles/inotify_recursive.dir/rotate_log.c.o: CMakeFiles/inotify_recursive.dir/flags.make
+CMakeFiles/inotify_recursive.dir/rotate_log.c.o: ../rotate_log.c
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/usanchezc/projects/inotify_recursive/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/inotify_recursive.dir/rotate_log.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/inotify_recursive.dir/rotate_log.c.o   -c /home/usanchezc/projects/inotify_recursive/rotate_log.c
+
+CMakeFiles/inotify_recursive.dir/rotate_log.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/inotify_recursive.dir/rotate_log.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -E /home/usanchezc/projects/inotify_recursive/rotate_log.c > CMakeFiles/inotify_recursive.dir/rotate_log.c.i
+
+CMakeFiles/inotify_recursive.dir/rotate_log.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/inotify_recursive.dir/rotate_log.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -S /home/usanchezc/projects/inotify_recursive/rotate_log.c -o CMakeFiles/inotify_recursive.dir/rotate_log.c.s
+
+CMakeFiles/inotify_recursive.dir/rotate_log.c.o.requires:
+.PHONY : CMakeFiles/inotify_recursive.dir/rotate_log.c.o.requires
+
+CMakeFiles/inotify_recursive.dir/rotate_log.c.o.provides: CMakeFiles/inotify_recursive.dir/rotate_log.c.o.requires
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/rotate_log.c.o.provides.build
+.PHONY : CMakeFiles/inotify_recursive.dir/rotate_log.c.o.provides
+
+CMakeFiles/inotify_recursive.dir/rotate_log.c.o.provides.build: CMakeFiles/inotify_recursive.dir/rotate_log.c.o
+
 CMakeFiles/inotify_recursive.dir/inotify.c.o: CMakeFiles/inotify_recursive.dir/flags.make
 CMakeFiles/inotify_recursive.dir/inotify.c.o: ../inotify.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/usanchezc/projects/inotify_recursive/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/usanchezc/projects/inotify_recursive/build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/inotify_recursive.dir/inotify.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/inotify_recursive.dir/inotify.c.o   -c /home/usanchezc/projects/inotify_recursive/inotify.c
 
@@ -74,7 +97,7 @@ CMakeFiles/inotify_recursive.dir/inotify.c.o.provides.build: CMakeFiles/inotify_
 
 CMakeFiles/inotify_recursive.dir/chk_kernel.c.o: CMakeFiles/inotify_recursive.dir/flags.make
 CMakeFiles/inotify_recursive.dir/chk_kernel.c.o: ../chk_kernel.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/usanchezc/projects/inotify_recursive/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/usanchezc/projects/inotify_recursive/build/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/inotify_recursive.dir/chk_kernel.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/inotify_recursive.dir/chk_kernel.c.o   -c /home/usanchezc/projects/inotify_recursive/chk_kernel.c
 
@@ -97,7 +120,7 @@ CMakeFiles/inotify_recursive.dir/chk_kernel.c.o.provides.build: CMakeFiles/inoti
 
 CMakeFiles/inotify_recursive.dir/socket_client.c.o: CMakeFiles/inotify_recursive.dir/flags.make
 CMakeFiles/inotify_recursive.dir/socket_client.c.o: ../socket_client.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/usanchezc/projects/inotify_recursive/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/usanchezc/projects/inotify_recursive/build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/inotify_recursive.dir/socket_client.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/inotify_recursive.dir/socket_client.c.o   -c /home/usanchezc/projects/inotify_recursive/socket_client.c
 
@@ -120,7 +143,7 @@ CMakeFiles/inotify_recursive.dir/socket_client.c.o.provides.build: CMakeFiles/in
 
 CMakeFiles/inotify_recursive.dir/curr_time.c.o: CMakeFiles/inotify_recursive.dir/flags.make
 CMakeFiles/inotify_recursive.dir/curr_time.c.o: ../curr_time.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/usanchezc/projects/inotify_recursive/build/CMakeFiles $(CMAKE_PROGRESS_4)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/usanchezc/projects/inotify_recursive/build/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/inotify_recursive.dir/curr_time.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/inotify_recursive.dir/curr_time.c.o   -c /home/usanchezc/projects/inotify_recursive/curr_time.c
 
@@ -143,7 +166,7 @@ CMakeFiles/inotify_recursive.dir/curr_time.c.o.provides.build: CMakeFiles/inotif
 
 CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o: CMakeFiles/inotify_recursive.dir/flags.make
 CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o: ../enum_ip_inter.c
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/usanchezc/projects/inotify_recursive/build/CMakeFiles $(CMAKE_PROGRESS_5)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/usanchezc/projects/inotify_recursive/build/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o   -c /home/usanchezc/projects/inotify_recursive/enum_ip_inter.c
 
@@ -166,6 +189,7 @@ CMakeFiles/inotify_recursive.dir/enum_ip_inter.c.o.provides.build: CMakeFiles/in
 
 # Object files for target inotify_recursive
 inotify_recursive_OBJECTS = \
+"CMakeFiles/inotify_recursive.dir/rotate_log.c.o" \
 "CMakeFiles/inotify_recursive.dir/inotify.c.o" \
 "CMakeFiles/inotify_recursive.dir/chk_kernel.c.o" \
 "CMakeFiles/inotify_recursive.dir/socket_client.c.o" \
@@ -175,6 +199,7 @@ inotify_recursive_OBJECTS = \
 # External object files for target inotify_recursive
 inotify_recursive_EXTERNAL_OBJECTS =
 
+inotify_recursive: CMakeFiles/inotify_recursive.dir/rotate_log.c.o
 inotify_recursive: CMakeFiles/inotify_recursive.dir/inotify.c.o
 inotify_recursive: CMakeFiles/inotify_recursive.dir/chk_kernel.c.o
 inotify_recursive: CMakeFiles/inotify_recursive.dir/socket_client.c.o
@@ -189,6 +214,7 @@ inotify_recursive: CMakeFiles/inotify_recursive.dir/link.txt
 CMakeFiles/inotify_recursive.dir/build: inotify_recursive
 .PHONY : CMakeFiles/inotify_recursive.dir/build
 
+CMakeFiles/inotify_recursive.dir/requires: CMakeFiles/inotify_recursive.dir/rotate_log.c.o.requires
 CMakeFiles/inotify_recursive.dir/requires: CMakeFiles/inotify_recursive.dir/inotify.c.o.requires
 CMakeFiles/inotify_recursive.dir/requires: CMakeFiles/inotify_recursive.dir/chk_kernel.c.o.requires
 CMakeFiles/inotify_recursive.dir/requires: CMakeFiles/inotify_recursive.dir/socket_client.c.o.requires

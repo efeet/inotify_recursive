@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/inotify_recursive.dir/rotate_log.c.o"
   "CMakeFiles/inotify_recursive.dir/inotify.c.o"
   "CMakeFiles/inotify_recursive.dir/chk_kernel.c.o"
   "CMakeFiles/inotify_recursive.dir/socket_client.c.o"

@@ -252,6 +252,30 @@ inotify.c.s:
 	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/inotify.c.s
 .PHONY : inotify.c.s
 
+rotate_log.o: rotate_log.c.o
+.PHONY : rotate_log.o
+
+# target to build an object file
+rotate_log.c.o:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/rotate_log.c.o
+.PHONY : rotate_log.c.o
+
+rotate_log.i: rotate_log.c.i
+.PHONY : rotate_log.i
+
+# target to preprocess a source file
+rotate_log.c.i:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/rotate_log.c.i
+.PHONY : rotate_log.c.i
+
+rotate_log.s: rotate_log.c.s
+.PHONY : rotate_log.s
+
+# target to generate assembly for a file
+rotate_log.c.s:
+	$(MAKE) -f CMakeFiles/inotify_recursive.dir/build.make CMakeFiles/inotify_recursive.dir/rotate_log.c.s
+.PHONY : rotate_log.c.s
+
 socket_client.o: socket_client.c.o
 .PHONY : socket_client.o
 
@@ -301,6 +325,9 @@ help:
 	@echo "... inotify.o"
 	@echo "... inotify.i"
 	@echo "... inotify.s"
+	@echo "... rotate_log.o"
+	@echo "... rotate_log.i"
+	@echo "... rotate_log.s"
 	@echo "... socket_client.o"
 	@echo "... socket_client.i"
 	@echo "... socket_client.s"

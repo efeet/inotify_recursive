@@ -39,8 +39,9 @@ int justkill = 0;
 int modifiedband=0;
 /*Variable para mostrar cambios en archivos.*/
 int showchanges = 0;
-
-                                                                                  
+/*Variable para almacenar la ruta de log*/
+char logpath[PATH_MAX];
+                                                                         
 static int checkCache = 0;                                                                                                                                                                        
 static int readBufferSize = 0;   
 static FILE *logfp = NULL; //Variable para abrir archivo de Log.
@@ -59,90 +60,15 @@ static struct stat *rootDirStat; // stat(2) structures for croot directories
 
 static void logMessage(int vb_mask, const char *format, ...)
 {
-    va_list argList;
-    if ((vb_mask == 0) || (vb_mask & verboseMask)) {
-	fprintf(logfp,"%s : ",currTimeLog());
-        va_start(argList, format);
-        vfprintf(logfp, format, argList);
-        va_end(argList);
-	fprintf(logfp," \n");
-    }
-}
-
-static void displayInotifyEvent(struct inotify_event *ev)
-{
-    if (ev->cookie > 0)
-        logMessage(VB_NOISY, "cookie = %4d; ", ev->cookie);
-    if (ev->mask & IN_ISDIR){
-        logMessage(VB_NOISY, "mask = IN_ISDIR ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    if (ev->mask & IN_CREATE){
-        logMessage(VB_NOISY, "mask = IN_CREATE ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    if (ev->mask & IN_DELETE_SELF){
-        logMessage(VB_NOISY, "mask = IN_DELETE_SELF ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    if (ev->mask & IN_DELETE){
-        logMessage(VB_NOISY, "mask = IN_DELETE ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    if (ev->mask & IN_MOVE_SELF){
-        logMessage(VB_NOISY, "mask = IN_MOVE_SELF ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    if (ev->mask & IN_MOVED_FROM){
-        logMessage(VB_NOISY, "mask = IN_MOVED_FROM ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    if (ev->mask & IN_MOVED_TO){
-        logMessage(VB_NOISY, "mask = IN_MOVED_TO ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    if (ev->mask & IN_IGNORED){
-        logMessage(VB_NOISY, "mask = IN_IGNORED ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    if (ev->mask & IN_Q_OVERFLOW){
-        logMessage(VB_NOISY, "mask = IN_Q_OVERFLOW ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    if (ev->mask & IN_UNMOUNT){
-        logMessage(VB_NOISY, "mask = IN_UNMOUNT ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    if (ev->mask & IN_ATTRIB){
-        logMessage(VB_NOISY, "mask = IN_ATTRIB ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    if (ev->mask & IN_OPEN){
-        logMessage(VB_NOISY, "mask = IN_OPEN ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    if (ev->mask & IN_MODIFY){
-	logMessage(VB_NOISY, "mask = IN_MODIFY ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
-    if (ev->mask & IN_CLOSE_WRITE){
-	logMessage(VB_NOISY, "mask = IN_CLOSE_WRITE ");
-	if (ev->len > 0)
-	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
-    }
+  va_list argList;
+  if ((vb_mask == 0) || (vb_mask & verboseMask)) {
+      fprintf(logfp,"%s : ",currTimeLog());
+      va_start(argList, format);
+      vfprintf(logfp, format, argList);
+      va_end(argList);
+      fprintf(logfp," \n");
+  }
+  rotatelog(logpath, logfp);
 }
 
 static void CheckPerm(char fullPathPerm[PATH_MAX])
@@ -540,8 +466,6 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 
     ev = (struct inotify_event *) buf;
     
-    //displayInotifyEvent(ev);
-    
     if (ev->wd != -1 && !(ev->mask & IN_IGNORED)) {
         evCacheSlot = findWatchChecked(ev->wd);
         //Elimina todo el monitor y lo vuelve a inicializar...
@@ -666,7 +590,7 @@ static void processInotifyEvents(int *inotifyFd)
         errExit("sigaction");
 
     firstTry = 1;
-
+    
     /* Read some events from inotify file descriptor */
     cnt = (readBufferSize > 0) ? readBufferSize : INOTIFY_READ_BUF_LEN;
     numRead = read(*inotifyFd, buf, cnt);
@@ -752,6 +676,7 @@ static int LoadValues()
 	  if(justkill == 0){
 	    if(!strncmp(token, parameters[0], sizeof(parameters[0]))){
 	      token = strtok( NULL, "\t =\n\r");
+	      strcpy(logpath, token);
 	      logfp = fopen(token, "a+");
 	      if (logfp == NULL)
 		errExit("Archivo log Error...\n");
