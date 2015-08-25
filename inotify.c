@@ -422,7 +422,7 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
 
     dirCnt++;
     slot = addWatchToCache(wd, pathname);
-    logMessage(VB_NOISY, "-traverseTree-> : wd = %d [cache slot: %d]; %s",wd, slot, pathname);
+    logMessage(VB_NOISY, "-Agregado-> : wd = %d [cache slot: %d]; %s",wd, slot, pathname);
     return 0;
 }
 
@@ -442,7 +442,7 @@ static void watchSubtree(int inotifyFd, char *path)
 {
     int cnt;
     cnt = watchDir(inotifyFd, path);
-    logMessage(VB_NOISY, "-MonSubArbol: %s: %d entradas agregadas",path, cnt);
+    logMessage(VB_NOISY, "-MonSubDir: %s: %d entradas agregadas",path, cnt);
 }
 
 static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, const char *newPathPrefix, const char *newName)
@@ -476,7 +476,7 @@ static int zapSubtree(int inotifyFd, char *path)
     int cnt;
     char *pn;
 
-    logMessage(VB_NOISY, "Liberando SubArbol: %s", path);
+    logMessage(VB_NOISY, "Liberando SubDir: %s", path);
 
     len = strlen(path);
     pn = strdup(path);
