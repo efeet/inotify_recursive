@@ -219,14 +219,14 @@ static void checkCacheConsistency(void)
                         j, wlCache[j].wd, wlCache[j].path, strerror(errno));
                 failures++;
         } else if (!S_ISDIR(sb.st_mode)) {
-            logMessage(0, "checkCacheConsistency: %s is not a directory\n",wlCache[j].path);
+            logMessage(0, "checkCacheConsistency: %s no es un directorio\n",wlCache[j].path);
                     exit(EXIT_FAILURE);
             }
         }
     }
 
     if (failures > 0)
-        logMessage(VB_NOISY, "checkCacheConsistency: %d failures\n",failures);
+        logMessage(VB_NOISY, "checkCacheConsistency: %d fallo\n",failures);
 }
 
 static int findWatch(int wd)
@@ -249,7 +249,7 @@ static int findWatchChecked(int wd)
     if (slot >= 0)
         return slot;
 
-    logMessage(0, "Could not find watch %d\n", wd);
+    logMessage(0, "No se encuentra watch %d\n", wd);
 }
 
 static void markCacheSlotEmpty(int slot)
@@ -318,12 +318,12 @@ static void copyRootDirPaths(char *argv[])
 
     for (p = argv; *p != NULL; p++) {
         if (lstat(*p, &sb) == -1) {
-	    logMessage(0, "lstat() failed on '%s'",*p);
+	    logMessage(0, "lstat() fallo en '%s'",*p);
             //fprintf(stderr, "lstat() failed on '%s'\n", *p);
             exit(EXIT_FAILURE);
         }
         if (! S_ISDIR(sb.st_mode)) {
-	    logMessage(0, "'%s' is not a directory", *p);
+	    logMessage(0, "'%s' no es un directorio", *p);
             //fprintf(stderr, "'%s' is not a directory\n", *p);
             exit(EXIT_FAILURE);
         }
@@ -347,7 +347,7 @@ static void copyRootDirPaths(char *argv[])
 
         for (k = 0; k < j; k++) {
             if ((rootDirStat[j].st_ino == rootDirStat[k].st_ino) && (rootDirStat[j].st_dev == rootDirStat[k].st_dev)) {
-		logMessage(0, "Duplicate filesystem objects: %s, %s", argv[j], argv[k]);
+		logMessage(0, "Objeto en FileSystem Duplicado: %s, %s", argv[j], argv[k]);
                 exit(EXIT_FAILURE);
             }
         }
@@ -378,16 +378,14 @@ static void zapRootDirPath(const char *path)
 
     p = findRootDirPath(path);
     if (p == NULL) {
-	logMessage(0, "zapRootDirPath(): path not found!");
-        //fprintf(stderr, "zapRootDirPath(): path not found!\n");
+	logMessage(0, "zapRootDirPath(): ruta no valida!");
         exit(EXIT_FAILURE);
     }
 
     *p = NULL;
     ignoreRootDirs++;
     if (ignoreRootDirs == numRootDirs) {
-	logMessage(0, "No more root paths left to monitor; bye!");
-        //fprintf(stderr, "No more root paths left to monitor; bye!\n");
+	logMessage(0, "No mas rutas Raiz para monitor; bye!");
         exit(EXIT_SUCCESS);
     }
 }
@@ -418,7 +416,7 @@ static int traverseTree(const char *pathname, const struct stat *sb, int tflag, 
     }
 
     if (findWatch(wd) >= 0) {
-        logMessage(VB_NOISY, "WD %d already in cache (%s)", wd, pathname);
+        logMessage(VB_NOISY, "WD %d ya estan en cache (%s)", wd, pathname);
         return 0;
     }
 
@@ -435,8 +433,8 @@ static int watchDir(int inotifyFd, const char *pathname)
     
     if (nftw(pathname, traverseTree, 20, FTW_PHYS) == -1)
         logMessage(VB_NOISY,
-                "nftw: %s: %s (directory probably deleted before we "
-                "could watch)", pathname, strerror(errno));
+                "nftw: %s: %s (directorio probablemente eliminado antes de "
+                "revision)", pathname, strerror(errno));
     return dirCnt;
 }
 
@@ -444,7 +442,7 @@ static void watchSubtree(int inotifyFd, char *path)
 {
     int cnt;
     cnt = watchDir(inotifyFd, path);
-    logMessage(VB_NOISY, "-watchSubtree: %s: %d entries added",path, cnt);
+    logMessage(VB_NOISY, "-MonSubArbol: %s: %d entradas agregadas",path, cnt);
 }
 
 static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, const char *newPathPrefix, const char *newName)
@@ -458,7 +456,7 @@ static void rewriteCachedPaths(const char *oldPathPrefix, const char *oldName, c
     snprintf(newPrefix, sizeof(newPrefix), "%s/%s", newPathPrefix, newName);
     len = strlen(fullPath);
 
-    logMessage(VB_NOISY, "Rename: %s ==> %s", fullPath, newPrefix);
+    logMessage(VB_NOISY, "Renombrado: %s ==> %s", fullPath, newPrefix);
 
     for (j = 0; j < cacheSize; j++) {
         if (strncmp(fullPath, wlCache[j].path, len) == 0 &&
@@ -478,7 +476,7 @@ static int zapSubtree(int inotifyFd, char *path)
     int cnt;
     char *pn;
 
-    logMessage(VB_NOISY, "Zapping subtree: %s", path);
+    logMessage(VB_NOISY, "Liberando SubArbol: %s", path);
 
     len = strlen(path);
     pn = strdup(path);
@@ -518,9 +516,9 @@ static int reinitialize(int oldInotifyFd)
         close(oldInotifyFd);
 
         reinitCnt++;
-        logMessage(0, "Reinitializing cache and inotify FD (reinitCnt = %d)",reinitCnt);
+        logMessage(0, "Reinicialianzo cache y inotify FD (reinitCnt = %d)",reinitCnt);
     } else {
-        logMessage(0, "Initializing cache");
+        logMessage(0, "Inicializando cache");
         reinitCnt = 0;
     }
 
@@ -528,7 +526,7 @@ static int reinitialize(int oldInotifyFd)
     if (inotifyFd == -1)
         errExit("inotify_init");
 
-    logMessage(0, "    new inotifyFd = %d", inotifyFd);
+    logMessage(0, "    nuevo inotifyFd = %d", inotifyFd);
 
     freeCache();
 
@@ -542,7 +540,7 @@ static int reinitialize(int oldInotifyFd)
             cnt++;
 
     if (oldInotifyFd >= 0)
-        logMessage(0, "Rebuilt cache with %d entries", cnt);
+        logMessage(0, " Reconstruccion de cache con %d entradas", cnt);
 
     return inotifyFd;
 }
@@ -573,12 +571,12 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
 
     if ((ev->mask & IN_ISDIR) && (ev->mask & (IN_CREATE | IN_MOVED_TO))) {
         snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);	
-        logMessage(0, "Directory creation on wd %d: %s",ev->wd, fullPath);
+        logMessage(0, "Creacion de directorio en wd %d: %s",ev->wd, fullPath);
         if (!pathnameInCache(fullPath))
             watchSubtree(*inotifyFd, fullPath);
 
     } else if (ev->mask & IN_DELETE_SELF) {
-        logMessage(0, "Clearing watchlist item %d (%s)",ev->wd, wlCache[evCacheSlot].path);
+        logMessage(0, "Limpiando watchlist item %d (%s)",ev->wd, wlCache[evCacheSlot].path);
 
         if (isRootDirPath(wlCache[evCacheSlot].path))
             zapRootDirPath(wlCache[evCacheSlot].path);
@@ -603,7 +601,7 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
             evLen += sizeof(struct inotify_event) + nextEv->len;
         } else if (((char *) nextEv < buf + bufSize) || !firstTry) {
             logMessage(VB_NOISY, "MOVED_OUT: %p %p",wlCache[evCacheSlot].path, ev->name);
-            logMessage(VB_NOISY, "firstTry = %d; remaining bytes = %d",firstTry, buf + bufSize - (char *) nextEv);
+            logMessage(VB_NOISY, "primerIntento = %d; remaining bytes = %d",firstTry, buf + bufSize - (char *) nextEv);
             snprintf(fullPath, sizeof(fullPath), "%s/%s",wlCache[evCacheSlot].path, ev->name);
 
             if (zapSubtree(*inotifyFd, fullPath) == -1) {
@@ -613,23 +611,23 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
                 return INOTIFY_READ_BUF_LEN;
             }
         } else {
-            logMessage(VB_NOISY, "HANGING IN_MOVED_FROM");
+            logMessage(VB_NOISY, "Manejo IN_MOVED_FROM");
             return -1;  /* Tell our caller to do another read() */
         }
 
     } else if (ev->mask & IN_Q_OVERFLOW) {
         static int overflowCnt = 0;
         overflowCnt++;
-        logMessage(0, "Queue overflow (%d) (inotifyReadCnt = %d)",overflowCnt, inotifyReadCnt);
+        logMessage(0, "Sobrecarga en cola (%d) (inotifyReadCnt = %d)",overflowCnt, inotifyReadCnt);
         *inotifyFd = reinitialize(*inotifyFd);
         /* Discard all remaining events in current read() buffer */
         evLen = INOTIFY_READ_BUF_LEN;
     } else if (ev->mask & IN_UNMOUNT) {
-        logMessage(0, "Filesystem unmounted: %s",wlCache[evCacheSlot].path);
+        logMessage(0, "FileSystem Desmontado: %s",wlCache[evCacheSlot].path);
         markCacheSlotEmpty(evCacheSlot);
             /* No need to remove the watch; that happens automatically */
     } else if (ev->mask & IN_MOVE_SELF && isRootDirPath(wlCache[evCacheSlot].path)) {
-        logMessage(0, "Root path moved: %s",wlCache[evCacheSlot].path);
+        logMessage(0, "Ruta Raiz Movida: %s",wlCache[evCacheSlot].path);
         zapRootDirPath(wlCache[evCacheSlot].path);
         if (zapSubtree(*inotifyFd, wlCache[evCacheSlot].path) == -1) {
             /* Cache reached an inconsistent state */
@@ -689,7 +687,7 @@ static void processInotifyEvents(int *inotifyFd)
     if (numRead == -1)
         errExit("read");
     if (numRead == 0) {
-        fprintf(stderr, "read() from inotify fd returned 0!");
+        fprintf(stderr, "read() regreso 0->fd desde inotify!");
         exit(EXIT_FAILURE);
     }
 
@@ -730,17 +728,16 @@ static void processInotifyEvents(int *inotifyFd)
             if (nr == -1 && errno != EINTR)
                 errExit("read");
             if (nr == 0) {
-                fprintf(stderr, "read() from inotify fd returned 0!");
+                fprintf(stderr, "read() regreso 0->fd desde inotify!");
                 exit(EXIT_FAILURE);
             }
 
             if (errno != -1) {
                 numRead += nr;
                 inotifyReadCnt++;
-                logMessage(VB_NOISY,"\n==========> SECONDARY Read %d: got %zd bytes",inotifyReadCnt, nr);
+                logMessage(VB_NOISY,"\n==========> Scaneo Secundario %d: got %zd bytes",inotifyReadCnt, nr);
             } else {                    /* EINTR */
-                logMessage(VB_NOISY,
-                       "\n==========> SECONDARY Read got nothing");
+                logMessage(VB_NOISY,"\n==========> Escaneo Secundario sin nada");
             }
             evp = buf;          /* Start again at beginning of buffer */
         }
@@ -821,7 +818,7 @@ static int LoadValues()
 	      token = strtok( NULL, "\t =\n\r");
 	      FILE *fpid = fopen(token, "r");
 	      if (!fpid){
-		perror("Archivo PID Error\n");
+		perror("Archivo pid Error\n");
 		exit(EXIT_FAILURE);
 	      }
 	      fscanf(fpid, "%d", &getpid);
@@ -909,14 +906,14 @@ int main(int argc, char *argv[])
 	      printf("Error archivo inotify.cfg no es valido...\n");
 	      exit(EXIT_FAILURE);
 	  }
-	  printf("Killing PID\n");
+	  printf("Matando PID\n");
 	  gload = LoadValues();
 	  if( gload == 0 ){
-	    printf("Killing iNotify Agent Success\n");
+	    printf("Exito al matar el pid del Agente..\n");
 	    exit(EXIT_SUCCESS);
 	  }
 	  else {
-	    printf("error: cannot kill iNotify Agent");
+	    printf("error: No se pudo matar el pid del Agente..");
 	    exit(EXIT_FAILURE);
 	  }
 	break;
