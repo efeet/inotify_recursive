@@ -73,85 +73,71 @@ static void displayInotifyEvent(struct inotify_event *ev)
 {
     if (ev->cookie > 0)
         logMessage(VB_NOISY, "cookie = %4d; ", ev->cookie);
-    
     if (ev->mask & IN_ISDIR){
         logMessage(VB_NOISY, "mask = IN_ISDIR ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
-
     if (ev->mask & IN_CREATE){
         logMessage(VB_NOISY, "mask = IN_CREATE ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
-
     if (ev->mask & IN_DELETE_SELF){
         logMessage(VB_NOISY, "mask = IN_DELETE_SELF ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
-    
     if (ev->mask & IN_DELETE){
         logMessage(VB_NOISY, "mask = IN_DELETE ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
-
     if (ev->mask & IN_MOVE_SELF){
         logMessage(VB_NOISY, "mask = IN_MOVE_SELF ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
-    
     if (ev->mask & IN_MOVED_FROM){
         logMessage(VB_NOISY, "mask = IN_MOVED_FROM ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
-    
     if (ev->mask & IN_MOVED_TO){
         logMessage(VB_NOISY, "mask = IN_MOVED_TO ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
-
     if (ev->mask & IN_IGNORED){
         logMessage(VB_NOISY, "mask = IN_IGNORED ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
-    
     if (ev->mask & IN_Q_OVERFLOW){
         logMessage(VB_NOISY, "mask = IN_Q_OVERFLOW ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
-    
     if (ev->mask & IN_UNMOUNT){
         logMessage(VB_NOISY, "mask = IN_UNMOUNT ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
-    
     if (ev->mask & IN_ATTRIB){
         logMessage(VB_NOISY, "mask = IN_ATTRIB ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
-    
     if (ev->mask & IN_OPEN){
         logMessage(VB_NOISY, "mask = IN_OPEN ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
-    
     if (ev->mask & IN_MODIFY){
 	logMessage(VB_NOISY, "mask = IN_MODIFY ");
 	if (ev->len > 0)
 	  logMessage(VB_NOISY, "Event Name = %s", ev->name);
     }
-    
     if (ev->mask & IN_CLOSE_WRITE){
 	logMessage(VB_NOISY, "mask = IN_CLOSE_WRITE ");
 	if (ev->len > 0)
@@ -489,7 +475,7 @@ static int zapSubtree(int inotifyFd, char *path)
                     (wlCache[j].path[len] == '/' ||
                      wlCache[j].path[len] == '\0')) {
 
-                logMessage(VB_NOISY,"-removing watch: wd = %d (%s)",wlCache[j].wd, wlCache[j].path);
+                logMessage(VB_NOISY,"-eliminando watch: wd = %d (%s)",wlCache[j].wd, wlCache[j].path);
 
                 if (inotify_rm_watch(inotifyFd, wlCache[j].wd) == -1) {
                     logMessage(VB_NOISY, "inotify_rm_watch wd = %d (%s): %s",wlCache[j].wd, wlCache[j].path, strerror(errno));

@@ -3428,3 +3428,333 @@
 [08/25/2015 13:52:36] : -traverseTree-> : wd = 257 [cache slot: 256]; /etc/lsb-release.d 
 [08/25/2015 13:52:36] : -traverseTree-> : wd = 258 [cache slot: 257]; /etc/yum.repos.d 
 [08/25/2015 13:52:36] : -MonSubArbol: /etc/: 255 entradas agregadas 
+[08/25/2015 13:53:52] : ->Log establecido como Ruidoso... 
+[08/25/2015 13:53:52] : ATENCION: El numero de directorios soportados es: 65386 
+[08/25/2015 13:53:52] :           para modificar este numero, se edita el parametro de kernel 
+[08/25/2015 13:53:52] :           /proc/sys/fs/inotify/max_user_watches 
+[08/25/2015 13:53:52] : Inicializando cache 
+[08/25/2015 13:53:52] :     nuevo inotifyFd = 6 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 1 [cache slot: 0]; /opt/PRUEBA 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 2 [cache slot: 1]; /opt/PRUEBA/DOS 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 3 [cache slot: 2]; /opt/PRUEBA/TRES 
+[08/25/2015 13:53:52] : -MonSubDir: /opt/PRUEBA: 3 entradas agregadas 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 4 [cache slot: 3]; /etc 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 5 [cache slot: 4]; /etc/bash_completion.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 6 [cache slot: 5]; /etc/iproute2 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 7 [cache slot: 6]; /etc/dracut.conf.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 8 [cache slot: 7]; /etc/rpm 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 9 [cache slot: 8]; /etc/gtk-2.0 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 10 [cache slot: 9]; /etc/cron.hourly 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 11 [cache slot: 10]; /etc/plymouth 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 12 [cache slot: 11]; /etc/modprobe.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 13 [cache slot: 12]; /etc/ConsoleKit 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 14 [cache slot: 13]; /etc/ConsoleKit/run-session.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 15 [cache slot: 14]; /etc/xinetd.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 16 [cache slot: 15]; /etc/UPower 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 17 [cache slot: 16]; /etc/dbus-1 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 18 [cache slot: 17]; /etc/dbus-1/system.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 19 [cache slot: 18]; /etc/dbus-1/session.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 20 [cache slot: 19]; /etc/apparmor 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 21 [cache slot: 20]; /etc/cupshelpers 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 22 [cache slot: 21]; /etc/sasl2 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 23 [cache slot: 22]; /etc/udev 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 24 [cache slot: 23]; /etc/udev/rules.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 25 [cache slot: 24]; /etc/ssh 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 26 [cache slot: 25]; /etc/icewm 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 27 [cache slot: 26]; /etc/icewm/yast2 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 28 [cache slot: 27]; /etc/systemd 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 29 [cache slot: 28]; /etc/systemd/user 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 30 [cache slot: 29]; /etc/systemd/system 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 31 [cache slot: 30]; /etc/systemd/system/default.target.wants 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 32 [cache slot: 31]; /etc/systemd/system/sockets.target.wants 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 33 [cache slot: 32]; /etc/systemd/system/bluetooth.target.wants 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 34 [cache slot: 33]; /etc/systemd/system/remote-fs.target.wants 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 35 [cache slot: 34]; /etc/systemd/system/multi-user.target.wants 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 36 [cache slot: 35]; /etc/systemd/system/timers.target.wants 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 37 [cache slot: 36]; /etc/systemd/system/getty.target.wants 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 38 [cache slot: 37]; /etc/systemd/system/sysinit.target.wants 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 39 [cache slot: 38]; /etc/systemd/system/system-update.target.wants 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 40 [cache slot: 39]; /etc/lvm 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 41 [cache slot: 40]; /etc/lvm/archive 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 42 [cache slot: 41]; /etc/lvm/backup 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 43 [cache slot: 42]; /etc/lvm/metadata 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 44 [cache slot: 43]; /etc/profile.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 45 [cache slot: 44]; /etc/slp.reg.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 46 [cache slot: 45]; /etc/gnupg 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 47 [cache slot: 46]; /etc/audisp 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 48 [cache slot: 47]; /etc/audisp/plugins.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 49 [cache slot: 48]; /etc/postfix 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 50 [cache slot: 49]; /etc/postfix/system 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 51 [cache slot: 50]; /etc/security 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 52 [cache slot: 51]; /etc/fonts 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 53 [cache slot: 52]; /etc/fonts/conf.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 54 [cache slot: 53]; /etc/fonts/conf.avail 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 55 [cache slot: 54]; /etc/depmod.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 56 [cache slot: 55]; /etc/cron.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 57 [cache slot: 56]; /etc/sysconfig 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 58 [cache slot: 57]; /etc/sysconfig/SuSEfirewall2.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 59 [cache slot: 58]; /etc/sysconfig/SuSEfirewall2.d/services 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 60 [cache slot: 59]; /etc/sysconfig/scripts 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 61 [cache slot: 60]; /etc/sysconfig/network 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 62 [cache slot: 61]; /etc/sysconfig/network/scripts 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 63 [cache slot: 62]; /etc/sysconfig/network/if-up.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 64 [cache slot: 63]; /etc/sysconfig/network/if-down.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 65 [cache slot: 64]; /etc/sysconfig/network/providers 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 66 [cache slot: 65]; /etc/pam.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 67 [cache slot: 66]; /etc/bootsplash 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 68 [cache slot: 67]; /etc/bootsplash/themes 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 69 [cache slot: 68]; /etc/bootsplash/themes/openSUSE 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 70 [cache slot: 69]; /etc/bootsplash/themes/openSUSE/cdrom 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 71 [cache slot: 70]; /etc/bootsplash/themes/openSUSE/bootloader 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 72 [cache slot: 71]; /etc/snapper 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 73 [cache slot: 72]; /etc/snapper/filters 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 74 [cache slot: 73]; /etc/snapper/config-templates 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 75 [cache slot: 74]; /etc/snapper/configs 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 76 [cache slot: 75]; /etc/polkit-1 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 77 [cache slot: 76]; /etc/polkit-1/rules.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 78 [cache slot: 77]; /etc/iscsi 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 79 [cache slot: 78]; /etc/iscsi/ifaces 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 80 [cache slot: 79]; /etc/default 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 81 [cache slot: 80]; /etc/permissions.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 82 [cache slot: 81]; /etc/tuned 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 83 [cache slot: 82]; /etc/cups 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 84 [cache slot: 83]; /etc/cups/interfaces 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 85 [cache slot: 84]; /etc/cups/ppd 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 86 [cache slot: 85]; /etc/cups/ssl 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 87 [cache slot: 86]; /etc/gpm 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 88 [cache slot: 87]; /etc/gpm/syn.conf 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 89 [cache slot: 88]; /etc/gpm/twiddler.conf 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 90 [cache slot: 89]; /etc/gpm/root.conf 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 91 [cache slot: 90]; /etc/uefi 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 92 [cache slot: 91]; /etc/uefi/certs 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 93 [cache slot: 92]; /etc/ppp 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 94 [cache slot: 93]; /etc/ppp/peers 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 95 [cache slot: 94]; /etc/ppp/ip-down.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 96 [cache slot: 95]; /etc/ppp/ip-up.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 97 [cache slot: 96]; /etc/ssl 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 98 [cache slot: 97]; /etc/ssl/private 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 99 [cache slot: 98]; /etc/omc 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 100 [cache slot: 99]; /etc/omc/srvinfo.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 101 [cache slot: 100]; /etc/named.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 102 [cache slot: 101]; /etc/apparmor.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 103 [cache slot: 102]; /etc/apparmor.d/apache2.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 104 [cache slot: 103]; /etc/apparmor.d/tunables 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 105 [cache slot: 104]; /etc/apparmor.d/tunables/xdg-user-dirs.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 106 [cache slot: 105]; /etc/apparmor.d/tunables/home.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 107 [cache slot: 106]; /etc/apparmor.d/tunables/multiarch.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 108 [cache slot: 107]; /etc/apparmor.d/local 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 109 [cache slot: 108]; /etc/apparmor.d/abstractions 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 110 [cache slot: 109]; /etc/apparmor.d/abstractions/ubuntu-browsers.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 111 [cache slot: 110]; /etc/apparmor.d/abstractions/apparmor_api 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 112 [cache slot: 111]; /etc/apparmor.d/disable 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 113 [cache slot: 112]; /etc/netconfig.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 114 [cache slot: 113]; /etc/skel 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 115 [cache slot: 114]; /etc/skel/public_html 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 116 [cache slot: 115]; /etc/skel/bin 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 117 [cache slot: 116]; /etc/skel/.fonts 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 118 [cache slot: 117]; /etc/skel/.config 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 119 [cache slot: 118]; /etc/skel/.local 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 120 [cache slot: 119]; /etc/wicked 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 121 [cache slot: 120]; /etc/wicked/extensions 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 122 [cache slot: 121]; /etc/wicked/ifconfig 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 123 [cache slot: 122]; /etc/NetworkManager 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 124 [cache slot: 123]; /etc/NetworkManager/dispatcher.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 125 [cache slot: 124]; /etc/NetworkManager/VPN 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 126 [cache slot: 125]; /etc/NetworkManager/system-connections 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 127 [cache slot: 126]; /etc/logrotate.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 128 [cache slot: 127]; /etc/cron.daily 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 129 [cache slot: 128]; /etc/YaST2 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 130 [cache slot: 129]; /etc/YaST2/licenses 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 131 [cache slot: 130]; /etc/YaST2/licenses/base 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 132 [cache slot: 131]; /etc/openldap 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 133 [cache slot: 132]; /etc/openldap/schema 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 134 [cache slot: 133]; /etc/selinux 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 135 [cache slot: 134]; /etc/init.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 136 [cache slot: 135]; /etc/init.d/rcS.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 137 [cache slot: 136]; /etc/init.d/rc3.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 138 [cache slot: 137]; /etc/init.d/rc6.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 139 [cache slot: 138]; /etc/init.d/rc1.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 140 [cache slot: 139]; /etc/init.d/boot.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 141 [cache slot: 140]; /etc/init.d/rc2.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 142 [cache slot: 141]; /etc/init.d/rc5.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 143 [cache slot: 142]; /etc/init.d/rc0.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 144 [cache slot: 143]; /etc/init.d/rc4.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 145 [cache slot: 144]; /etc/libnl 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 146 [cache slot: 145]; /etc/grub.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 147 [cache slot: 146]; /etc/zypp 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 148 [cache slot: 147]; /etc/zypp/services.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 149 [cache slot: 148]; /etc/zypp/repos.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 150 [cache slot: 149]; /etc/zypp/multiversion.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 151 [cache slot: 150]; /etc/zypp/vendors.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 152 [cache slot: 151]; /etc/request-key.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 153 [cache slot: 152]; /etc/audit 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 154 [cache slot: 153]; /etc/audit/rules.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 155 [cache slot: 154]; /etc/ifplugd 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 156 [cache slot: 155]; /etc/java 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 157 [cache slot: 156]; /etc/java/security 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 158 [cache slot: 157]; /etc/java/security/security.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 159 [cache slot: 158]; /etc/pm 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 160 [cache slot: 159]; /etc/pm/config.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 161 [cache slot: 160]; /etc/pm/power.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 162 [cache slot: 161]; /etc/pm/sleep.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 163 [cache slot: 162]; /etc/at-spi2 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 164 [cache slot: 163]; /etc/pulse 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 165 [cache slot: 164]; /etc/gtk-3.0 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 166 [cache slot: 165]; /etc/PackageKit 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 167 [cache slot: 166]; /etc/X11 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 168 [cache slot: 167]; /etc/X11/xorg.conf.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 169 [cache slot: 168]; /etc/X11/xim.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 170 [cache slot: 169]; /etc/X11/xinit 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 171 [cache slot: 170]; /etc/X11/xinit/xinitrc.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 172 [cache slot: 171]; /etc/X11/xdm 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 173 [cache slot: 172]; /etc/xdg 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 174 [cache slot: 173]; /etc/xdg/menus 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 175 [cache slot: 174]; /etc/xdg/menus/applications-merged 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 176 [cache slot: 175]; /etc/xdg/autostart 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 177 [cache slot: 176]; /etc/xdg/systemd 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 178 [cache slot: 177]; /etc/kde4 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 179 [cache slot: 178]; /etc/kde4/kdm 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 180 [cache slot: 179]; /etc/kde4/share 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 181 [cache slot: 180]; /etc/kde4/share/config 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 182 [cache slot: 181]; /etc/kde4/share/apps 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 183 [cache slot: 182]; /etc/kde4/share/apps/konqueror 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 184 [cache slot: 183]; /etc/kde4/share/apps/konqueror/profiles 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 185 [cache slot: 184]; /etc/kde4/share/apps/plasma-desktop 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 186 [cache slot: 185]; /etc/kde4/share/apps/plasma-desktop/init 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 187 [cache slot: 186]; /etc/vpnc 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 188 [cache slot: 187]; /etc/wpa_supplicant 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 189 [cache slot: 188]; /etc/avahi 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 190 [cache slot: 189]; /etc/avahi/services 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 191 [cache slot: 190]; /etc/gdbinit.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 192 [cache slot: 191]; /etc/ca-certificates 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 193 [cache slot: 192]; /etc/ca-certificates/update.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 194 [cache slot: 193]; /etc/openvpn 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 195 [cache slot: 194]; /etc/sensors.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 196 [cache slot: 195]; /etc/cron.monthly 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 197 [cache slot: 196]; /etc/pango 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 198 [cache slot: 197]; /etc/sudoers.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 199 [cache slot: 198]; /etc/reader.conf.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 200 [cache slot: 199]; /etc/sysctl.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 201 [cache slot: 200]; /etc/pki 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 202 [cache slot: 201]; /etc/pki/trust 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 203 [cache slot: 202]; /etc/pki/trust/anchors 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 204 [cache slot: 203]; /etc/pki/trust/blacklist 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 205 [cache slot: 204]; /etc/lirc 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 206 [cache slot: 205]; /etc/news 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 207 [cache slot: 206]; /etc/uucp 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 208 [cache slot: 207]; /etc/aliases.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 209 [cache slot: 208]; /etc/dconf 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 210 [cache slot: 209]; /etc/dconf/db 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 211 [cache slot: 210]; /etc/dconf/profile 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 212 [cache slot: 211]; /etc/alternatives 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 213 [cache slot: 212]; /etc/opt 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 214 [cache slot: 213]; /etc/cron.weekly 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 215 [cache slot: 214]; /etc/pkcs11 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 216 [cache slot: 215]; /etc/pkcs11/modules 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 217 [cache slot: 216]; /etc/susehelp.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 218 [cache slot: 217]; /etc/susehelp.d/htdig 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 219 [cache slot: 218]; /etc/openal 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 220 [cache slot: 219]; /etc/ld.so.conf.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 221 [cache slot: 220]; /etc/tmpdirs.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 222 [cache slot: 221]; /etc/samba 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 223 [cache slot: 222]; /etc/auto.master.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 224 [cache slot: 223]; /etc/binfmt.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 225 [cache slot: 224]; /etc/cifs-utils 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 226 [cache slot: 225]; /etc/pptp.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 227 [cache slot: 226]; /etc/htdig 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 228 [cache slot: 227]; /etc/tmpfiles.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 229 [cache slot: 228]; /etc/modules-load.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 230 [cache slot: 229]; /etc/gconf 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 231 [cache slot: 230]; /etc/gconf/2 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 232 [cache slot: 231]; /etc/gconf/gconf.xml.defaults 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 233 [cache slot: 232]; /etc/gconf/gconf.xml.mandatory 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 234 [cache slot: 233]; /etc/gconf/gconf.xml.system 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 235 [cache slot: 234]; /etc/gconf/gconf.xml.vendor 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 236 [cache slot: 235]; /etc/gconf/gconf.xml.schemas 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 237 [cache slot: 236]; /etc/joe 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 238 [cache slot: 237]; /etc/mc 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 239 [cache slot: 238]; /etc/zsh_completion.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 240 [cache slot: 239]; /etc/mcelog 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 241 [cache slot: 240]; /etc/xscreensaver 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 242 [cache slot: 241]; /etc/obex-data-server 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 243 [cache slot: 242]; /etc/ImageMagick-6_Q16-2 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 244 [cache slot: 243]; /etc/products.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 245 [cache slot: 244]; /etc/pcmcia 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 246 [cache slot: 245]; /etc/jvm 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 247 [cache slot: 246]; /etc/jvm-commmon 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 248 [cache slot: 247]; /etc/maven 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 249 [cache slot: 248]; /etc/my.cnf.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 250 [cache slot: 249]; /etc/apache2 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 251 [cache slot: 250]; /etc/apache2/conf.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 252 [cache slot: 251]; /etc/sane.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 253 [cache slot: 252]; /etc/hp 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 254 [cache slot: 253]; /etc/gimp 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 255 [cache slot: 254]; /etc/gimp/2.0 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 256 [cache slot: 255]; /etc/akonadi 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 257 [cache slot: 256]; /etc/lsb-release.d 
+[08/25/2015 13:53:52] : -Agregado-> : wd = 258 [cache slot: 257]; /etc/yum.repos.d 
+[08/25/2015 13:53:52] : -MonSubDir: /etc/: 255 entradas agregadas 
+[08/25/2015 15:08:38] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:13:25] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:13:26] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:13:26] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:13:26] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:13:27] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:13:27] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:13:27] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:13:27] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:13:27] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:13:28] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:13:28] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:13:28] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:13:34] : Modificacion de contenido en: /etc/rpm/macros.glib2;55dccc6e 
+[08/25/2015 15:13:40] : Modificacion de contenido en: /etc/rpm/macros.gdk-pixbuf;55dccc74 
+[08/25/2015 15:13:41] : Modificacion de contenido en: /etc/rpm/macros.pango;55dccc75 
+[08/25/2015 15:13:41] : Modificacion de contenido en: /etc/rpm/macros.gtk2;55dccc75 
+[08/25/2015 15:14:31] : Creacion de directorio en wd 4: /etc/gnome-chess 
+[08/25/2015 15:14:31] : -Agregado-> : wd = 259 [cache slot: 258]; /etc/gnome-chess 
+[08/25/2015 15:14:31] : -MonSubDir: /etc/gnome-chess: 1 entradas agregadas 
+[08/25/2015 15:14:31] : Modificacion de contenido en: /etc/gnome-chess/engines.conf;55dccca6 
+[08/25/2015 15:22:59] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:00] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:00] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:00] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:01] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:01] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:01] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:01] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:01] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:02] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:02] : Modificacion de contenido en: /etc/pango/pangox.aliases;55dccea6 
+[08/25/2015 15:23:02] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:02] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:02] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:03] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:03] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:04] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:05] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:05] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:06] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:06] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:07] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:07] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:07] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:07] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:07] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:08] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:08] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:08] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:08] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:08] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:09] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:09] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:10] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:10] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:11] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:11] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:12] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:13] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:13] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:13] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:13] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/25/2015 15:23:14] : Modificacion de contenido en: /etc/ld.so.cache~ 
