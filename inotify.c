@@ -7,26 +7,39 @@
 #include "libraries_include.h"
 #include "enum_ip_inter.h"
 
+/*@errExit - Macro para envio de Mensajes en archivo Log.*/
+/*@verboseMask - Variable para indicar nivel de Verbose en log.*/
 #define errExit(msg)    do{ \
 			logMessage(0, msg); \
 			exit(EXIT_FAILURE); \
                         }while (0)
 
 #define VB_BASIC 1      /* Basic messages */                                                                  
-#define VB_NOISY 2      /* Verbose messages */     
+#define VB_NOISY 2      /* Verbose messages */  
 static int verboseMask;
 
-//Variables para Socket
-int sock = 0, sock_send = 0;
+/* Inicializa socket*/
+int sock = 0;
+/* Envio de frame por socket.*/
+int sock_send = 0;
+/*Hostname Server.*/
 char hostname[256];
+/*Ip console Address.*/
 char ipconsole[256];
+/*All Ips on Server.*/
 char allIps[PATH_MAX];
+/*Variable para matar proceso.*/
 int justkill = 0;
-int modifiedband=0, showchanges = 0;
+/*Variable para bandera de Evento de Modificacion.*/
+int modifiedband=0;
+/*Variable para mostrar cambios en archivos.*/
+int showchanges = 0;
+
                                                                                   
 static int checkCache = 0;                                                                                                                                                                        
 static int readBufferSize = 0;   
 static FILE *logfp = NULL; //Variable para abrir archivo de Log.
+static FILE *fvalues = NULL; //Variable para abrir archivo de configuracion.
 
 static int inotifyReadCnt = 0;
 
@@ -149,7 +162,7 @@ static void CheckPerm(char fullPathPerm[PATH_MAX])
    
     stat(fullPathPerm, &buf_stat);
     if(buf_stat.st_mode & S_IWOTH){
-      for (sock_inits=1; sock_inits<4; sock_inits++){
+      for (sock_inits=1; sock_inits<3; sock_inits++){
 	logMessage(VB_NOISY,"Intento %d de conexion de Socket...",sock_inits);
 	sock = OS_ConnectPort(514,ipconsole);
 	if( sock > 0 ){
@@ -561,7 +574,6 @@ static size_t processNextInotifyEvent(int *inotifyFd, char *buf, int bufSize, in
             watchSubtree(*inotifyFd, fullPath);
 
     } else if (ev->mask & IN_DELETE_SELF) {
-	printf("Borrado2\n");
         logMessage(0, "Clearing watchlist item %d (%s)",ev->wd, wlCache[evCacheSlot].path);
 
         if (isRootDirPath(wlCache[evCacheSlot].path))
@@ -731,9 +743,8 @@ static void processInotifyEvents(int *inotifyFd)
     }
 }
 
-static int LoadValues(char *config_file)
+static int LoadValues()
 {
-    FILE *fvalues;
     char line[1024 + 1];
     char *token, *token2, buf[12];
     char *parameters[] = { "logpath", "pidpath" , "logverbose" , "ipconsole" , "paths", "showchanges" }; 
@@ -743,7 +754,10 @@ static int LoadValues(char *config_file)
     
     max_watches = chk_kernel();
     
-    fvalues = fopen(config_file, "r");
+    if (max_watches <= 0) {
+      printf("\nValor de Kernel incorrecto...\n");
+      exit(EXIT_FAILURE);
+    }
     
     while( fgets(line, 1024, fvalues) != NULL ){
         token = strtok(line, "\t =\n\r");
@@ -753,7 +767,7 @@ static int LoadValues(char *config_file)
 	      token = strtok( NULL, "\t =\n\r");
 	      logfp = fopen(token, "a+");
 	      if (logfp == NULL)
-		errExit("fopen");
+		errExit("Archivo log Error...\n");
 	      setbuf(logfp, NULL);
 	    }  
 	    if(!strncmp(token, parameters[1], sizeof(parameters[1]))){
@@ -761,7 +775,7 @@ static int LoadValues(char *config_file)
 	      token = strtok( NULL, "\t =\n\r");
 	      FILE *fpid = fopen(token, "w");
 	      if (!fpid){
-		perror("Archivo PID Error\n");
+		perror("Archivo pid Error...\n");
 		exit(EXIT_FAILURE);
 	      }
 	      fprintf(fpid, "%d\n", pid);
@@ -771,7 +785,10 @@ static int LoadValues(char *config_file)
 	      token = strtok( NULL, "\t =\n\r");
 	      verboseMask = atoi(token);
 	      logMessage(VB_BASIC,"Log establecido como Basico...");
-	      logMessage(VB_NOISY,"Log establecido como Ruidoso...");
+	      logMessage(VB_NOISY,"->Log establecido como Ruidoso...");
+	      logMessage(0, "ATENCION: El numero de directorios soportados es: %d", max_watches);
+	      logMessage(0, "          para modificar este numero, se edita el parametro de kernel");
+	      logMessage(0, "          /proc/sys/fs/inotify/max_user_watches");
 	    }
 	    if(!strncmp(token, parameters[3], sizeof(parameters[3]))){
 	      token = strtok( NULL, "\t =\n\r");
@@ -826,23 +843,26 @@ int main(int argc, char *argv[])
     char* token, *token2;
     char namecfg[11]="inotify.cfg";
     
-    if (optind >= argc){
-        printf("Error Inicial\n");
-	exit(EXIT_FAILURE);
+    if (optind >= argc || argc < 3 || argc > 3 ){
+      printf("Error de uso: %s \n",argv[0]);
+      printf("Uso ->: \n\n");
+      printf("Iniciar Agente de monitoreo:  -c  inotify.cfg \n");
+      printf("Detener Agente de monitoreo:  -k  inotify.cfg \n\n");
+      exit(EXIT_FAILURE);
+    }
+
+    fvalues = fopen(argv[2], "r");
+    if( fvalues == NULL ){
+     printf("Error ruta incorrecta de Archivo inotify.cfg..\n");
+     exit(EXIT_FAILURE);
     }
     
-    if ( argc < 3){
-      printf("Error de uso: %s\n",argv[0]);
-      exit(EXIT_FAILURE);
-    }    
-        
     char *p = malloc(strlen(argv[2] + 1));
     
     while ((opt = getopt(argc, argv, "c:k")) != -1) {
       switch (opt) {
 	case 'c':
 	  strcpy(p, argv[2]);
-	  printf("Ruta de configuracion: %s\n",argv[2]);
 	  token = strtok(p,"\n\r");
 	  token2 = strtok(token, "/");
 	  while(token2 != NULL){
@@ -856,28 +876,48 @@ int main(int argc, char *argv[])
 	    }
 	  }
 	  if(cfgvalida == 1){
-	    gload = LoadValues(argv[2]);
+	    gload = LoadValues();
 	    if( gload != 0 ){
-	      printf("Error Load Values from cfg file\n");
+	      printf("Error en la carga de valores en archivo inotify.cfg..\n");
 	      exit(EXIT_FAILURE);
 	    }
 	  } else {
-	      printf("error: cfg file not found\n");
+	      printf("Error archivo inotify.cfg no es valido...\n");
 	      exit(EXIT_FAILURE);
 	  }
 	break;
 	case 'k':
 	  justkill = 1;
+	  while(token2 != NULL){
+	    if(!strncmp(token2, namecfg, sizeof(namecfg))){
+		cfgvalida = 1;
+		break;
+	    }
+	    else{
+	      token2 = strtok(NULL, "/");
+	      cfgvalida = 0;
+	    }
+	  }
+	  if(cfgvalida == 1){
+	    gload = LoadValues();
+	    if( gload != 0 ){
+	      printf("Error en la carga de valores en archivo inotify.cfg..\n");
+	      exit(EXIT_FAILURE);
+	    }
+	  } else {
+	      printf("Error archivo inotify.cfg no es valido...\n");
+	      exit(EXIT_FAILURE);
+	  }
 	  printf("Killing PID\n");
-	   gload = LoadValues(argv[2]);
-	   if( gload == 0 ){
-	     printf("Killing iNotify Agent Success\n");
-	     exit(EXIT_SUCCESS);
-	   }
-	   else {
-	     printf("error: cannot kill iNotify Agent");
-	     exit(EXIT_FAILURE);
-	   }
+	  gload = LoadValues();
+	  if( gload == 0 ){
+	    printf("Killing iNotify Agent Success\n");
+	    exit(EXIT_SUCCESS);
+	  }
+	  else {
+	    printf("error: cannot kill iNotify Agent");
+	    exit(EXIT_FAILURE);
+	  }
 	break;
 	default:
 	  printf("Usage Error: %s\n",argv[0]);

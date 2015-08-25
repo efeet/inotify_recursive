@@ -15,17 +15,13 @@ int chk_kernel(void)
   }
   buf[n] = 0;
   max_watches = atoi(buf);
-  for(i=1; i <= max_watches; i++){
+  /*for(i=1; i <= max_watches; i++){
     rem = i % 65000;
     if(rem == 0)
       rest+=256;
-  }
+  }*/
+  rest=150;
   printf("Numero de Archivos a monitorear = /proc/sys/fs/inotify/max_user_watches: %d\n",max_watches - rest);
-  if (max_watches <= 0) {
-    printf("Numero de Rutas Incorrecto: ");
-    printf(buf);
-    printf("\n");
-    return 1;
-  }
+  
   return (max_watches - rest);
 }
