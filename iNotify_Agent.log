@@ -3123,3 +3123,42 @@
 [08/24/2015 18:46:08] : Modificacion de contenido en: /etc/ld.so.cache~ 
 [08/24/2015 18:46:08] : Modificacion de contenido en: /etc/ld.so.cache~ 
 [08/24/2015 18:46:08] : Modificacion de contenido en: /etc/ld.so.cache~ 
+[08/24/2015 19:25:06] : Modificacion de contenido en: /etc/resolv.conf.KGYpLM 
+[08/24/2015 19:25:06] : Modificacion de contenido en: /etc/resolv.conf.KGYpLM 
+[08/24/2015 19:25:07] : Modificacion de contenido en: /etc/resolv.conf 
+[08/24/2015 19:25:07] : Modificacion de contenido en: /etc/yp.conf.O7hnsD 
+[08/25/2015 09:57:29] : Modificacion de contenido en: /etc/resolv.conf.p0FTrl 
+[08/25/2015 09:57:29] : Modificacion de contenido en: /etc/resolv.conf.p0FTrl 
+[08/25/2015 09:57:29] : Modificacion de contenido en: /etc/resolv.conf.p0FTrl 
+[08/25/2015 09:57:29] : Modificacion de contenido en: /etc/resolv.conf 
+[08/25/2015 09:57:29] : Modificacion de contenido en: /etc/yp.conf.tyGm3p 
+[08/25/2015 10:29:51] : Intento 1 de conexion de Socket... 
+[08/25/2015 10:30:22] : Intento 2 de conexion de Socket... 
+[08/25/2015 10:30:22] : Error al enviar a Socket. 
+[08/25/2015 10:30:22] : ---->Objeto Con Escritura Publica=/opt/PRUEBA/AAAAAAAAAA 
+[08/25/2015 10:30:22] : Directory creation on wd 1: /opt/PRUEBA/DOS 
+[08/25/2015 10:30:22] : -traverseTree-> : wd = 257 [cache slot: 256]; /opt/PRUEBA/DOS 
+[08/25/2015 10:30:22] : -watchSubtree: /opt/PRUEBA/DOS: 1 entries added 
+[08/25/2015 10:30:29] : Directory creation on wd 1: /opt/PRUEBA/TRES 
+[08/25/2015 10:30:29] : -traverseTree-> : wd = 258 [cache slot: 257]; /opt/PRUEBA/TRES 
+[08/25/2015 10:30:29] : -watchSubtree: /opt/PRUEBA/TRES: 1 entries added 
+[08/25/2015 10:30:52] : Intento 1 de conexion de Socket... 
+[08/25/2015 10:30:52] : Intento 2 de conexion de Socket... 
+[08/25/2015 10:30:52] : Error al enviar a Socket. 
+[08/25/2015 10:30:52] : ---->Objeto Con Escritura Publica=/opt/PRUEBA/AAAAAAAAAA 
+[08/25/2015 10:31:29] : Rename: /opt/PRUEBA/TRES ==> /opt/PRUEBA/DOS/TRES 
+[08/25/2015 10:31:29] :   rewriteCachedPaths -> wd 258 [cache slot 257] ==> /opt/PRUEBA/DOS/TRES 
+[08/25/2015 10:31:39] : Intento 1 de conexion de Socket... 
+[08/25/2015 10:31:39] : Intento 2 de conexion de Socket... 
+[08/25/2015 10:31:39] : Error al enviar a Socket. 
+[08/25/2015 10:31:39] : ---->Objeto Con Escritura Publica=/opt/PRUEBA/DOS/TRES 
+[08/25/2015 10:31:45] : Rename: /opt/PRUEBA/DOS/TRES ==> /opt/PRUEBA/TRES 
+[08/25/2015 10:31:45] :   rewriteCachedPaths -> wd 258 [cache slot 257] ==> /opt/PRUEBA/TRES 
+[08/25/2015 10:31:50] : Intento 1 de conexion de Socket... 
+[08/25/2015 10:31:50] : Intento 2 de conexion de Socket... 
+[08/25/2015 10:31:50] : Error al enviar a Socket. 
+[08/25/2015 10:31:50] : ---->Objeto Con Escritura Publica=/opt/PRUEBA/TRES 
+[08/25/2015 10:32:01] : Intento 1 de conexion de Socket... 
+[08/25/2015 10:32:01] : Intento 2 de conexion de Socket... 
+[08/25/2015 10:32:01] : Error al enviar a Socket. 
+[08/25/2015 10:32:01] : ---->Objeto Con Escritura Publica=/opt/PRUEBA/DOS 

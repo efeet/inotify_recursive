@@ -7,6 +7,11 @@
 #include "libraries_include.h"
 #include "enum_ip_inter.h"
 
+#define APP_USAGE "Error de uso: \
+		   \nUso: \
+		   \n\nIniciar Agente de monitoreo:  -c  inotify.cfg \
+		   \nIniciar Agente de monitoreo:  -c  inotify.cfg\n"
+
 /*@errExit - Macro para envio de Mensajes en archivo Log.*/
 /*@verboseMask - Variable para indicar nivel de Verbose en log.*/
 #define errExit(msg)    do{ \
@@ -343,7 +348,6 @@ static void copyRootDirPaths(char *argv[])
         for (k = 0; k < j; k++) {
             if ((rootDirStat[j].st_ino == rootDirStat[k].st_ino) && (rootDirStat[j].st_dev == rootDirStat[k].st_dev)) {
 		logMessage(0, "Duplicate filesystem objects: %s, %s", argv[j], argv[k]);
-                //fprintf(stderr, "Duplicate filesystem objects: %s, %s\n",argv[j], argv[k]);
                 exit(EXIT_FAILURE);
             }
         }
@@ -844,10 +848,7 @@ int main(int argc, char *argv[])
     char namecfg[11]="inotify.cfg";
     
     if (optind >= argc || argc < 3 || argc > 3 ){
-      printf("Error de uso: %s \n",argv[0]);
-      printf("Uso ->: \n\n");
-      printf("Iniciar Agente de monitoreo:  -c  inotify.cfg \n");
-      printf("Detener Agente de monitoreo:  -k  inotify.cfg \n\n");
+      printf(APP_USAGE);
       exit(EXIT_FAILURE);
     }
 
@@ -920,7 +921,7 @@ int main(int argc, char *argv[])
 	  }
 	break;
 	default:
-	  printf("Usage Error: %s\n",argv[0]);
+	  printf(APP_USAGE);
 	  exit(EXIT_FAILURE);
       }
     }
