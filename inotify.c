@@ -68,8 +68,6 @@ static void logMessage(int vb_mask, const char *format, ...)
       va_end(argList);
       fprintf(logfp," \n");
   }
-  logfp = rotatelog(logpath, logfp);
-  setbuf(logfp, NULL);
 }
 
 static void CheckPerm(char fullPathPerm[PATH_MAX])
@@ -99,6 +97,9 @@ static void CheckPerm(char fullPathPerm[PATH_MAX])
       strcpy(sendBuff, clearsendBuff);
       OS_CloseSocket(sock);
       OS_CloseSocket(sock_send);
+      //Verificamos el LOG y los rotamos.
+      logfp = rotatelog(logpath, logfp);
+      setbuf(logfp, NULL);
     }
 }
 
@@ -174,7 +175,7 @@ static void markCacheSlotEmpty(int slot)
 static int findEmptyCacheSlot(void)
 {
     int j;
-    const int ALLOC_INCR = 200;
+    const int ALLOC_INCR = 10;
 
     for (j = 0; j < cacheSize; j++)
         if (wlCache[j].wd == -1)
