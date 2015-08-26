@@ -14,7 +14,10 @@ FILE *rotatelog(char logpath[PATH_MAX], FILE *logfp){
   char rotatelog3[PATH_MAX];
   struct stat st;
   
-  stat(logpath, &st);
+  if(lstat(logpath, &st) == -1){
+      printf("Error de acceso a log\n");
+      exit(1);
+  }
   
   strcpy(rotate, logpath);
   
