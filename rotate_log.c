@@ -1,9 +1,5 @@
 #include "libraries_include.h"
 
-int logren1=0;
-int logren2=0;
-int logren3=0;
-
 int logexist (char *filename)
 {
   struct stat   buffer;   
@@ -11,7 +7,7 @@ int logexist (char *filename)
 }
 
 FILE *rotatelog(char logpath[PATH_MAX], FILE *logfp){
-  int logsizelimit = 1048576/*104857600*/;
+  int logsizelimit = 104857600;
   char rotate[PATH_MAX];
   char rotatelog1[PATH_MAX];
   char rotatelog2[PATH_MAX];
@@ -31,11 +27,8 @@ FILE *rotatelog(char logpath[PATH_MAX], FILE *logfp){
   
   if(st.st_size >= logsizelimit){
     if(logexist(rotatelog1)){
-      logren1=1;
       if(logexist(rotatelog2)){
-	logren2=1;
 	if(logexist(rotatelog3)){
-	  logren3=1;
 	  remove(rotatelog3);
 	  rename(rotatelog2, rotatelog3);
 	  rename(rotatelog1, rotatelog2);
