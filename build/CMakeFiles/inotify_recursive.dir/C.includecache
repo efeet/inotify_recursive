@@ -10,6 +10,14 @@
 
 /home/usanchezc/projects/inotify_recursive/curr_time.h
 
+/home/usanchezc/projects/inotify_recursive/enum_ip_inter.h
+
+/home/usanchezc/projects/inotify_recursive/inotify.c
+libraries_include.h
+/home/usanchezc/projects/inotify_recursive/libraries_include.h
+enum_ip_inter.h
+/home/usanchezc/projects/inotify_recursive/enum_ip_inter.h
+
 /home/usanchezc/projects/inotify_recursive/libraries_include.h
 stdio.h
 -
@@ -79,10 +87,6 @@ chk_kernel.h
 /home/usanchezc/projects/inotify_recursive/chk_kernel.h
 rotate_log.h
 /home/usanchezc/projects/inotify_recursive/rotate_log.h
-
-/home/usanchezc/projects/inotify_recursive/rotate_log.c
-libraries_include.h
-/home/usanchezc/projects/inotify_recursive/libraries_include.h
 
 /home/usanchezc/projects/inotify_recursive/rotate_log.h
 limits.h

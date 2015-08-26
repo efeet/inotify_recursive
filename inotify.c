@@ -628,7 +628,7 @@ static void processInotifyEvents(int *inotifyFd)
             sigemptyset(&sa.sa_mask);
             sa.sa_handler = alarmHandler;
 
-            ualarm(2000, 0);
+            ualarm(5000, 0);
 
             nr = read(*inotifyFd, buf + numRead, INOTIFY_READ_BUF_LEN - numRead);
 
