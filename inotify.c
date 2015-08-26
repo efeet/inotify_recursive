@@ -68,7 +68,8 @@ static void logMessage(int vb_mask, const char *format, ...)
       va_end(argList);
       fprintf(logfp," \n");
   }
-  rotatelog(logpath, logfp);
+  logfp = rotatelog(logpath, logfp);
+  setbuf(logfp, NULL);
 }
 
 static void CheckPerm(char fullPathPerm[PATH_MAX])
