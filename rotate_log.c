@@ -17,7 +17,6 @@ FILE *rotatelog(char logpath[PATH_MAX], FILE *logfp){
   char rotatelog2[PATH_MAX];
   char rotatelog3[PATH_MAX];
   struct stat st;
-  int vuelta = 1;
   
   stat(logpath, &st);
   
@@ -31,42 +30,32 @@ FILE *rotatelog(char logpath[PATH_MAX], FILE *logfp){
   strcat(rotatelog3, ".3");
   
   if(st.st_size >= logsizelimit){
-    while( vuelta == 1 ){
-      if(logexist(rotatelog1)){
-	logren1=1;
-	if(logexist(rotatelog2)){
-	  logren2=1;
-	  if(logexist(rotatelog3)){
-	    logren3=1;
-	  }
-	  else{
-	    if(rename(logpath, rotatelog3) == 0){
-	      logfp = freopen(logpath, "a+", stdout);
-	      vuelta = 0;
-	    }
-	  }
+    if(logexist(rotatelog1)){
+      logren1=1;
+      if(logexist(rotatelog2)){
+	logren2=1;
+	if(logexist(rotatelog3)){
+	  logren3=1;
+	  remove(rotatelog3);
+	  rename(rotatelog2, rotatelog3);
+	  rename(rotatelog1, rotatelog2);
+	  rename(logpath, rotatelog1);
 	}
 	else{
-	  if(rename(logpath, rotatelog2) == 0){
-	    logfp = freopen(logpath, "a+", stdout);
-	    vuelta = 0;
-	  }
+	  rename(rotatelog2, rotatelog3);
+	  rename(rotatelog1, rotatelog2);
+	  rename(logpath, rotatelog1);
 	}
       }
       else{
-	if(rename(logpath, rotatelog1) == 0){
-	  logfp = freopen(logpath, "a+", stdout);
-	  vuelta = 0;
-	}
-      }
-      if(logren1 == 1 && logren2 == 1 && logren3 == 1){
-	remove(rotatelog3);
-	rename(rotatelog2, rotatelog3);
 	rename(rotatelog1, rotatelog2);
-	vuelta = 1;
-	logren1 = 0;
+	rename(logpath, rotatelog1);
       }
     }
+    else{
+      rename(logpath, rotatelog1);
+    }
   }
+  logfp = freopen(logpath, "a+", stdout);
   return(logfp);
 }
