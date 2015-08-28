@@ -98,8 +98,8 @@ static void CheckPerm(char fullPathPerm[PATH_MAX])
       OS_CloseSocket(sock);
       OS_CloseSocket(sock_send);
       //Verificamos el LOG y los rotamos.
-      logfp = rotatelog(logpath, logfp);
-      setbuf(logfp, NULL);
+      //logfp = rotatelog(logpath, logfp);
+      //setbuf(logfp, NULL);
     }
 }
 
@@ -659,7 +659,7 @@ static void processInotifyEvents(int *inotifyFd)
 static int LoadValues()
 {
     char line[1024 + 1];
-    char *token, *token2, buf[12];
+    char *token, *token2; //buf[12];
     char *parameters[] = { "logpath", "pidpath" , "logverbose" , "ipconsole" , "paths", "showchanges" }; 
     char **argv2 = malloc(2*sizeof(char *));
     size_t argc2 = 0;
@@ -726,7 +726,7 @@ static int LoadValues()
 	  }
 	  else{
 	    int getpid = 0;
-	    char killagent[PATH_MAX];
+	    //char killagent[PATH_MAX];
 	    if(!strncmp(token, parameters[1], sizeof(parameters[1]))){
 	      token = strtok( NULL, "\t =\n\r");
 	      FILE *fpid = fopen(token, "r");
