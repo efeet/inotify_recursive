@@ -91,6 +91,8 @@ rotate_log.h
 /home/usanchezc/projects/inotify_recursive/rotate_log.h
 limits.h
 -
+stdio.h
+-
 
 /home/usanchezc/projects/inotify_recursive/socket_client.h
 

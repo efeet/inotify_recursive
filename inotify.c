@@ -41,6 +41,8 @@ int modifiedband=0;
 int showchanges = 0;
 /*Variable para almacenar la ruta de log*/
 char logpath[PATH_MAX];
+/* Validacion de conexion con socket */
+int SockConn = 0;
                                                                          
 static int checkCache = 0;                                                                                                                                                                        
 static int readBufferSize = 0;   
@@ -78,18 +80,20 @@ static void CheckPerm(char fullPathPerm[PATH_MAX])
    
     stat(fullPathPerm, &buf_stat);
     if(buf_stat.st_mode & S_IWOTH){
-      for (sock_inits=1; sock_inits<3; sock_inits++){
-	logMessage(VB_NOISY,"Intento %d de conexion de Socket...",sock_inits);
-	sock = OS_ConnectPort(514,ipconsole);
-	if( sock > 0 ){
-	  logMessage(0,"Conexion Exitosa.");
-	  break;
-	}	    
+      if(SockConn == 1){
+	for (sock_inits=1; sock_inits<3; sock_inits++){
+	  logMessage(VB_NOISY,"Intento %d de conexion de Socket...",sock_inits);
+	  sock = OS_ConnectPort(514,ipconsole);
+	  if( sock > 0 ){
+	    logMessage(0,"Conexion Exitosa.");
+	    break;
+	  }	    
+	}
+	snprintf(sendBuff, sizeof(sendBuff),"%s|%s|%sWARN|Write Perm Others Users|%s\r\n",currTime(), hostname, allIps, fullPathPerm); //Construir mensaje
+	sock_send = write(sock, sendBuff, strlen(sendBuff)); //Envio a socket.
+	if( sock_send < 0 )
+	  logMessage(0,"Error al enviar a Socket.");
       }
-      snprintf(sendBuff, sizeof(sendBuff),"%s|%s|%sWARN|Write Perm Others Users|%s\r\n",currTime(), hostname, allIps, fullPathPerm); //Construir mensaje
-      sock_send = write(sock, sendBuff, strlen(sendBuff)); //Envio a socket.
-      if( sock_send < 0 )
-	logMessage(0,"Error al enviar a Socket.");
       logMessage(0,"---->Objeto Con Escritura Publica=%s",fullPathPerm);
       bzero(fullPathPerm,PATH_MAX);
       strcpy(fullPathPerm, clearsendBuff);
@@ -98,8 +102,8 @@ static void CheckPerm(char fullPathPerm[PATH_MAX])
       OS_CloseSocket(sock);
       OS_CloseSocket(sock_send);
       //Verificamos el LOG y los rotamos.
-      //logfp = rotatelog(logpath, logfp);
-      //setbuf(logfp, NULL);
+      logfp = rotatelog(logpath, logfp);
+      setbuf(logfp, NULL);
     }
 }
 
@@ -834,6 +838,17 @@ int main(int argc, char *argv[])
 	  printf(APP_USAGE);
 	  exit(EXIT_FAILURE);
       }
+    }
+    
+    //Validacion de Socket para envio de mensajes
+    sock = OS_ConnectPort(514, ipconsole);
+    if( sock > 0){
+      logMessage(0,"Conexion con Socket Exitosa!.");
+      SockConn = 1;
+      OS_CloseSocket(sock);
+    } else {
+      logMessage(0, "Conexion con Socket Fallo!.");
+      SockConn = 0;
     }
     
     inotifyFd = reinitialize(-1);
