@@ -10,7 +10,7 @@
 #define APP_USAGE "Error de uso: \
 		   \nUso: \
 		   \n\nIniciar Agente de monitoreo:  -c  inotify.cfg \
-		   \nIniciar Agente de monitoreo:  -c  inotify.cfg\n"
+		   \nDetener Agente de monitoreo:  -k  inotify.cfg\n"
 
 /*@errExit - Macro para envio de Mensajes en archivo Log.*/
 /*@verboseMask - Variable para indicar nivel de Verbose en log.*/
